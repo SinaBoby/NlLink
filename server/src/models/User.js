@@ -2,26 +2,42 @@ import mongoose from "mongoose";
 
 import validateAllowedFields from "../util/validateAllowedFields.js";
 
-const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true, trim: true },
-  userName: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, trim: true },
-  password: { type: String, required: true },
-  userType: {
-    type: String,
-    enum: ["NewComer", "Local"],
-    required: true,
-    default: "NewComer",
+const userSchema = new mongoose.Schema(
+  {
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+    userName: { type: String, required: true, unique: true, trim: true },
+    email: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, required: true },
+    userType: {
+      type: String,
+      enum: ["NewComer", "Local"],
+      required: true,
+      default: "NewComer",
+    },
+    phoneNumber: {
+      type: String,
+    },
+    profileImage: {
+      alt: String,
+      img: {
+        data: Buffer,
+        contentType: String,
+      },
+    },
+    birthDay: { type: Date, required: true },
+    joinedAt: { type: Date, default: () => Date.now(), immutable: true },
+    interests: [String],
+    isActive: Boolean,
+    createdActivities: [
+      { type: mongoose.SchemaTypes.ObjectId, ref: "Activity" },
+    ],
+    activities: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Activity" }],
   },
-  phoneNumber: String,
-  birthDay: { type: Date, required: true },
-  joinedAt: { type: Date, default: () => Date.now(), immutable: true },
-  interests: [String],
-  isActive: Boolean,
-});
+  { timestamps: true }
+);
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model("user", userSchema);
 
 export const validateUser = (userObject) => {
   const errorList = [];
@@ -37,6 +53,9 @@ export const validateUser = (userObject) => {
     "joinedAt",
     "interests",
     "isActive",
+    "profileImage",
+    "createdActivities",
+    "activities",
   ];
 
   const validatedKeysMessage = validateAllowedFields(userObject, allowedKeys);
@@ -67,10 +86,6 @@ export const validateUser = (userObject) => {
 
   if (userObject.birthDay == null) {
     errorList.push("birthDay is a required field");
-  }
-
-  if (userObject.interests == null) {
-    errorList.push("interests is a required field");
   }
 
   return errorList;

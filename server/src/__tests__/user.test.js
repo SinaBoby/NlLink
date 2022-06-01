@@ -49,6 +49,7 @@ describe("GET /api/user/", () => {
       password: "mypassword",
       birthDay: "01-02-2000",
       interests: ["skiing"],
+      phoneNumber: "0686",
     };
     const testUser2 = {
       firstName: "Jane",
@@ -58,6 +59,7 @@ describe("GET /api/user/", () => {
       password: "secretcode",
       birthDay: "01-02-1990",
       interests: ["swimming"],
+      phoneNumber: "0687",
     };
 
     await addUserToMockDB(testUser1);
