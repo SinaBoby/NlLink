@@ -14,7 +14,7 @@ testRouter.post("/seed", async (req, res) => {
     logError(msg);
 
     res.status(400).json({
-      sucess: false,
+      success: false,
       msg,
     });
   } else {
@@ -23,8 +23,13 @@ testRouter.post("/seed", async (req, res) => {
     const data = {
       users: [
         {
-          name: "Rob",
-          email: "rob@hackyourfuture.net",
+          firstName: "John",
+          lastName: "Doe",
+          userName: "JDoe",
+          email: "john@doe.com",
+          password: "mypassword",
+          birthDay: "01-02-2000",
+          interests: ["skiing"],
         },
       ],
     };
