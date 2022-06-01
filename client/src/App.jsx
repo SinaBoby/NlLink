@@ -8,6 +8,8 @@ import CreateUser from "./pages/User/CreateUser";
 import UserList from "./pages/User/UserList";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
+import Login from "./pages/Login/Login";
+
 const App = () => {
   return (
     <>
@@ -19,6 +21,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/user" element={<UserList />} />
         <Route path="/user/create" element={<CreateUser />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </>
