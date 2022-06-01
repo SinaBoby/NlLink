@@ -1,0 +1,66 @@
+.create-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.create-user-input-field {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.create-user-input-field input {
+  width: 100%;
+  min-height: 1.8rem;
+}
+
+.create-user-input-field select {
+  width: 100%;
+  min-height: 1.8rem;
+}
+
+.create-user-container .btn {
+  margin: auto;
+}
+
+.create-user-form {
+  width: 60%;
+  margin: auto;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.first-name-wrapper {
+  width: 45%;
+}
+
+.last-name-wrapper {
+  width: 45%;
+  margin-left: auto;
+}
+
+.btn-link.create-user-submit-btn {
+  width: 100%;
+  margin: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .create-user-form {
+    width: 90%;
+    margin: auto;
+    padding: 5px;
+  }
+  .first-name-wrapper,
+  .last-name-wrapper {
+    width: 100%;
+    margin-left: 10px;
+  }
+}
