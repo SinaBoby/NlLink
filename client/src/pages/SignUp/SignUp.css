@@ -16,3 +16,7 @@
 .signup-input-field input {
   width: 100%;
 }
+
+.signup-container .btn {
+  margin: auto;
+}
