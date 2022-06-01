@@ -59,7 +59,7 @@ describe("POST /api/user/create", () => {
       .post("/api/user/create")
       .send({ user: testUser })
       .then((response) => {
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(400);
 
         const { body } = response;
         expect(body.success).toBe(false);
@@ -80,7 +80,7 @@ describe("POST /api/user/create", () => {
       .post("/api/user/create")
       .send({ user: testUser })
       .then((response) => {
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(400);
 
         const { body } = response;
         expect(body.success).toBe(false);
