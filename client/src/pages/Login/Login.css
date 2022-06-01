@@ -1,0 +1,14 @@
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  flex-wrap: wrap;
+}
+
+.login-signup-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
