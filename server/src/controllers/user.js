@@ -37,9 +37,9 @@ export const createUser = async (req, res) => {
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
-      const UserWithHashedPassword = await getUserWithHashedPassword(user);
+      const userWithHashedPassword = await getUserWithHashedPassword(user);
 
-      const newUser = await User.create(UserWithHashedPassword);
+      const newUser = await User.create(userWithHashedPassword);
 
       res.status(201).json({ success: true, user: newUser });
     }

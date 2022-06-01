@@ -30,6 +30,7 @@ const testUserBase = {
   password: "mypassword",
   birthDay: "01-02-2000",
   interests: ["skiing"],
+  phoneNumber: "0686",
 };
 
 describe("POST /api/user/create", () => {

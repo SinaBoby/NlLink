@@ -30,6 +30,6 @@ const activitySchema = new mongoose.Schema(
     },
     maxPeople: Number,
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 module.exports = mongoose.model("Activity", activitySchema);

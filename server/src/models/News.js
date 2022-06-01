@@ -19,7 +19,7 @@ const newsSchema = new mongoose.Schema(
       enum: ["refugees", "politics", "finance", "society"],
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("News", newsSchema);

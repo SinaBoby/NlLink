@@ -18,6 +18,6 @@ const messageSchema = new mongoose.Schema(
     seen: Boolean,
     edited: Boolean,
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 module.exports = mongoose.model("Message", messageSchema);

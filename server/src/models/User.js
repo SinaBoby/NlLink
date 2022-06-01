@@ -65,27 +65,27 @@ export const validateUser = (userObject) => {
     errorList.push(validatedKeysMessage);
   }
 
-  if (userObject.firstName === null) {
+  if (userObject.firstName == null) {
     errorList.push("firstName is a required field");
   }
 
-  if (userObject.lastName === null) {
+  if (userObject.lastName == null) {
     errorList.push("lastName is a required field");
   }
 
-  if (userObject.userName === null) {
+  if (userObject.userName == null) {
     errorList.push("userName is a required field");
   }
 
-  if (userObject.email === null) {
+  if (userObject.email == null) {
     errorList.push("email is a required field");
   }
 
-  if (userObject.password === null) {
+  if (userObject.password == null) {
     errorList.push("password is a required field");
   }
 
-  if (userObject.birthDay === null) {
+  if (userObject.birthDay == null) {
     errorList.push("birthDay is a required field");
   }
 
