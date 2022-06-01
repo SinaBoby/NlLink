@@ -1,7 +1,7 @@
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
-import getUserWithHashedPassword from "./auth.js";
+//import getUserWithHashedPassword from "./auth.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -37,9 +37,9 @@ export const createUser = async (req, res) => {
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
-      const userWithHashedPassword = await getUserWithHashedPassword(user);
+      //const userWithHashedPassword = await getUserWithHashedPassword(user);
 
-      const newUser = await User.create(userWithHashedPassword);
+      const newUser = await User.create(user);
 
       res.status(201).json({ success: true, user: newUser });
     }
