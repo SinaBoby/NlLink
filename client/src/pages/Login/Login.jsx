@@ -10,7 +10,7 @@ const Login = () => {
       <input type="text" className="login-input" />
       <div className="login-signup-wrapper">
         <p> Don&apos;t have an account? </p>
-        <Link to="/signup" className="navbar-link  btn-link">
+        <Link to="/user/create" className="navbar-link  btn-link">
           Sign up
         </Link>
       </div>
