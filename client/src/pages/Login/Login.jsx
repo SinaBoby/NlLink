@@ -4,14 +4,13 @@ import useFetch from "../../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
 import "./Login.css";
+//import { logInfo } from "../../../../server/src/util/logging.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const onSuccess = () => {
-    // eslint-disable-next-line no-console
-    console.log("hi");
     navigate("/");
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -23,8 +22,7 @@ const Login = () => {
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(email, password);
+    //logInfo(email, password);
     performFetch({
       method: "POST",
       headers: {

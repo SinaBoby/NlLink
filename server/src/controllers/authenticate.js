@@ -6,23 +6,16 @@ const authenticate = function (req, res) {
   const { email, password } = req.body;
   // eslint-disable-next-line no-console
   console.log(email);
-  User.findOne({ email }, function (err, user) {
-    if (err) {
-      logError(err);
-      res.status(500).json({
-        error: "Internal error please try again",
-      });
-    } else if (!user) {
-      res.status(401).json({
-        error: "Incorrect email or password",
-      });
-    } else {
-      user.isCorrectPassword(password, function (err, same) {
-        if (err) {
-          res.status(500).json({
-            error: "Internal error please try again",
-          });
-        } else if (!same) {
+  (async () => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        res.status(401).json({
+          error: "Incorrect email or password",
+        });
+      } else {
+        const same = await user.isCorrectPassword(password);
+        if (!same) {
           res.status(401).json({
             error: "Incorrect email or password",
           });
@@ -32,8 +25,6 @@ const authenticate = function (req, res) {
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "1h",
           });
-          // eslint-disable-next-line no-console
-          console.log(token);
           res.status(200);
           res.set("Access-Control-Allow-Origin", req.headers.origin);
           res.set("Access-Control-Allow-Credentials", "true");
@@ -48,9 +39,14 @@ const authenticate = function (req, res) {
           res.json({ success: true });
           res.end();
         }
+      }
+    } catch (error) {
+      logError(error);
+      res.status(500).json({
+        error: "Internal error please try again",
       });
     }
-  });
+  })();
 };
 
 export default authenticate;
