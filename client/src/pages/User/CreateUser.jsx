@@ -15,7 +15,6 @@ const CreateUser = () => {
   const [birthDay, setBirthDay] = useState("");
   const [userType, setUserType] = useState("NewComer");
 
-
   const onSuccess = () => {
     setFirstName("");
     setLastName("");

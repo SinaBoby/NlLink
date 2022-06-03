@@ -10,7 +10,12 @@ const app = express();
 // Tell express to use the json middleware
 app.use(express.json());
 // Allow everyone to access our API. In a real application, we would need to restrict this!
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:8080",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 // Add middleware so that can express can parse cookies passed by our browser
 app.use(cookieParser());
 /****** Attach routes ******/
@@ -19,8 +24,9 @@ app.use(cookieParser());
  * As we also host our client code on heroku we want to separate the API endpoints.
  */
 app.use("/api/user", userRouter);
-app.use("api/authenticate", authenticateRouter);
+app.use("/api/authenticate", authenticateRouter);
 app.get("/checkToken", withAuth, function (req, res) {
-  res.sendStatus(200);
+  res.status(200);
+  res.send("token is there");
 });
 export default app;

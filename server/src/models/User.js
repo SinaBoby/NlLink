@@ -54,16 +54,15 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
-userSchema.methods.isCorrectPassword = async (password, hash) => {
-  try {
-    // Compare password
-    return await bcrypt.compare(password, hash);
-  } catch (error) {
-    logError(error);
-  }
-
-  // Return false if error
-  return false;
+userSchema.methods.isCorrectPassword = function (password, callback) {
+  bcrypt.compare(password, this.password, function (err, same) {
+    // eslint-disable-next-line no-console
+    if (err) {
+      callback(err);
+    } else {
+      callback(err, same);
+    }
+  });
 };
 const User = mongoose.model("user", userSchema);
 

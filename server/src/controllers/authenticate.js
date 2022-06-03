@@ -1,9 +1,11 @@
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { logError } from "../util/logging.js";
 import User from "../models/User.js";
 
 const authenticate = function (req, res) {
   const { email, password } = req.body;
+  // eslint-disable-next-line no-console
+  console.log(email);
   User.findOne({ email }, function (err, user) {
     if (err) {
       logError(err);
@@ -30,7 +32,15 @@ const authenticate = function (req, res) {
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+          // eslint-disable-next-line no-console
+          console.log(token);
+          res.status(200);
+          res.cookie("token", token, {
+            httpOnly: true,
+            origin: "http://localhost:8080",
+          });
+          res.json({ success: true });
+          res.end();
         }
       });
     }
