@@ -35,6 +35,12 @@ const authenticate = function (req, res) {
           // eslint-disable-next-line no-console
           console.log(token);
           res.status(200);
+          res.set("Access-Control-Allow-Origin", req.headers.origin);
+          res.set("Access-Control-Allow-Credentials", "true");
+          res.set(
+            "Access-Control-Expose-Headers",
+            "date, etag, access-control-allow-origin, access-control-allow-credentials"
+          );
           res.cookie("token", token, {
             httpOnly: true,
             origin: "http://localhost:8080",

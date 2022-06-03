@@ -14,7 +14,9 @@ const UserList = () => {
   );
 
   useEffect(() => {
-    performFetch();
+    performFetch({
+      credentials: "include",
+    });
 
     return cancelFetch;
   }, []);

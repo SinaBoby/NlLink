@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
-//import { logInfo } from "../util/logging";
+import { logInfo } from "../util/logging.js";
 const withAuth = function (req, res, next) {
+  logInfo(req.headers);
   const token = req.cookies.token;
   if (!token) {
     res
