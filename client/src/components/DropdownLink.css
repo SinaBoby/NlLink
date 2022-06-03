@@ -16,5 +16,5 @@
 }
 
 .dropdown-link:hover {
-  text-decoration: underline;
+  color: hsl(0, 0%, 98%);
 }

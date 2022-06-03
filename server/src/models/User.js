@@ -48,14 +48,7 @@ export const validateUser = (userObject) => {
     "email",
     "password",
     "userType",
-    "phoneNumber",
     "birthDay",
-    "joinedAt",
-    "interests",
-    "isActive",
-    "profileImage",
-    "createdActivities",
-    "activities",
   ];
 
   const validatedKeysMessage = validateAllowedFields(userObject, allowedKeys);
