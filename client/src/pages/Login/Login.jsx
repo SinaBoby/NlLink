@@ -49,22 +49,32 @@ const Login = () => {
   }
   return (
     <div className="login-page-container">
-      Login Enter your email and password
+      <h2 className="login-user-header">
+        Enter your email and password to login
+      </h2>
       <form onSubmit={handleSubmit}>
-        <Input
-          name="email"
-          type="email"
-          value={email}
-          onChange={(value) => setEmail(value)}
-          className="login-input"
-        />
-        <Input
-          name="password"
-          value={password}
-          type="password"
-          onChange={(value) => setPassword(value)}
-          className="login-input"
-        />
+        <label>
+          Email
+          <Input
+            name="email"
+            type="email"
+            value={email}
+            onChange={(value) => setEmail(value)}
+            className="login-input"
+            data-testid={TEST_ID.emailInput}
+          />
+        </label>
+        <label>
+          Password
+          <Input
+            name="password"
+            value={password}
+            type="password"
+            onChange={(value) => setPassword(value)}
+            className="login-input"
+            data-testid={TEST_ID.passwordInput}
+          />
+        </label>
         <button
           type="submit"
           className="btn-link navbar-link create-user-submit-btn"
@@ -76,6 +86,9 @@ const Login = () => {
         <p> Don&apos;t have an account? </p>
         <Link to="/user/create" className="navbar-link  btn-link">
           Sign up
+        </Link>
+        <Link to="/user/passwordForgot" className="navbar-link  btn-link">
+          Forgot My password
         </Link>
       </div>
       {statusComponent}

@@ -1,9 +1,10 @@
 .login-page-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   min-height: 80vh;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .login-signup-wrapper {
@@ -11,4 +12,13 @@
   width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.login-user-header {
+  display: block;
+}
+.login-input {
+  width: 100%;
+  min-height: 1.8rem;
+  margin: 10px;
 }
