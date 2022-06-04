@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+import * as bcrypt from "bcrypt";
+import { logError } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
 
 const userSchema = new mongoose.Schema(
@@ -37,6 +38,32 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.pre("save", async function (next) {
+  try {
+    if (!this.isModified("password")) {
+      return next();
+    }
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    logError(error);
+    next(error);
+  }
+});
+userSchema.methods.isCorrectPassword = async function (password) {
+  try {
+    // Compare password
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    logError(error);
+  }
+  // Return false if error
+  return false;
+};
 const User = mongoose.model("user", userSchema);
 
 export const validateUser = (userObject) => {
