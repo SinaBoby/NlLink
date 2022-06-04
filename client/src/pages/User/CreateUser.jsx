@@ -14,7 +14,11 @@ const CreateUser = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [userType, setUserType] = useState("NewComer");
-
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passError, setPassError] = useState("");
+  const strongRegex = new RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})"
+  );
   const onSuccess = () => {
     setFirstName("");
     setLastName("");
@@ -24,6 +28,7 @@ const CreateUser = () => {
     setPassword("");
     setBirthDay("");
     setUserType("NewComer");
+    setConfirmPassword("");
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/create",
@@ -33,28 +38,54 @@ const CreateUser = () => {
   useEffect(() => {
     return cancelFetch;
   }, []);
-
+  useEffect(() => {
+    if (passError) {
+      setTimeout(() => setPassError(null), 3000);
+    }
+  }, [passError]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    performFetch({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          firstName,
-          lastName,
-          userName,
-          password,
-          email,
-          birthDay,
-          phoneNumber,
-          userType,
+    if (password !== confirmPassword && !strongRegex.test(password)) {
+      setPassError(
+        new Error(
+          "Passwords you entered are not same & outside the pattern please try again"
+        )
+      );
+    } else if (password !== confirmPassword) {
+      setPassError(
+        new Error("Password you entered are not same please try again")
+      );
+    } else if (!strongRegex.test(password)) {
+      setPassError(new Error("Please check the password pattern again"));
+    } else {
+      performFetch({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          user: {
+            firstName,
+            lastName,
+            userName,
+            password,
+            email,
+            birthDay,
+            phoneNumber,
+            userType,
+          },
+        }),
+      });
+    }
   };
+  function showPassword() {
+    var x = document.getElementById("passwordInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
 
   let statusComponent = null;
   if (error != null) {
@@ -72,6 +103,15 @@ const CreateUser = () => {
   return (
     <div data-testid={TEST_ID.container} className="create-user-container">
       <h2 className="create-user-header">Join NlLink</h2>
+      <p> Password must contain at least:</p>
+      <ul>
+        <li>Be 6 characters or longer</li>
+        <li>1 lowercase alphabetical character</li>
+        <li>1 uppercase alphabetical character</li>
+        <li>1 numeric character</li>
+        <li>1 special character(!@#$%^&)</li>
+      </ul>
+
       <form onSubmit={handleSubmit} className="create-user-form">
         <div className="create-user-input-field first-name-wrapper">
           <label>First Name</label>
@@ -141,16 +181,36 @@ const CreateUser = () => {
           />
         </div>
         <div className="create-user-input-field">
-          <label>Password</label>
-          <Input
-            name="password"
-            value={password}
-            type="password"
-            onChange={(value) => setPassword(value)}
-            data-testid={TEST_ID.passwordInput}
-          />
+          <label>
+            Password
+            <Input
+              name="password"
+              value={password}
+              type="password"
+              onChange={(value) => setPassword(value)}
+              data-testid={TEST_ID.passwordInput}
+              id="passwordInput"
+              style={{
+                background: strongRegex.test(password) ? "lightGreen" : "white",
+              }}
+            />
+          </label>
+          <label>
+            Confirm Password
+            <Input
+              name="confirmPassword"
+              value={confirmPassword}
+              type="password"
+              onChange={(value) => setConfirmPassword(value)}
+              data-testid={TEST_ID.passwordInput}
+            />
+          </label>
         </div>
-
+        <label>
+          {" "}
+          <span>Show password</span>
+          <input type="checkbox" onClick={() => showPassword()} />
+        </label>
         <button
           type="submit"
           className="btn-link navbar-link create-user-submit-btn"
@@ -160,6 +220,7 @@ const CreateUser = () => {
         </button>
       </form>
       {statusComponent}
+      {passError && <h2>{passError.toString()}</h2>}
     </div>
   );
 };
