@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import User from "../models/User.js";
 
 const authenticate = function (req, res) {
