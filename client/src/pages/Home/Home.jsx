@@ -17,8 +17,12 @@ const Home = () => {
         </div>
         <div className="header-btn-col">
           <h1 className="title mobile-mt">Welkom in Nederland</h1>
-          <Button className={"btn-inline"}>I&apos;m a local</Button>
-          <Button className={"btn-inline"}>I&apos;m a new comer</Button>
+          <Button className={"btn-inline"} type="button">
+            I&apos;m a local
+          </Button>
+          <Button className={"btn-inline"} type="button">
+            I&apos;m a new comer
+          </Button>
         </div>
       </header>
       <main>

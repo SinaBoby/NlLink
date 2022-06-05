@@ -92,7 +92,6 @@ export const validateUser = (userObject) => {
     "email",
     "password",
     "userType",
-    "phoneNumber",
     "birthDay",
     "joinedAt",
     "interests",

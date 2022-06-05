@@ -4,6 +4,7 @@ import Input from "../../components/Input";
 import useFetch from "../../hooks/useFetch";
 import TEST_ID from "./CreateUser.testid";
 import "./CreateUser.css";
+import Button from "./../../components/Button";
 
 const CreateUser = () => {
   const [firstName, setFirstName] = useState("");
@@ -232,13 +233,13 @@ const CreateUser = () => {
           <span>Show password</span>
           <input type="checkbox" onClick={() => showPassword()} />
         </label>
-        <button
-          type="submit"
-          className="btn-link navbar-link create-user-submit-btn"
+        <Button
+          className="btn-block"
           data-testid={TEST_ID.submitButton}
+          type="submit"
         >
-          Submit
-        </button>
+          Create new account
+        </Button>
       </form>
       {statusComponent}
       {passError && <h2>{passError.toString()}</h2>}
