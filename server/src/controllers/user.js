@@ -1,7 +1,7 @@
 import User, { validateUser } from "../models/User.js";
-import { logError } from "../util/logging.js";
+import { logError, logInfo } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
-import getUserWithHashedPassword from "./auth.js";
+//import getUserWithHashedPassword from "./auth.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -15,6 +15,17 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getLoggedInUser = async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const email = req.email;
+    logInfo(email);
+    const user = await User.findOne({ email });
+    res.status(200).json({ success: true, user });
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
+  }
+};
 export const createUser = async (req, res) => {
   try {
     const { user } = req.body;
@@ -37,9 +48,9 @@ export const createUser = async (req, res) => {
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
-      const userWithHashedPassword = await getUserWithHashedPassword(user);
+      //const userWithHashedPassword = await getUserWithHashedPassword(user);
 
-      const newUser = await User.create(userWithHashedPassword);
+      const newUser = await User.create(user);
 
       res.status(201).json({ success: true, user: newUser });
     }
