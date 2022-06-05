@@ -8,7 +8,7 @@ import withAuth from "./middlewares/middleware.js";
 const app = express();
 const allowedOrigins = [
   "http://localhost:8080",
-  "https://c35-newcomers-develop.herokuapp.com/",
+  "https://c35-newcomers-develop.herokuapp.com",
 ];
 // Tell express to use the json middleware
 app.use(express.json());
