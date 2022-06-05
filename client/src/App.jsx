@@ -9,21 +9,24 @@ import UserList from "./pages/User/UserList";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
+import { AuthProvider } from "./AuthContext";
 
 const App = () => {
   return (
     <>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/user" element={<UserList />} />
-        <Route path="/user/create" element={<CreateUser />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/user" element={<UserList />} />
+          <Route path="/user/create" element={<CreateUser />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <Footer />
+      </AuthProvider>
     </>
   );
 };

@@ -3,25 +3,25 @@ import { logError } from "../util/logging.js";
 import User from "../models/User.js";
 
 const authenticate = function (req, res) {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
   // eslint-disable-next-line no-console
-  console.log(email);
+  console.log(userName);
   (async () => {
     try {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ userName });
       if (!user) {
         res.status(401).json({
-          error: "Incorrect email or password",
+          error: "Incorrect userName or password",
         });
       } else {
         const same = await user.isCorrectPassword(password);
         if (!same) {
           res.status(401).json({
-            error: "Incorrect email or password",
+            error: "Incorrect userName or password",
           });
         } else {
           // Issue token
-          const payload = { email };
+          const payload = { userName };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "1h",
           });

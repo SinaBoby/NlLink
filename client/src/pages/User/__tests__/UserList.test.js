@@ -43,12 +43,14 @@ describe("UserList", () => {
   });
 
   it("Renders the users given by the backend", async () => {
-    const testName = "John Doe";
+    const testUserName = "John";
     const testEmail = "john@doe.com";
 
     // Mock our fetch with a user
     fetch.mockResponseOnce(
-      getUsersSuccessMock([{ _id: "u---1", name: testName, email: testEmail }])
+      getUsersSuccessMock([
+        { _id: "u---1", userName: testUserName, email: testEmail },
+      ])
     );
     render(
       <MemoryRouter>
@@ -65,7 +67,9 @@ describe("UserList", () => {
     );
 
     // Check the information is on the page. We only check that the name is somewhere on the page, so {exact: false}
-    expect(screen.getByText(testName, { exact: false })).toBeInTheDocument();
+    expect(
+      screen.getByText(testUserName, { exact: false })
+    ).toBeInTheDocument();
     expect(screen.getByText(testEmail, { exact: false })).toBeInTheDocument();
   });
 

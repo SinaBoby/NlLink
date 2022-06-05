@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.jpg";
 import burgerIcon from "../images/icon-hamburger.svg";
 import "./Nav.css";
-
+import { AuthContext } from "../AuthContext";
 import TEST_ID from "./Nav.testid";
 import Dropdown from "./Dropdown";
 
 const Nav = () => {
   const [isDropdown, setDropdown] = useState();
-
+  const { auth } = useContext(AuthContext);
   const toggleDropdown = () => setDropdown((prev) => !prev);
 
   return (
@@ -36,7 +36,7 @@ const Nav = () => {
             User
           </Link>
           <Link to="/login" className="navbar-link  btn-link">
-            Login/Sign up
+            {auth ? "LogOut" : "Sign In"}
           </Link>
         </div>
         <button onClick={toggleDropdown} className="btn-menu mobile">
