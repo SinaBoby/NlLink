@@ -18,9 +18,9 @@ export const getUsers = async (req, res) => {
 export const getLoggedInUser = async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
-    const email = req.email;
-    logInfo(email);
-    const user = await User.findOne({ email });
+    const userName = req.userName;
+    logInfo(userName);
+    const user = await User.findOne({ userName });
     res.status(200).json({ success: true, user });
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
