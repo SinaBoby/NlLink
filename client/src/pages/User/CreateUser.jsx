@@ -235,6 +235,8 @@ const CreateUser = () => {
         </label>
         <Button
           className="btn-block"
+          data-testid={TEST_ID.submitButton}
+          type="submit"
         >
           Create new account
         </Button>
