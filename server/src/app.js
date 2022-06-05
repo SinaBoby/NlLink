@@ -6,13 +6,26 @@ import authenticateRouter from "./routes/authenticate.js";
 import withAuth from "./middlewares/middleware.js";
 // Create an express server
 const app = express();
-
+const allowedOrigins = [
+  "http://localhost:8080",
+  "https://c35-newcomers-develop.herokuapp.com/",
+];
 // Tell express to use the json middleware
 app.use(express.json());
 // Allow everyone to access our API. In a real application, we would need to restrict this!
 const corsOptions = {
-  origin:
-    "http://localhost:8080" || "https://c35-newcomers-develop.herokuapp.com/",
+  origin: function (origin, callback) {
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      var msg =
+        "The CORS policy for this site does not " +
+        "allow access from the specified Origin.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
