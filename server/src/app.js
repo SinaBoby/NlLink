@@ -11,7 +11,8 @@ const app = express();
 app.use(express.json());
 // Allow everyone to access our API. In a real application, we would need to restrict this!
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin:
+    "http://localhost:8080" || "https://c35-newcomers-develop.herokuapp.com/",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { logError } from "../util/logging.js";
+import { logError, logInfo } from "../util/logging.js";
 import User from "../models/User.js";
 
 const authenticate = function (req, res) {
@@ -34,7 +34,7 @@ const authenticate = function (req, res) {
           );
           res.cookie("token", token, {
             httpOnly: true,
-            origin: "http://localhost:8080",
+            origin: req.headers.origin,
           });
           res.json({ success: true });
           res.end();
