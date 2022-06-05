@@ -1,7 +1,6 @@
 import React from "react";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-
 /**
  * We use the App component to test here as it will do the routing for us.
  * This allows our test to be more user centric!

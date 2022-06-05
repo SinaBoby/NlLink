@@ -12,7 +12,7 @@ const withAuth = function (req, res, next) {
           .status(401)
           .json({ success: false, msg: "Unauthorized: Invalid Token" });
       } else {
-        req.email = decoded.email;
+        req.userName = decoded.userName;
         next();
       }
     });

@@ -9,6 +9,8 @@ const CreateUser = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
+  const [validUsername, setValidUserName] = useState(false);
+  const [userError, setUserError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -19,6 +21,7 @@ const CreateUser = () => {
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})"
   );
+  const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_]{3,23}$");
   const onSuccess = () => {
     setFirstName("");
     setLastName("");
@@ -42,21 +45,31 @@ const CreateUser = () => {
     if (passError) {
       setTimeout(() => setPassError(null), 3000);
     }
-  }, [passError]);
+    if (userError) {
+      setTimeout(() => setUserError(null), 3000);
+    }
+  }, [passError, userError]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword && !strongRegex.test(password)) {
+    if (
+      password !== confirmPassword &&
+      !strongRegex.test(password) &&
+      !validUsername
+    ) {
       setPassError(
         new Error(
           "Passwords you entered are not same & outside the pattern please try again"
         )
       );
+      setUserError(new Error("Please check the userName pattern again"));
     } else if (password !== confirmPassword) {
       setPassError(
         new Error("Password you entered are not same please try again")
       );
     } else if (!strongRegex.test(password)) {
       setPassError(new Error("Please check the password pattern again"));
+    } else if (!validUsername) {
+      setUserError(new Error("Please check the userName pattern again"));
     } else {
       performFetch({
         method: "POST",
@@ -136,8 +149,16 @@ const CreateUser = () => {
           <Input
             name="userName"
             value={userName}
-            onChange={(value) => setUserName(value)}
+            onChange={(value) => {
+              setUserName(value);
+              USER_REGEX.test(value)
+                ? setValidUserName(true)
+                : setValidUserName(false);
+            }}
             data-testid={TEST_ID.userNameInput}
+            style={{
+              background: validUsername ? "lightGreen" : "white",
+            }}
           />
         </div>
         <div className="create-user-input-field">
@@ -221,6 +242,7 @@ const CreateUser = () => {
       </form>
       {statusComponent}
       {passError && <h2>{passError.toString()}</h2>}
+      {userError && <h2>{userError.toString()}</h2>}
     </div>
   );
 };

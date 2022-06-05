@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Input from "../../components/Input";
 import useFetch from "../../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
 import "./Login.css";
+import { AuthContext } from "../../AuthContext";
 //import { logInfo } from "../../../../server/src/util/logging.js";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
   const onSuccess = () => {
     navigate("/");
   };
@@ -30,10 +32,11 @@ const Login = () => {
       },
       credentials: "include",
       body: JSON.stringify({
-        email,
+        userName,
         password,
       }),
     });
+    setAuth(true);
   };
   let statusComponent = null;
   if (error != null) {
@@ -54,14 +57,14 @@ const Login = () => {
       </h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          UserName
           <Input
-            name="email"
-            type="email"
-            value={email}
-            onChange={(value) => setEmail(value)}
+            name="userName"
+            type="userName"
+            value={userName}
+            onChange={(value) => setUserName(value)}
             className="login-input"
-            data-testid={TEST_ID.emailInput}
+            data-testid={TEST_ID.userNameInput}
           />
         </label>
         <label>
