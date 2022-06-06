@@ -37,7 +37,7 @@ const authenticate = function (req, res) {
           );
           res.cookie("token", token, {
             httpOnly: true,
-            origin: "http://localhost:8080",
+            origin: req.headers.origin,
             expires: cookieExpIn,
           });
           res.json({ success: true });
