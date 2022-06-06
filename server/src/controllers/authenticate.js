@@ -39,6 +39,7 @@ const authenticate = function (req, res) {
             httpOnly: true,
             origin: req.headers.origin,
             expires: cookieExpIn,
+
           });
           res.json({ success: true });
           res.end();
