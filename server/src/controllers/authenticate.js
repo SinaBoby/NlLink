@@ -21,6 +21,9 @@ const authenticate = function (req, res) {
           });
         } else {
           // Issue token
+          const cookieExpIn = new Date();
+
+          cookieExpIn.setTime(cookieExpIn.getTime() + 60 * 60 * 1000);
           const payload = { userName };
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "1h",
@@ -35,6 +38,7 @@ const authenticate = function (req, res) {
           res.cookie("token", token, {
             httpOnly: true,
             origin: "http://localhost:8080",
+            expires: cookieExpIn,
           });
           res.json({ success: true });
           res.end();

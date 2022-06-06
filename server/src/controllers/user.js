@@ -30,8 +30,7 @@ export const getLoggedInUser = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     if ("token" in req.cookies) {
-      delete req.cookies.token;
-      return res.status(200).json({
+      return res.status(200).clearCookie("token").json({
         success: true,
       });
     } else {
