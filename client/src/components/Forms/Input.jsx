@@ -1,4 +1,5 @@
 import React from "react";
+import "./Input.css";
 import PropTypes from "prop-types";
 
 const Input = ({ name, value, onChange, ...rest }) => {
@@ -7,6 +8,7 @@ const Input = ({ name, value, onChange, ...rest }) => {
       {...rest}
       name={name}
       value={value}
+      className={"input"}
       onChange={(e) => onChange(e.target.value)}
     />
   );

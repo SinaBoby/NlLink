@@ -15,10 +15,16 @@
 }
 
 .btn-inline {
-  padding: 0.6rem 0rem;
   width: 9.5rem;
   font-size: 1rem;
   padding: 0.7rem 0;
+}
+
+.form-btn-link {
+  background: transparent;
+  border: none;
+  color: blue;
+  text-decoration: underline;
 }
 
 .btn-block {

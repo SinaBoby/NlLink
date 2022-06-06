@@ -1,25 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
-import Input from "../../components/Input";
+import Input from "../../components/Forms/Input";
+import Label from "../../components/Forms/Label";
+import Form from "../../components/Forms/Form";
+import Button from "../../components/Button";
 import useFetch from "../../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
 import "./Login.css";
 import { AuthContext } from "../../AuthContext";
 //import { logInfo } from "../../../../server/src/util/logging.js";
+import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
+import Spinner from "./../../components/Spinner/Spinner";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { isAuthenticated, login } = useContext(AuthContext);
   const onSuccess = () => {
-    navigate("/");
+    login(() => navigate("/"));
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/authenticate",
     onSuccess
   );
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+
     return cancelFetch;
   }, []);
   const handleSubmit = (e) => {
@@ -36,7 +45,6 @@ const Login = () => {
         password,
       }),
     });
-    setAuth(true);
   };
   let statusComponent = null;
   if (error != null) {
@@ -46,56 +54,53 @@ const Login = () => {
       </div>
     );
   } else if (isLoading) {
-    statusComponent = (
-      <div data-testid={TEST_ID.loadingContainer}>Login user....</div>
-    );
+    statusComponent = <Spinner />;
   }
   return (
-    <div className="login-page-container">
-      <h2 className="login-user-header">
-        Enter your email and password to login
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          UserName
-          <Input
-            name="userName"
-            type="userName"
-            value={userName}
-            onChange={(value) => setUserName(value)}
-            className="login-input"
-            data-testid={TEST_ID.userNameInput}
-          />
-        </label>
-        <label>
-          Password
-          <Input
-            name="password"
-            value={password}
-            type="password"
-            onChange={(value) => setPassword(value)}
-            className="login-input"
-            data-testid={TEST_ID.passwordInput}
-          />
-        </label>
-        <button
-          type="submit"
-          className="btn-link navbar-link create-user-submit-btn"
-        >
-          Submit
-        </button>
-      </form>
+    <Form onSubmit={handleSubmit} title="Login with your Username and Password">
+      <InputFieldContainer>
+        <Label>UserName</Label>
+        <Input
+          name="userName"
+          type="userName"
+          value={userName}
+          onChange={(value) => setUserName(value)}
+          className="login-input"
+          data-testid={TEST_ID.userNameInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Password</Label>
+        <Input
+          name="password"
+          value={password}
+          type="password"
+          onChange={(value) => setPassword(value)}
+          className="login-input"
+          data-testid={TEST_ID.passwordInput}
+        />
+      </InputFieldContainer>
+      <Button className="btn btn-block" type={"submit"}>
+        Sign in
+      </Button>
       <div className="login-signup-wrapper">
-        <p> Don&apos;t have an account? </p>
+        <p>Don&apos;t have an account?</p>
         <Link to="/user/create" className="navbar-link  btn-link">
           Sign up
         </Link>
-        <Link to="/user/passwordForgot" className="navbar-link  btn-link">
+        &nbsp;&nbsp;
+        <p>Forgot your password?</p>
+        &nbsp;
+        <Button
+          type={"button"}
+          className="btn btn-inline form-btn-link"
+          onClick={() => navigate("/user/ResetPassword")}
+        >
           Forgot My password
-        </Link>
+        </Button>
       </div>
       {statusComponent}
-    </div>
+    </Form>
   );
 };
 

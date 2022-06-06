@@ -9,7 +9,7 @@ import Dropdown from "./Dropdown";
 
 const Nav = () => {
   const [isDropdown, setDropdown] = useState();
-  const { auth } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const toggleDropdown = () => setDropdown((prev) => !prev);
 
   return (
@@ -35,9 +35,15 @@ const Nav = () => {
           >
             User
           </Link>
-          <Link to="/login" className="navbar-link  btn-link">
-            {auth ? "LogOut" : "Sign In"}
-          </Link>
+          {isAuthenticated ? (
+            <Link to="/logout" className="navbar-link  btn-link">
+              Sign out
+            </Link>
+          ) : (
+            <Link to="/login" className="navbar-link  btn-link">
+              Register/Sign in
+            </Link>
+          )}
         </div>
         <button onClick={toggleDropdown} className="btn-menu mobile">
           <img src={burgerIcon} alt={"burger menu icon"} />

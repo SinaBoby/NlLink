@@ -1,15 +1,41 @@
-import React, { useEffect, useState } from "react";
-
-import Input from "../../components/Input";
+import React, { useEffect, useState, useContext } from "react";
+import InputFieldContainer from "../../components/Forms/InputFieldContainer";
+import Select from "../../components/Forms/Select";
+import Input from "../../components/Forms/Input";
+import Label from "../../components/Forms/Label";
 import useFetch from "../../hooks/useFetch";
 import TEST_ID from "./CreateUser.testid";
 import "./CreateUser.css";
 import Button from "./../../components/Button";
+import Form from "../../components/Forms/Form";
+import { useNavigate } from "react-router-dom";
+import Spinner from "./../../components/Spinner/Spinner";
+import { AuthContext } from "../../AuthContext";
+
+const PasswordHint = () => {
+  return (
+    <div className="password-hint">
+      <h3> Password must contain at least:</h3>
+      <ul>
+        <li>Be 6 characters or longer</li>
+        <li>1 lowercase alphabetical character</li>
+        <li>1 uppercase alphabetical character</li>
+        <li>1 numeric character</li>
+        <li>1 special character(!@#$%^&)</li>
+      </ul>
+    </div>
+  );
+};
 
 const CreateUser = () => {
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useContext(AuthContext);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
+  const [isHint, setIsHint] = useState(false);
   const [validUsername, setValidUserName] = useState(false);
   const [userError, setUserError] = useState("");
   const [email, setEmail] = useState("");
@@ -19,20 +45,14 @@ const CreateUser = () => {
   const [userType, setUserType] = useState("NewComer");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passError, setPassError] = useState("");
+  const [province, setProvince] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})"
   );
   const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_]{3,23}$");
   const onSuccess = () => {
-    setFirstName("");
-    setLastName("");
-    setUserName("");
-    setEmail("");
-    setPhoneNumber("");
-    setPassword("");
-    setBirthDay("");
-    setUserType("NewComer");
-    setConfirmPassword("");
+    clearForm();
+    navigate("/user/create");
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/create",
@@ -40,6 +60,10 @@ const CreateUser = () => {
   );
 
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+
     return cancelFetch;
   }, []);
   useEffect(() => {
@@ -50,6 +74,20 @@ const CreateUser = () => {
       setTimeout(() => setUserError(null), 3000);
     }
   }, [passError, userError]);
+
+  const clearForm = () => {
+    setFirstName("");
+    setLastName("");
+    setUserName("");
+    setEmail("");
+    setPhoneNumber("");
+    setPassword("");
+    setBirthDay("");
+    setUserType("NewComer");
+    setConfirmPassword("");
+    setProvince("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -87,6 +125,7 @@ const CreateUser = () => {
             birthDay,
             phoneNumber,
             userType,
+            province,
           },
         }),
       });
@@ -109,142 +148,155 @@ const CreateUser = () => {
       </div>
     );
   } else if (isLoading) {
-    statusComponent = (
-      <div data-testid={TEST_ID.loadingContainer}>Creating user....</div>
-    );
+    statusComponent = <Spinner data-testid={TEST_ID.loadingContainer} />;
   }
 
   return (
-    <div data-testid={TEST_ID.container} className="create-user-container">
-      <h2 className="create-user-header">Join NlLink</h2>
-      <p> Password must contain at least:</p>
-      <ul>
-        <li>Be 6 characters or longer</li>
-        <li>1 lowercase alphabetical character</li>
-        <li>1 uppercase alphabetical character</li>
-        <li>1 numeric character</li>
-        <li>1 special character(!@#$%^&)</li>
-      </ul>
-
-      <form onSubmit={handleSubmit} className="create-user-form">
-        <div className="create-user-input-field first-name-wrapper">
-          <label>First Name</label>
-          <Input
-            name="firstName"
-            value={firstName}
-            onChange={(value) => setFirstName(value)}
-            data-testid={TEST_ID.firstNameInput}
-          />
-        </div>
-        <div className="create-user-input-field last-name-wrapper">
-          <label>Last Name</label>
-          <Input
-            name="lastName"
-            value={lastName}
-            onChange={(value) => setLastName(value)}
-            data-testid={TEST_ID.lastNameInput}
-          />
-        </div>
-        <div className="create-user-input-field">
-          <label>Username</label>
-          <Input
-            name="userName"
-            value={userName}
-            onChange={(value) => {
-              setUserName(value);
-              USER_REGEX.test(value)
-                ? setValidUserName(true)
-                : setValidUserName(false);
-            }}
-            data-testid={TEST_ID.userNameInput}
-            style={{
-              background: validUsername ? "lightGreen" : "white",
-            }}
-          />
-        </div>
-        <div className="create-user-input-field">
-          <label>Email</label>
-          <Input
-            name="email"
-            type="email"
-            value={email}
-            onChange={(value) => setEmail(value)}
-            data-testid={TEST_ID.emailInput}
-          />
-        </div>
-        <div className="create-user-input-field">
-          <label>User Type</label>
-          <select
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}
-          >
-            <option value="NewComer">NewComer</option>
-            <option value="Local">Local</option>
-          </select>
-        </div>
-
-        <div className="create-user-input-field">
-          <label>Birth Day</label>
-          <Input
-            name="birthDay"
-            type="date"
-            value={birthDay}
-            onChange={(value) => setBirthDay(value)}
-            data-testid={TEST_ID.birthDayInput}
-          />
-        </div>
-        <div className="create-user-input-field">
-          <label>Phone Number</label>
-          <Input
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={(value) => setPhoneNumber(value)}
-            data-testid={TEST_ID.phoneNumberInput}
-          />
-        </div>
-        <div className="create-user-input-field">
-          <label>
-            Password
-            <Input
-              name="password"
-              value={password}
-              type="password"
-              onChange={(value) => setPassword(value)}
-              data-testid={TEST_ID.passwordInput}
-              id="passwordInput"
-              style={{
-                background: strongRegex.test(password) ? "lightGreen" : "white",
-              }}
-            />
-          </label>
-          <label>
-            Confirm Password
-            <Input
-              name="confirmPassword"
-              value={confirmPassword}
-              type="password"
-              onChange={(value) => setConfirmPassword(value)}
-              data-testid={TEST_ID.passwordInput}
-            />
-          </label>
-        </div>
-        <label>
-          {" "}
-          <span>Show password</span>
-          <input type="checkbox" onClick={() => showPassword()} />
-        </label>
-        <Button
-          className="btn-block"
-          data-testid={TEST_ID.submitButton}
-          type="submit"
-        >
-          Create new account
-        </Button>
-      </form>
+    <Form onSubmit={handleSubmit} title="Join NlLink">
+      <InputFieldContainer className="first-name-wrapper">
+        <Label>First Name</Label>
+        <Input
+          name="firstName"
+          value={firstName}
+          onChange={(value) => setFirstName(value)}
+          data-testid={TEST_ID.firstNameInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer className="last-name-wrapper">
+        <Label>Last Name</Label>
+        <Input
+          name="lastName"
+          value={lastName}
+          onChange={(value) => setLastName(value)}
+          data-testid={TEST_ID.lastNameInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Username</Label>
+        <Input
+          name="userName"
+          value={userName}
+          onChange={(value) => {
+            setUserName(value);
+            USER_REGEX.test(value)
+              ? setValidUserName(true)
+              : setValidUserName(false);
+          }}
+          data-testid={TEST_ID.userNameInput}
+          style={{
+            background: validUsername ? "lightGreen" : "white",
+          }}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Email Address</Label>
+        <Input
+          name="email"
+          type="email"
+          value={email}
+          onChange={(value) => setEmail(value)}
+          data-testid={TEST_ID.emailInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>User Type</Label>
+        <Select
+          value={userType}
+          onChange={(value) => setUserType(value)}
+          options={[
+            { value: "NewComer", text: "New comer" },
+            { value: "Local", text: "Local" },
+          ]}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Where do you live in the Netherlands ?</Label>
+        <Select
+          value={province}
+          onChange={(value) => setProvince(value)}
+          options={[
+            { value: "Drenthe", text: "Drenthe" },
+            { value: "Flevoland", text: "Flevoland" },
+            { value: "Friesland", text: "Friesland" },
+            { value: "Gelderland", text: "Gelderland" },
+            { value: "Groningen", text: "Gronigen" },
+            { value: "Limburg", text: "Limburg" },
+            { value: "North Brabant", text: "North Brabant" },
+            { value: "North Holland", text: "North Holland" },
+            { value: "Overijssel", text: "Overijssel" },
+            { value: "South Holland", text: "South Holland" },
+            { value: "Utrecht", text: "Utrecht" },
+            { value: "Zeeland", text: "Zeeland" },
+          ]}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Birth Day</Label>
+        <Input
+          name="birthDay"
+          type="date"
+          value={birthDay}
+          onChange={(value) => setBirthDay(value)}
+          data-testid={TEST_ID.birthDayInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer>
+        <Label>Phone Number</Label>
+        <Input
+          name="phoneNumber"
+          value={phoneNumber}
+          onChange={(value) => setPhoneNumber(value)}
+          data-testid={TEST_ID.phoneNumberInput}
+        />
+      </InputFieldContainer>
+      <InputFieldContainer
+        className="password-wrapper"
+        onMouseEnter={() => setIsHint(true)}
+        onMouseLeave={() => setIsHint(false)}
+      >
+        <Label>Password ?</Label>
+        <Input
+          name="password"
+          value={password}
+          type="password"
+          onChange={(value) => setPassword(value)}
+          data-testid={TEST_ID.passwordInput}
+          id="passwordInput"
+          style={{
+            background: strongRegex.test(password) ? "lightGreen" : "white",
+          }}
+        />
+        {isHint && <PasswordHint />}
+      </InputFieldContainer>
+      <InputFieldContainer className="confirm-password-wrapper">
+        <Label>Confirm Password</Label>
+        <Input
+          name="confirmPassword"
+          value={confirmPassword}
+          type="password"
+          onChange={(value) => setConfirmPassword(value)}
+          data-testid={TEST_ID.passwordInput}
+        />
+      </InputFieldContainer>
+      <label className="input-checkbox-container">
+        <input
+          type="checkbox"
+          className="input-checkbox"
+          onClick={() => showPassword()}
+        />
+        Show password
+      </label>
+      <Button
+        className="btn-block"
+        data-testid={TEST_ID.submitButton}
+        type="submit"
+      >
+        Create new account
+      </Button>
       {statusComponent}
       {passError && <h2>{passError.toString()}</h2>}
       {userError && <h2>{userError.toString()}</h2>}
-    </div>
+    </Form>
   );
 };
 
