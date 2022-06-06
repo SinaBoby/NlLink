@@ -26,25 +26,44 @@ export const getLoggedInUser = async (req, res) => {
     res.send({ message: "Error in Fetching user" });
   }
 };
+
+export const logout = async (req, res) => {
+  try {
+    if ("token" in req.cookies) {
+      delete req.cookies.token;
+      return res.status(200).json({
+        success: true,
+      });
+    } else {
+      return res.status(500).json({
+        message: "Internal Server Error",
+      });
+    }
+  } catch (error) {
+    logError(error);
+    return res.status(500).json({
+      msg: error.message,
+    });
+  }
+};
+
 export const createUser = async (req, res) => {
   try {
     const { user } = req.body;
 
     if (typeof user !== "object") {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         msg: `You need to provide a 'user' object. Received: ${JSON.stringify(
           user
         )}`,
       });
-
-      return;
     }
 
     const errorList = validateUser(user);
 
     if (errorList.length > 0) {
-      res
+      return res
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
@@ -52,11 +71,11 @@ export const createUser = async (req, res) => {
 
       const newUser = await User.create(user);
 
-      res.status(201).json({ success: true, user: newUser });
+      return res.status(201).json({ success: true, user: newUser });
     }
   } catch (error) {
     logError(error);
-    res
+    return res
       .status(500)
       .json({ success: false, msg: "Unable to create user, try again later" });
   }

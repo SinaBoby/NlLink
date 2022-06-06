@@ -9,6 +9,7 @@ import UserList from "./pages/User/UserList";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
+import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/user" element={<UserList />} />
           <Route path="/user/create" element={<CreateUser />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
         <Footer />
       </AuthProvider>

@@ -11,10 +11,14 @@ const Dropdown = () => {
     <div className="dropdown">
       <DropdownLink>News</DropdownLink>
       <DropdownLink onClick={() => navigate("/about")}>About</DropdownLink>
-      <DropdownLink>Contact us</DropdownLink>
+      <DropdownLink onClick={() => navigate("/contact")}>
+        Contact us
+      </DropdownLink>
       <Divider />
-      <DropdownLink>Login</DropdownLink>
-      <DropdownLink>Register</DropdownLink>
+      <DropdownLink onClick={() => navigate("/login")}>Login</DropdownLink>
+      <DropdownLink onClick={() => navigate("/user/create")}>
+        Register
+      </DropdownLink>
     </div>
   );
 };
