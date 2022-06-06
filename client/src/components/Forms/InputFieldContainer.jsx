@@ -20,7 +20,7 @@ const InputFieldContainer = ({
 };
 
 InputFieldContainer.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
   className: PropTypes.string,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

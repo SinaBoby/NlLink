@@ -23,7 +23,7 @@ const Select = ({ value, onChange, options }) => {
 Select.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
 };
 
 export default Select;

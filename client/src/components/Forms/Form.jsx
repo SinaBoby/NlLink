@@ -15,7 +15,7 @@ const Form = ({ onSubmit, children, title }) => {
 };
 
 Form.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
   onSubmit: PropTypes.func.isRequired,
   title: PropTypes.string,
 };
