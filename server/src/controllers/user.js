@@ -3,10 +3,11 @@ import { logError, logInfo } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
 //import getUserWithHashedPassword from "./auth.js";
 
-export const getUsers = async (req, res) => {
+export const getUserDetails = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json({ success: true, result: users });
+    const userName = req.userName;
+    const user = await User.findOne({ userName });
+    res.status(200).json({ success: true, result: user });
   } catch (error) {
     logError(error);
     res
