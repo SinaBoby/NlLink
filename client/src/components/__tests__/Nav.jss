@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
  */
 import App from "../../App";
 import TEST_ID_HOME from "../../pages/Home/Home.testid";
-import TEST_ID_USER_LIST from "../../pages/User/UserList.testid";
+//import TEST_ID_USER_LIST from "../../pages/User/UserList.testid";
 import TEST_ID_NAV from "../Nav.testid";
 import { getUsersSuccessMock } from "../../__testUtils__/fetchUserMocks";
 
@@ -36,7 +36,7 @@ describe("Navigation", () => {
     );
   });
 
-  it("Clicking on the User link should go to User List page ", async () => {
+  /*  it("Clicking on the User link should go to User List page ", async () => {
     fetch.mockResponseOnce(getUsersSuccessMock());
 
     render(
@@ -64,5 +64,5 @@ describe("Navigation", () => {
         "true"
       )
     );
-  });
+  }); */
 });

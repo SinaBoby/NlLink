@@ -45,14 +45,13 @@ const CreateUser = () => {
   const [userType, setUserType] = useState("NewComer");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passError, setPassError] = useState("");
-  const [province, setProvince] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})"
   );
   const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_]{3,23}$");
   const onSuccess = () => {
     clearForm();
-    navigate("/user/create");
+    navigate("/login");
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/create",
@@ -85,7 +84,6 @@ const CreateUser = () => {
     setBirthDay("");
     setUserType("NewComer");
     setConfirmPassword("");
-    setProvince("");
   };
 
   const handleSubmit = (e) => {
@@ -125,7 +123,6 @@ const CreateUser = () => {
             birthDay,
             phoneNumber,
             userType,
-            province,
           },
         }),
       });
@@ -206,27 +203,6 @@ const CreateUser = () => {
           options={[
             { value: "NewComer", text: "New comer" },
             { value: "Local", text: "Local" },
-          ]}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>Where do you live in the Netherlands ?</Label>
-        <Select
-          value={province}
-          onChange={(value) => setProvince(value)}
-          options={[
-            { value: "Drenthe", text: "Drenthe" },
-            { value: "Flevoland", text: "Flevoland" },
-            { value: "Friesland", text: "Friesland" },
-            { value: "Gelderland", text: "Gelderland" },
-            { value: "Groningen", text: "Gronigen" },
-            { value: "Limburg", text: "Limburg" },
-            { value: "North Brabant", text: "North Brabant" },
-            { value: "North Holland", text: "North Holland" },
-            { value: "Overijssel", text: "Overijssel" },
-            { value: "South Holland", text: "South Holland" },
-            { value: "Utrecht", text: "Utrecht" },
-            { value: "Zeeland", text: "Zeeland" },
           ]}
         />
       </InputFieldContainer>

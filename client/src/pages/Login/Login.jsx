@@ -11,23 +11,25 @@ import { AuthContext } from "../../AuthContext";
 //import { logInfo } from "../../../../server/src/util/logging.js";
 import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
 import Spinner from "./../../components/Spinner/Spinner";
-
+import useUserDetails from "../../hooks/useUserRole";
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useContext(AuthContext);
-  const onSuccess = () => {
-    login(() => navigate("/"));
+  const { login } = useContext(AuthContext);
+  const { setUserDetails } = useUserDetails();
+  const onSuccess = (response) => {
+    setUserDetails(response.user);
+    login(() => navigate("/dashboard"));
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/authenticate",
     onSuccess
   );
   useEffect(() => {
-    if (isAuthenticated) {
+    /*  if (isAuthenticated) {
       navigate("/");
-    }
+    } */
 
     return cancelFetch;
   }, []);
