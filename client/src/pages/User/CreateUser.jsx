@@ -149,130 +149,132 @@ const CreateUser = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit} title="Join NlLink">
-      <InputFieldContainer className="first-name-wrapper">
-        <Label>First Name</Label>
-        <Input
-          name="firstName"
-          value={firstName}
-          onChange={(value) => setFirstName(value)}
-          data-testid={TEST_ID.firstNameInput}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer className="last-name-wrapper">
-        <Label>Last Name</Label>
-        <Input
-          name="lastName"
-          value={lastName}
-          onChange={(value) => setLastName(value)}
-          data-testid={TEST_ID.lastNameInput}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>Username</Label>
-        <Input
-          name="userName"
-          value={userName}
-          onChange={(value) => {
-            setUserName(value);
-            USER_REGEX.test(value)
-              ? setValidUserName(true)
-              : setValidUserName(false);
-          }}
-          data-testid={TEST_ID.userNameInput}
-          style={{
-            background: validUsername ? "lightGreen" : "white",
-          }}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>Email Address</Label>
-        <Input
-          name="email"
-          type="email"
-          value={email}
-          onChange={(value) => setEmail(value)}
-          data-testid={TEST_ID.emailInput}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>User Type</Label>
-        <Select
-          value={userType}
-          onChange={(value) => setUserType(value)}
-          options={[
-            { value: "NewComer", text: "New comer" },
-            { value: "Local", text: "Local" },
-          ]}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>Birth Day</Label>
-        <Input
-          name="birthDay"
-          type="date"
-          value={birthDay}
-          onChange={(value) => setBirthDay(value)}
-          data-testid={TEST_ID.birthDayInput}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer>
-        <Label>Phone Number</Label>
-        <Input
-          name="phoneNumber"
-          value={phoneNumber}
-          onChange={(value) => setPhoneNumber(value)}
-          data-testid={TEST_ID.phoneNumberInput}
-        />
-      </InputFieldContainer>
-      <InputFieldContainer
-        className="password-wrapper"
-        onMouseEnter={() => setIsHint(true)}
-        onMouseLeave={() => setIsHint(false)}
-      >
-        <Label>Password ?</Label>
-        <Input
-          name="password"
-          value={password}
-          type="password"
-          onChange={(value) => setPassword(value)}
-          data-testid={TEST_ID.passwordInput}
-          id="passwordInput"
-          style={{
-            background: strongRegex.test(password) ? "lightGreen" : "white",
-          }}
-        />
-        {isHint && <PasswordHint />}
-      </InputFieldContainer>
-      <InputFieldContainer className="confirm-password-wrapper">
-        <Label>Confirm Password</Label>
-        <Input
-          name="confirmPassword"
-          value={confirmPassword}
-          type="password"
-          onChange={(value) => setConfirmPassword(value)}
-          data-testid={TEST_ID.passwordInput}
-        />
-      </InputFieldContainer>
-      <label className="input-checkbox-container">
-        <input
-          type="checkbox"
-          className="input-checkbox"
-          onClick={() => showPassword()}
-        />
-        Show password
-      </label>
-      <Button
-        className="btn-block"
-        data-testid={TEST_ID.submitButton}
-        type="submit"
-      >
-        Create new account
-      </Button>
+    <>
+      <Form onSubmit={handleSubmit} title="Join NlLink">
+        <InputFieldContainer className="first-name-wrapper">
+          <Label>First Name</Label>
+          <Input
+            name="firstName"
+            value={firstName}
+            onChange={(value) => setFirstName(value)}
+            data-testid={TEST_ID.firstNameInput}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer className="last-name-wrapper">
+          <Label>Last Name</Label>
+          <Input
+            name="lastName"
+            value={lastName}
+            onChange={(value) => setLastName(value)}
+            data-testid={TEST_ID.lastNameInput}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer>
+          <Label>Username</Label>
+          <Input
+            name="userName"
+            value={userName}
+            onChange={(value) => {
+              setUserName(value);
+              USER_REGEX.test(value)
+                ? setValidUserName(true)
+                : setValidUserName(false);
+            }}
+            data-testid={TEST_ID.userNameInput}
+            style={{
+              background: validUsername ? "lightGreen" : "white",
+            }}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer>
+          <Label>Email Address</Label>
+          <Input
+            name="email"
+            type="email"
+            value={email}
+            onChange={(value) => setEmail(value)}
+            data-testid={TEST_ID.emailInput}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer>
+          <Label>User Type</Label>
+          <Select
+            value={userType}
+            onChange={(value) => setUserType(value)}
+            options={[
+              { value: "NewComer", text: "New comer" },
+              { value: "Local", text: "Local" },
+            ]}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer>
+          <Label>Birth Day</Label>
+          <Input
+            name="birthDay"
+            type="date"
+            value={birthDay}
+            onChange={(value) => setBirthDay(value)}
+            data-testid={TEST_ID.birthDayInput}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer>
+          <Label>Phone Number</Label>
+          <Input
+            name="phoneNumber"
+            value={phoneNumber}
+            onChange={(value) => setPhoneNumber(value)}
+            data-testid={TEST_ID.phoneNumberInput}
+          />
+        </InputFieldContainer>
+        <InputFieldContainer
+          className="password-wrapper"
+          onMouseEnter={() => setIsHint(true)}
+          onMouseLeave={() => setIsHint(false)}
+        >
+          <Label>Password ?</Label>
+          <Input
+            name="password"
+            value={password}
+            type="password"
+            onChange={(value) => setPassword(value)}
+            data-testid={TEST_ID.passwordInput}
+            id="passwordInput"
+            style={{
+              background: strongRegex.test(password) ? "lightGreen" : "white",
+            }}
+          />
+          {isHint && <PasswordHint />}
+        </InputFieldContainer>
+        <InputFieldContainer className="confirm-password-wrapper">
+          <Label>Confirm Password</Label>
+          <Input
+            name="confirmPassword"
+            value={confirmPassword}
+            type="password"
+            onChange={(value) => setConfirmPassword(value)}
+            data-testid={TEST_ID.passwordInput}
+          />
+        </InputFieldContainer>
+        <label className="input-checkbox-container">
+          <input
+            type="checkbox"
+            className="input-checkbox"
+            onClick={() => showPassword()}
+          />
+          Show password
+        </label>
+        <Button
+          className="btn-block"
+          data-testid={TEST_ID.submitButton}
+          type="submit"
+        >
+          Create new account
+        </Button>
+        {passError && <h2>{passError.toString()}</h2>}
+        {userError && <h2>{userError.toString()}</h2>}
+      </Form>
       {statusComponent}
-      {passError && <h2>{passError.toString()}</h2>}
-      {userError && <h2>{userError.toString()}</h2>}
-    </Form>
+    </>
   );
 };
 

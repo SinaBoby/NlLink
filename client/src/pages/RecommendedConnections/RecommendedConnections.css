@@ -1,0 +1,19 @@
+.recommended-connections {
+  padding: 2rem;
+  background-color: hsl(0, 53%, 91%);
+}
+
+.card-wrapper {
+  background-color: hsl(0, 0%, 100%);
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-wrapper {
+  height: 40%;
+  align-self: center;
+}

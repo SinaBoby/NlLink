@@ -11,15 +11,14 @@ import { AuthContext } from "../../AuthContext";
 //import { logInfo } from "../../../../server/src/util/logging.js";
 import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
 import Spinner from "./../../components/Spinner/Spinner";
-import useUserDetails from "../../hooks/useUserRole";
+
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-  const { setUserDetails } = useUserDetails();
-  const onSuccess = (response) => {
-    setUserDetails(response.user);
+
+  const onSuccess = () => {
     login(() => navigate("/dashboard"));
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -27,10 +26,6 @@ const Login = () => {
     onSuccess
   );
   useEffect(() => {
-    /*  if (isAuthenticated) {
-      navigate("/");
-    } */
-
     return cancelFetch;
   }, []);
   const handleSubmit = (e) => {

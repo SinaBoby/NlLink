@@ -5,7 +5,6 @@ import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
 import News from "./pages/News/News";
 import CreateUser from "./pages/User/CreateUser";
-import UserList from "./pages/User/UserList";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
@@ -14,6 +13,8 @@ import { AuthProvider } from "./AuthContext";
 import { UserDetailsProvider } from "./context/UserDetailsContext";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
+import Connect from "./pages/Connect/Connect";
+import RecommendedConnections from "./pages/RecommendedConnections/RecommendedConnections";
 
 const App = () => {
   return (
@@ -26,11 +27,15 @@ const App = () => {
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
-            <Route path="/user" element={<UserList />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
             <Route element={<RequireAuth />}>
+              <Route path="/connect" element={<Connect />} />
+              <Route
+                path="/recommended-connections"
+                element={<RecommendedConnections />}
+              />
+              <Route path="/logout" element={<Logout />} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
           </Routes>

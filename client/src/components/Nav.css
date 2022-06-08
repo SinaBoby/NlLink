@@ -14,7 +14,7 @@
 
 .navbar-right {
   display: flex;
-  width: 70%;
+  width: max-content;
   justify-content: flex-end;
 }
 
@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1080px) {
   .navbar {
     position: sticky;
     top: 0;
