@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Dashboard.css";
 import latestNews from "../../images/latest-news-desktop.jpg";
 import yourConnections from "../../images/your-connections-desktop.jpg";
-import useUserDetails from "../../hooks/useUserRole";
+import useUserDetails from "../../hooks/useUserDetails";
 import ActivitySlider from "../../components/ActivitySlider/ActivitySlider";
+import Spinner from "../../components/Spinner/Spinner";
+import Error from "../../components/Error/Error";
 
 const Dashboard = () => {
-  const { userDetails } = useUserDetails();
+  const { userDetails, getMe, isMeLoading, meError, cancelMeFetch } =
+    useUserDetails();
+  useEffect(() => {
+    getMe();
+
+    return cancelMeFetch;
+  }, []);
 
   let userType;
   if (userDetails) {
@@ -41,6 +49,8 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      {isMeLoading && !meError && <Spinner />}
+      {meError && <Error>{meError}</Error>}
       <div className="user-activity-wrapper">
         <h2 className="user-header">
           Welcome,

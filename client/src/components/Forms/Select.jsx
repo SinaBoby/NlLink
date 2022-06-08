@@ -11,7 +11,12 @@ const Select = ({ value, onChange, options }) => {
     >
       {options.map((option, index) => {
         return (
-          <option className="option" value={option.value} key={index}>
+          <option
+            className="option"
+            selected={option.selected}
+            value={option.value}
+            key={index}
+          >
             {option.text}
           </option>
         );
