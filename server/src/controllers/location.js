@@ -22,7 +22,7 @@ export const addLocation = async (req, res) => {
   } catch (error) {
     logError(error);
     return res.status(500).json({
-      msg: `Internal Server Error: ${error.message}`,
+      msg: `Error: ${error.message}`,
     });
   }
 };

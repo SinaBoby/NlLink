@@ -8,10 +8,13 @@ export const AuthProvider = ({ children }) => {
     document.cookie =
       "userStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setIsAuthenticated(isUserAuthenticated());
+    localStorage.removeItem("user");
     cb();
   };
 
-  const login = (cb) => {
+  const login = (user, cb) => {
+    localStorage.setItem("user", JSON.stringify(user));
+
     /*
       Token expires in 1 hour. We create a cookie and set the expiration date
       1 hour from now

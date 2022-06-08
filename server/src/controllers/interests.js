@@ -58,7 +58,7 @@ export const deleteInterest = async (req, res) => {
   } catch (error) {
     logError(error);
     return res.status(500).json({
-      msg: error.message,
+      msg: `Error: ${error.message}`,
     });
   }
 };

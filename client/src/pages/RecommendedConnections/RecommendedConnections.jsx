@@ -10,71 +10,56 @@ import { useLocation } from "react-router-dom";
 import UserCard from "../../components/RecentConnections/UserCard";
 import Tags from "./Tags";
 import Button from "./../../components/Button";
+import useFetch from "./../../hooks/useFetch";
+import Spinner from "../../components/Spinner/Spinner";
+import Error from "../../components/Error/Error";
+//import { logInfo } from "./../../../../server/src/util/logging";
 
-const mockUsers = [
-  {
-    name: "Bashar Khdr",
-    occupation: "Full Stack developer",
-    photo: profile1,
-    interests: ["development", "Skiing", "Tv Shows"],
-  },
-  {
-    name: "Burak Ozman",
-    occupation: "Full Stack developer",
-    photo: profile2,
-    interests: ["reading", "Soccer", "Tennis"],
-  },
-  {
-    name: "Samira",
-    occupation: "Full Stack developer",
-    photo: profile3,
-    interests: ["bar attending", "Soccer"],
-  },
-  {
-    name: "Burak Ozman",
-    occupation: "Full Stack developer",
-    photo: burak,
-    userType: "Local",
-    interests: ["development", "Dutch"],
-  },
-  {
-    name: "Sina Boby",
-    occupation: "Full Stack developer",
-    photo: sina,
-    userType: "Local",
-    interests: ["Soccer", "Dutch"],
-  },
-  {
-    name: "Bashar",
-    occupation: "Full Stack developer",
-    photo: bashar,
-    interests: ["Soccer"],
-  },
-];
+const mockProfileImages = [profile1, profile2, profile3, bashar, burak, sina];
 
 const RecommendedConnections = () => {
   const { state } = useLocation();
+  const [users, setUsers] = useState([]);
 
-  const [users, setUsers] = useState(mockUsers);
+  const onSuccess = (res) => {
+    const { users } = res;
+    setUsers(users);
+  };
+
+  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+    "/find_matches",
+    onSuccess
+  );
 
   useEffect(() => {
     if (state !== null) {
       const interests = state.selectedInterests;
-      setUsers((prev) => {
-        const filteredUsers = interests.map((item) => {
-          return prev.filter((user) => user.interests.includes(item));
-        });
+      const province = state.province;
 
-        return filteredUsers.reduce((acc, val) => {
-          return [...acc, ...val.filter((user) => !acc.includes(user))];
-        }, filteredUsers[0]);
+      performFetch({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          interests,
+          province,
+        }),
       });
+
+      return cancelFetch;
     }
   }, []);
 
   return (
     <div className="recommended-connections">
+      {error && <Error>{error}</Error>}
+      {!error && isLoading && <Spinner />}
       {users.map((user, index) => {
+        const photoIndex = Math.floor(Math.random() * mockProfileImages.length);
+        user.photo = mockProfileImages[photoIndex];
+
         return (
           <div className="card-wrapper" key={index}>
             <UserCard user={user}>

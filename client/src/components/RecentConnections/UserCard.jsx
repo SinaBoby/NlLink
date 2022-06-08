@@ -9,8 +9,8 @@ const UserCard = ({ user, children }) => {
         <img src={user.photo} />
       </div>
       <div className="card-info">
-        <h3 className="card-title">{user.name}</h3>
-        <h5 className="card-subtitle">{user.occupation}</h5>
+        <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType} volunteer)`}</h3>
+        <h5 className="card-subtitle">{user.province}</h5>
         {children}
       </div>
     </div>

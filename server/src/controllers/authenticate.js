@@ -40,7 +40,15 @@ const authenticate = function (req, res) {
             origin: req.headers.origin,
             expires: cookieExpIn,
           });
-          res.json({ success: true });
+          res.json({
+            success: true,
+            user: {
+              userName: user.userName,
+              userType: user.userType,
+              firstName: user.firstName,
+              lastName: user.lastName,
+            },
+          });
           res.end();
         }
       }
