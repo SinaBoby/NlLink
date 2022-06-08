@@ -8,6 +8,9 @@ import { logInfo, logError } from "./util/logging.js";
 import connectDB from "./db/connectDB.js";
 import testRouter from "./testRouter.js";
 
+import seedActivityCollection from "./db/seedMockActivityData.js";
+import seedNewsCollection from "./db/seedMockNews.js";
+
 // The environment should set the port
 const port = process.env.PORT;
 
@@ -26,6 +29,12 @@ const startServer = async () => {
     logError(error);
   }
 };
+
+// seed mock Data to DB
+
+Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
+  logError(error)
+);
 
 /****** Host our client code for Heroku *****/
 /**

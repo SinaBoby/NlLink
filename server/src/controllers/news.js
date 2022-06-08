@@ -1,0 +1,14 @@
+import News from "../models/News.js";
+
+const getNews = async (req, res) => {
+  try {
+    const news = await News.find();
+    res.status(200).json({ success: true, result: news });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ success: false, msg: "Unable to get news, try again later" });
+  }
+};
+
+export default getNews;

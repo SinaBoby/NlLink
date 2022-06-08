@@ -5,13 +5,16 @@ import {
   getLoggedInUser,
   logout,
 } from "../controllers/user.js";
+import getUserActivities from "../controllers/userActivities.js";
 import withAuth from "../middlewares/middleware.js";
-
+import getNews from "../controllers/news.js";
 const userRouter = express.Router();
 
 userRouter.get("/", withAuth, getUserDetails);
 userRouter.post("/logout", withAuth, logout);
 userRouter.get("/me", withAuth, getLoggedInUser);
 userRouter.post("/create", createUser);
+userRouter.get("/activities", withAuth, getUserActivities);
+userRouter.get("/news", withAuth, getNews);
 
 export default userRouter;

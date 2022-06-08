@@ -37,6 +37,7 @@ export const UserDetailsProvider = ({ children }) => {
     </UserDetailsContext.Provider>
   );
 };
+
 UserDetailsProvider.propTypes = {
   children: PropTypes.array.isRequired,
 };
