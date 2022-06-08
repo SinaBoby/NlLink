@@ -32,7 +32,7 @@
 .latest-news-wrapper {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  height: 400px;
   background-color: #d9d9d9;
   display: flex;
   flex-direction: row;
@@ -41,6 +41,10 @@
 
 .latest-news-details-wrapper {
   width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .latest-news-img-wrapper {
@@ -53,6 +57,9 @@
   object-fit: cover;
 }
 
+.latest-news-header {
+  height: 10%;
+}
 .connections-status-wrapper {
   position: relative;
   width: 100%;

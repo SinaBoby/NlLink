@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
 import useFetch from "../hooks/useFetch";
-// import PropTypes from "prop-types";
+import "./News.css";
 
 const News = () => {
   const [newsData, setNewsData] = useState(null);
@@ -21,11 +21,6 @@ const News = () => {
     return cancelFetch;
   }, []);
 
-  // let userType;
-  // if (userDetails) {
-  //   userType = "Local";
-  // }
-
   if (isLoading) {
     return <div>...</div>;
   }
@@ -42,7 +37,3 @@ const News = () => {
 };
 
 export default News;
-
-// News.propTypes = {
-//   newsData: PropTypes.array.isRequired,
-// };
