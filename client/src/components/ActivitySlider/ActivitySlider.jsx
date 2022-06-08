@@ -29,13 +29,18 @@ const ActivitySlider = ({ activitiesData }) => {
             key={activity.title}
             className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
           >
-            <h4>{activity.title}</h4>
+            <h2>{activity.title}</h2>
+            <h3>{activity.category}</h3>
             <p>{activity.description}</p>
           </div>
         );
       })}
       <BtnSlider moveSlide={nextSlide} direction={"next"} />
       <BtnSlider moveSlide={prevSlide} direction={"prev"} />
+      <div className="activity-count-wrapper">
+        {" "}
+        {slideIndex}/{activitiesData.length}
+      </div>
     </div>
   );
 };

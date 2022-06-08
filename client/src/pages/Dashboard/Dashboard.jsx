@@ -1,60 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import latestNews from "../../images/latest-news-desktop.jpg";
 import yourConnections from "../../images/your-connections-desktop.jpg";
 import useUserDetails from "../../hooks/useUserRole";
 import ActivitySlider from "../../components/ActivitySlider/ActivitySlider";
+import useFetch from "../../hooks/useFetch";
+import News from "../../components/News";
 
 const Dashboard = () => {
   const { userDetails } = useUserDetails();
+  const [userActivities, setUserActivities] = useState(null);
+
+  const onSuccess = (response) => {
+    setUserActivities(response.result);
+  };
+  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+    "/user/activities",
+    onSuccess
+  );
+  useEffect(() => {
+    performFetch({
+      credentials: "include",
+    });
+
+    return cancelFetch;
+  }, []);
 
   let userType;
   if (userDetails) {
-    userType = userDetails.userType;
+    userType = "Local";
   }
-
-  // mock activity data
-  const activitiesData = [
-    {
-      id: 1,
-      title: "swimming",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, voluptates?",
-    },
-    {
-      id: 2,
-      title: "biking",
-      description:
-        "ipsum dolor sit amet consectetur adipisicing elit. Libero, volupt",
-    },
-    {
-      id: 3,
-      title: "walking",
-      description: " amet consectetur adipisicing elit. Libero, volupt",
-    },
-    {
-      id: 4,
-      title: "skiing",
-      description: "lor sit amet consectetur adipisicing elit. Libero, volupt",
-    },
-  ];
 
   return (
     <div className="dashboard-container">
       <div className="user-activity-wrapper">
         <h2 className="user-header">
-          Welcome,
-          {userDetails && <div>{userDetails.firstName}</div>}
+          {userDetails && (
+            <div>{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</div>
+          )}
         </h2>
 
         <div className="upcoming-activities-wrapper activity-wrapper">
           <h3>Upcoming Activities</h3>
-          <ActivitySlider activitiesData={activitiesData} />
+          {isLoading && <div>...</div>}
+          {error && <div>{error.message}</div>}
+          {userActivities && <ActivitySlider activitiesData={userActivities} />}
         </div>
         <div className="your-activities-wrapper activity-wrapper">
           {userType == "Local" && <h3> Your Activities</h3>}
           {userType == "NewComer" && <h3> Recommended Activities</h3>}
-          <ActivitySlider activitiesData={activitiesData} />
+          {isLoading && <div>...</div>}
+          {error && <div>{error.message}</div>}
+          {userActivities && <ActivitySlider activitiesData={userActivities} />}
         </div>
       </div>
       <div className="latest-news-wrapper">
@@ -63,6 +60,7 @@ const Dashboard = () => {
         </div>
         <div className="latest-news-details-wrapper">
           <h3 className="latest-news-header">Latest News About Newcomers</h3>
+          <News />
         </div>
       </div>
       <div className="connections-status-wrapper">
