@@ -15,7 +15,7 @@ const getUserActivities = async (req, res) => {
 
     res.status(200).json({ success: true, result: activities });
   } catch (e) {
-    res.send({ message: "Error in Fetching user" });
+    res.send({ msg: "Error in Fetching user" });
   }
 };
 
