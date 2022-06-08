@@ -36,7 +36,7 @@ const Dashboard = () => {
 
   let userType;
   if (userDetails) {
-    userType = "Local";
+    userType = userDetails.userType;
   }
 
   return (
