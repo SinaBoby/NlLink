@@ -5,3 +5,9 @@
   flex-wrap: wrap;
   overflow-y: auto;
 }
+
+@media screen and (max-width: 900px) {
+  .news-wrapper {
+    height: 88%;
+  }
+}
