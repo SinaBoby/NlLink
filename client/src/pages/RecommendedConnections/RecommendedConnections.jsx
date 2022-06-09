@@ -52,25 +52,44 @@ const RecommendedConnections = () => {
     }
   }, []);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <Error>{error}</Error>;
+  }
+
+  if (users.length === 0) {
+    return (
+      <>
+        <h1 className="empty-users-fallback">
+          Sorry. We could not find any users that match your search preferences
+        </h1>
+      </>
+    );
+  }
+
   return (
     <div className="recommended-connections">
-      {error && <Error>{error}</Error>}
-      {!error && isLoading && <Spinner />}
-      {users.map((user, index) => {
-        const photoIndex = Math.floor(Math.random() * mockProfileImages.length);
-        user.photo = mockProfileImages[photoIndex];
+      {users.length > 0 &&
+        users.map((user, index) => {
+          const photoIndex = Math.floor(
+            Math.random() * mockProfileImages.length
+          );
+          user.photo = mockProfileImages[photoIndex];
 
-        return (
-          <div className="card-wrapper" key={index}>
-            <UserCard user={user}>
-              <Tags tags={user.interests} />
-            </UserCard>
-            <div className="btn-wrapper">
-              <Button className={"btn-inline"}>Start a conversation</Button>
+          return (
+            <div className="card-wrapper" key={index}>
+              <UserCard user={user}>
+                <Tags tags={user.interests} />
+              </UserCard>
+              <div className="btn-wrapper">
+                <Button className={"btn-inline"}>Start a conversation</Button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

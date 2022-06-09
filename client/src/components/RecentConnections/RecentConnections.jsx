@@ -6,14 +6,16 @@ import UserCard from "./UserCard";
 
 const recentConnections = [
   {
-    name: "Burak Ozman",
-    occupation: "Full Stack developer",
+    firstName: "Burak",
+    lastName: "Ozman",
+    userType: "Local",
     photo: burak,
     interests: ["development", "Soccer"],
   },
   {
-    name: "Sina Boby",
-    occupation: "Full Stack developer",
+    firstName: "Sina",
+    lastName: "Boby",
+    occupation: "Newcomer",
     photo: sina,
     interests: ["development", "Tennis"],
   },
