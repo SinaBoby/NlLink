@@ -19,11 +19,14 @@ const Connect = () => {
     useUserDetails();
   const [province, setProvince] = useState("");
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const [interestsErr, setInterestsErr] = useState(null);
+  const [provinceErr, setProvinceErr] = useState(null);
 
   const onAddInterestSuccess = (res) => {
     const { interest } = res;
 
     setSelectedInterests((prev) => [...prev, interest]);
+    setInterestsErr(null);
   };
 
   const onDeleteInterestSuccess = (res) => {
@@ -35,6 +38,7 @@ const Connect = () => {
   const onAddProvinceSuccess = (res) => {
     const { province } = res;
     setProvince(province);
+    setProvinceErr(null);
   };
 
   useEffect(() => {
@@ -109,6 +113,24 @@ const Connect = () => {
           province,
         }),
       });
+    } else {
+      setProvinceErr("Province is required to find a match!");
+    }
+  };
+
+  const findMatches = () => {
+    if (province !== "" && selectedInterests.length > 0) {
+      navigate("/recommended-connections", {
+        state: { selectedInterests, province },
+      });
+    } else {
+      if (province === "") {
+        setProvinceErr("Province is required to find a match!");
+      }
+
+      if (selectedInterests.length === 0) {
+        setInterestsErr("At least one interest is required to find a match");
+      }
     }
   };
 
@@ -145,6 +167,7 @@ const Connect = () => {
                 onDeleteInterest={deleteInterest}
                 selectedInterests={selectedInterests}
               />
+              {interestsErr && <Error>{interestsErr}</Error>}
             </section>
             <section className="ctnc-location">
               <InputFieldContainer>
@@ -168,17 +191,10 @@ const Connect = () => {
                     { value: "Zeeland", text: "Zeeland" },
                   ]}
                 />
+                {provinceErr && <Error>{provinceErr}</Error>}
               </InputFieldContainer>
             </section>
-            <Button
-              className={"btn-block"}
-              type="button"
-              onClick={() =>
-                navigate("/recommended-connections", {
-                  state: { selectedInterests },
-                })
-              }
-            >
+            <Button className={"btn-block"} type="button" onClick={findMatches}>
               Find a match
             </Button>
           </div>

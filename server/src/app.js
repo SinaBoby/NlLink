@@ -6,6 +6,7 @@ import authenticateRouter from "./routes/authenticate.js";
 import withAuth from "./middlewares/middleware.js";
 import interestRouter from "./routes/interests.js";
 import locationRouter from "./routes/location.js";
+import searchRouter from "./routes/search.js";
 // Create an express server
 const app = express();
 const allowedOrigins = [
@@ -43,6 +44,7 @@ app.use("/api/user", userRouter);
 app.use("/api/authenticate", authenticateRouter);
 app.use("/api/interest", interestRouter);
 app.use("/api/province", locationRouter);
+app.use("/api/find_matches", searchRouter);
 app.get("/checkToken", withAuth, function (req, res) {
   res.status(200);
   res.send("token is there");
