@@ -31,7 +31,7 @@ const ActivitySlider = ({ activitiesData }) => {
           >
             <h2>{activity.title}</h2>
             <h3>{activity.category}</h3>
-            <p>{activity.description}</p>
+            <p className="activity-description">{activity.description}</p>
           </div>
         );
       })}
