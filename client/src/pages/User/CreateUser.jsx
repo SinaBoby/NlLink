@@ -60,7 +60,7 @@ const CreateUser = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/dashboard");
     }
 
     return cancelFetch;

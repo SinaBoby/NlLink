@@ -15,7 +15,7 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { isAuthenticated, login } = useContext(AuthContext);
 
   const onSuccess = (res) => {
     const { user } = res;
@@ -29,6 +29,10 @@ const Login = () => {
     onSuccess
   );
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+
     return cancelFetch;
   }, []);
   const handleSubmit = (e) => {
