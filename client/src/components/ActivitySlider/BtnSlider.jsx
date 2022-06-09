@@ -1,6 +1,4 @@
 import React from "react";
-// import leftArrow from "./icons/arrow-left.svg";
-// import rightArrow from "./icons/arrow-right.svg";
 import LeftArrow from "./LeftArrow";
 import PropTypes from "prop-types";
 import RightArrow from "./RightArrow";

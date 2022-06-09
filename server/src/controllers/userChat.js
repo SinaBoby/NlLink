@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Chat from "../models/Chat";
+import Chat from "../models/Chat.js";
 import User from "../models/User.js";
 
 const getUserRecentChat = async (req, res) => {

@@ -15,6 +15,8 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .user-activity-wrapper {
@@ -29,7 +31,8 @@
 
 .user-header {
   width: 100%;
-  padding: 10px;
+  padding: 2% 5%;
+  margin-bottom: 20px;
 }
 
 .activity-wrapper-header {
@@ -69,8 +72,8 @@
 .latest-news-header {
   height: 10%;
   width: 100%;
-  text-align: center;
-  padding-top: 1%;
+  padding-left: 5%;
+  padding-top: 2%;
 }
 .connections-status-wrapper {
   position: relative;
@@ -115,15 +118,20 @@
     position: relative;
   }
 
+  .user-header {
+    padding: 2% 10%;
+  }
+
   .latest-news-wrapper {
     min-height: 300px;
     flex-direction: column;
   }
 
   .latest-news-header {
-    height: 12%;
+    height: 14%;
     margin: 0px;
-    padding: 2%;
+    padding-left: 5%;
+    padding-top: 2%;
   }
 
   .latest-news-img-wrapper {
