@@ -65,9 +65,9 @@ const CreateUser = () => {
   const [passError, setPassError] = useState("");
   const [ageError, setAgeError] = useState("");
   const strongRegex = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,50})"
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,64})"
   );
-  const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_@.]{3,23}$");
+  const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$");
   const onSuccess = () => {
     clearForm();
     navigate("/login");
@@ -189,6 +189,7 @@ const CreateUser = () => {
           name="firstName"
           value={firstName}
           placeholder="Required"
+          maxLength="100"
           title="Required field"
           onChange={(value) => setFirstName(value)}
           data-testid={TEST_ID.firstNameInput}
@@ -200,6 +201,7 @@ const CreateUser = () => {
         <Input
           name="lastName"
           value={lastName}
+          maxLength="100"
           placeholder="Required"
           title="Required field"
           onChange={(value) => setLastName(value)}
@@ -216,7 +218,9 @@ const CreateUser = () => {
         <Input
           name="userName"
           value={userName}
-          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{3,23}$"
+          minLength="3"
+          maxLength="64"
+          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$"
           placeholder="Required, should not be used before"
           title="Required field, should not be used before"
           onChange={(value) => {
@@ -238,6 +242,8 @@ const CreateUser = () => {
         <Input
           name="email"
           type="email"
+          minLength="3"
+          maxLength="250"
           title="Required field, please enter a valid email address"
           value={email}
           pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
@@ -301,6 +307,8 @@ const CreateUser = () => {
           title="Required field"
           value={password}
           type="password"
+          minLength="6"
+          maxLength="64"
           onChange={(value) => setPassword(value)}
           data-testid={TEST_ID.passwordInput}
           id="passwordInput"
@@ -318,6 +326,8 @@ const CreateUser = () => {
           value={confirmPassword}
           title="Required field, must match the password you entered"
           type="password"
+          minLength="6"
+          maxLength="64"
           onChange={(value) => setConfirmPassword(value)}
           data-testid={TEST_ID.passwordInput}
           required

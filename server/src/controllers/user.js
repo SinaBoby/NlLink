@@ -1,30 +1,47 @@
 import User, { validateUser } from "../models/User.js";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
 //import getUserWithHashedPassword from "./auth.js";
 
 export const getUserDetails = async (req, res) => {
   try {
     const userName = req.userName;
+    if (!userName) {
+      res
+        .status(401)
+        .json({ success: false, msg: "You are not Authenticated" });
+    }
     const user = await User.findOne({ userName });
+    if (!user) {
+      res.status(404).json({ success: false, msg: "User not found" });
+    }
     res.status(200).json({ success: true, result: user });
   } catch (error) {
     logError(error);
     res
       .status(500)
-      .json({ success: false, msg: "Unable to get users, try again later" });
+      .json({ success: false, msg: "Server Error, try again later" });
   }
 };
 
 export const getLoggedInUser = async (req, res) => {
   try {
-    // request.user is getting fetched from Middleware after token authentication
     const userName = req.userName;
-    logInfo(userName);
+    if (!userName) {
+      res
+        .status(401)
+        .json({ success: false, msg: "You are not Authenticated" });
+    }
     const user = await User.findOne({ userName });
+    if (!user) {
+      res.status(404).json({ success: false, msg: "User not found" });
+    }
     res.status(200).json({ success: true, user });
-  } catch (e) {
-    res.send({ message: "Error in Fetching user" });
+  } catch (error) {
+    logError(error);
+    res
+      .status(500)
+      .json({ success: false, msg: "Server Error, try again later" });
   }
 };
 
@@ -35,8 +52,9 @@ export const logout = async (req, res) => {
         success: true,
       });
     } else {
-      return res.status(500).json({
-        message: "Internal Server Error",
+      return res.status(401).json({
+        success: false,
+        msg: "You are not Authenticated",
       });
     }
   } catch (error) {
@@ -50,23 +68,21 @@ export const logout = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { user } = req.body;
+    const errorList = validateUser(user);
     if (typeof user !== "object") {
       return res.status(400).json({
         success: false,
-        msg: `You need to provide a 'user' object. Received: ${typeof user}`,
+        msg: `BAD REQUEST: You need to provide a 'user' object. Received: ${typeof user}`,
       });
-    }
-    const errorList = validateUser(user);
-    if (errorList.length > 0) {
+    } else if (errorList.length > 0) {
       logError(errorList);
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
       //const userWithHashedPassword = await getUserWithHashedPassword(user);
 
       const newUser = await User.create(user);
-      logInfo(newUser.age);
       return res.status(201).json({ success: true, user: newUser });
     }
   } catch (error) {
@@ -78,11 +94,13 @@ export const createUser = async (req, res) => {
       });
       logError(error);
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, msg: validationErrorMessage(errors) });
     } else {
       logError(error);
-      return res.status(500).json({ success: false, msg: error.message });
+      return res
+        .status(500)
+        .json({ success: false, msg: `Server Error: ${error.message}` });
     }
   }
 };

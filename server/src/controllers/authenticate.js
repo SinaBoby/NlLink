@@ -3,21 +3,26 @@ import { logError } from "../util/logging.js";
 import User from "../models/User.js";
 
 const authenticate = function (req, res) {
-  const { userName, password } = req.body;
-  // eslint-disable-next-line no-console
-  console.log(userName);
   (async () => {
     try {
+      const { userName, password } = req.body;
       const user = await User.findOne({ userName });
-      if (!user) {
-        res.status(401).json({
-          error: "Incorrect userName or password",
+      if (!userName || !password) {
+        res.status(400).json({
+          success: false,
+          msg: "BAD REQUEST: Please enter your username and password",
+        });
+      } else if (!user) {
+        res.status(404).json({
+          success: false,
+          msg: "NOT FOUND: Incorrect userName or password",
         });
       } else {
         const same = await user.isCorrectPassword(password);
         if (!same) {
-          res.status(401).json({
-            error: "Incorrect userName or password",
+          res.status(404).json({
+            success: false,
+            msg: "NOT FOUND: Incorrect password",
           });
         } else {
           // Issue token
@@ -47,7 +52,8 @@ const authenticate = function (req, res) {
     } catch (error) {
       logError(error);
       res.status(500).json({
-        error: "Internal error please try again",
+        success: false,
+        msg: `SERVER ERROR: ${error.message}`,
       });
     }
   })();

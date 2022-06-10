@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
 import { logError, logInfo } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
-const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,23}$/i;
+const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$/i;
 const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,50})/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,64})/;
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: "Required field error! Please add your {PATH} to the form",
       unique: true,
-      minLength: 2,
-      maxLength: [100, "{PATH} should be maximum 100 characters"],
+      minLength: [3, "{PATH} should be minimum 3 characters"],
+      maxLength: [64, "{PATH} should be maximum 64 characters"],
       trim: true,
       validate: {
         validator: (value) => userNameRegex.test(value),
@@ -36,8 +36,8 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: "Required field error! Please add your {PATH} to the form",
-      minLength: [3, "{PATH} should be minimum 320 characters"],
-      maxLength: [320, "{PATH} should be maximum 320 characters"],
+      minLength: [3, "{PATH} should be minimum 3 characters"],
+      maxLength: [250, "{PATH} should be maximum 250 characters"],
       match: [
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
         "{VALUE} is not a valid email address",
@@ -49,10 +49,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: "Required field error! Please add your {PATH} to the form",
       minLength: [6, "{PATH} should be minimum 6 characters"],
-      maxLength: [250, "{PATH} should be maximum 250 characters"],
+      maxLength: [64, "{PATH} should be maximum 64 characters"],
       validate: {
         validator: (value) => passwordRegex.test(value),
-        message: (props) => `${props.value} is not a valid password`,
+        message: (props) =>
+          `${props.value} is not a valid password. Please follow the pattern.`,
       },
     },
     userType: {
@@ -66,8 +67,8 @@ const userSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: String,
-      minLength: 8,
-      maxLength: 16,
+      minLength: [8, "{VALUE} is too short. Enter a valid Mobile phone number"],
+      maxLength: [16, "{VALUE} is too long. Enter a valid Mobile phone number"],
       match: [/[+|00][0-9]{7,15}/, "Please fill a valid phone Number"],
     },
     profileImage: {
