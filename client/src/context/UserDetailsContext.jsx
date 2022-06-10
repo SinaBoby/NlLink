@@ -1,10 +1,12 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import PropTypes from "prop-types";
+import { AuthContext } from "../AuthContext";
 
 export const UserDetailsContext = createContext();
 export const UserDetailsProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const onSuccess = (res) => {
     const { user } = res;
@@ -17,16 +19,24 @@ export const UserDetailsProvider = ({ children }) => {
   );
 
   const getMe = () => {
-    performFetch({
-      method: "GET",
-      credentials: "include",
-    });
+    if (isAuthenticated) {
+      performFetch({
+        method: "GET",
+        credentials: "include",
+      });
+    }
   };
+
+  useEffect(() => {
+    window.addEventListener("load", getMe);
+    return () => window.removeEventListener("load", getMe);
+  }, []);
 
   return (
     <UserDetailsContext.Provider
       value={{
         userDetails,
+        setUserDetails,
         getMe,
         isMeLoading: isLoading,
         meError: error,

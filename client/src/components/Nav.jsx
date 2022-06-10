@@ -6,17 +6,13 @@ import "./Nav.css";
 import { AuthContext } from "../AuthContext";
 import TEST_ID from "./Nav.testid";
 import Dropdown from "./Dropdown";
+import useUserDetails from "./../hooks/useUserDetails";
 
 const Nav = () => {
   const [isDropdown, setDropdown] = useState();
   const { isAuthenticated } = useContext(AuthContext);
+  const { userDetails } = useUserDetails();
   const toggleDropdown = () => setDropdown((prev) => !prev);
-
-  let userDetails;
-
-  if (isAuthenticated) {
-    userDetails = JSON.parse(localStorage.getItem("user"));
-  }
 
   return (
     <>
@@ -34,7 +30,7 @@ const Nav = () => {
                 Activities
               </Link>
             )}
-            {isAuthenticated && (
+            {userDetails && isAuthenticated && (
               <Link to="connect" className="navbar-link">
                 {userDetails.userType === "NewComer"
                   ? "Connect to Locals"

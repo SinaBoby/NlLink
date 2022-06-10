@@ -47,12 +47,7 @@ const authenticate = function (req, res) {
           });
           res.json({
             success: true,
-            user: {
-              userName: user.userName,
-              userType: user.userType,
-              firstName: user.firstName,
-              lastName: user.lastName,
-            },
+            user,
           });
           res.end();
         }

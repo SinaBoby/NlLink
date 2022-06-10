@@ -15,7 +15,7 @@ import Error from "../../components/Error/Error";
 
 const Connect = () => {
   const navigate = useNavigate();
-  const { userDetails, getMe, isMeLoading, meError, cancelMeFetch } =
+  const { userDetails, setUserDetails, isMeLoading, meError, cancelMeFetch } =
     useUserDetails();
   const [province, setProvince] = useState("");
   const [selectedInterests, setSelectedInterests] = useState([]);
@@ -25,32 +25,30 @@ const Connect = () => {
   const onAddInterestSuccess = (res) => {
     const { interest } = res;
 
-    setSelectedInterests((prev) => [...prev, interest]);
+    setUserDetails((prev) => {
+      return { ...prev, interests: [...prev.interests, interest] };
+    });
     setInterestsErr(null);
   };
 
   const onDeleteInterestSuccess = (res) => {
     const { interest } = res;
 
-    setSelectedInterests((prev) => prev.filter((item) => item !== interest));
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        interests: prev.interests.filter((item) => item !== interest),
+      };
+    });
   };
 
   const onAddProvinceSuccess = (res) => {
     const { province } = res;
-    setProvince(province);
+    setUserDetails((prev) => {
+      return { ...prev, province };
+    });
     setProvinceErr(null);
   };
-
-  useEffect(() => {
-    if (userDetails !== null) {
-      if (userDetails.province !== null) {
-        setProvince(userDetails.province);
-      }
-      setSelectedInterests(userDetails.interests);
-    } else {
-      getMe();
-    }
-  }, [userDetails]);
 
   const {
     isLoading: isAddInterestLoading,
@@ -135,13 +133,19 @@ const Connect = () => {
   };
 
   useEffect(() => {
+    if (userDetails !== null) {
+      if (userDetails.province !== null) {
+        setProvince(userDetails.province);
+      }
+      setSelectedInterests(userDetails.interests);
+    }
     return () => {
       cancelAddInterest();
       cancelAddProvince();
       cancelDeleteInterest();
       cancelMeFetch();
     };
-  }, []);
+  }, [userDetails]);
 
   return (
     <>

@@ -12,9 +12,7 @@ export const AuthProvider = ({ children }) => {
     cb();
   };
 
-  const login = (user, cb) => {
-    localStorage.setItem("user", JSON.stringify(user));
-
+  const login = (cb) => {
     /*
       Token expires in 1 hour. We create a cookie and set the expiration date
       1 hour from now

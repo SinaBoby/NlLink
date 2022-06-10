@@ -10,19 +10,19 @@ import "./Login.css";
 import { AuthContext } from "../../AuthContext";
 import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
 import Spinner from "./../../components/Spinner/Spinner";
+import useUserDetails from "../../hooks/useUserDetails";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { isAuthenticated, login } = useContext(AuthContext);
-
+  const { setUserDetails } = useUserDetails();
   const onSuccess = (res) => {
     const { user } = res;
 
-    setTimeout(() => {
-      login(user, () => navigate("/dashboard"));
-    }, 1000);
+    setUserDetails(user);
+    login(() => navigate("/dashboard"));
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/authenticate",
