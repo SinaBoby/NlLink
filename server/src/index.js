@@ -10,6 +10,7 @@ import testRouter from "./testRouter.js";
 
 import seedActivityCollection from "./db/seedMockActivityData.js";
 import seedNewsCollection from "./db/seedMockNews.js";
+// import Activity from "./models/Activity.js";
 
 // The environment should set the port
 const port = process.env.PORT;
@@ -35,6 +36,16 @@ const startServer = async () => {
 Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
   logError(error)
 );
+
+// Promise.all([seedNewsCollection]).catch((error) => logError(error));
+// seedActivityCollection()
+//   .then(() => {
+//     return Activity.find();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((e) => logError(e));
 
 /****** Host our client code for Heroku *****/
 /**

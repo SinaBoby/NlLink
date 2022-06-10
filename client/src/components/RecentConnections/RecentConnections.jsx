@@ -19,13 +19,34 @@ const recentConnections = [
     photo: sina,
     interests: ["development", "Tennis"],
   },
+  {
+    firstName: "Sina",
+    lastName: "Boby",
+    occupation: "Newcomer",
+    photo: sina,
+    interests: ["development", "Tennis"],
+  },
+  {
+    firstName: "Sina",
+    lastName: "Boby",
+    occupation: "Newcomer",
+    photo: sina,
+    interests: ["development", "Tennis"],
+  },
+  {
+    firstName: "Sina",
+    lastName: "Boby",
+    occupation: "Newcomer",
+    photo: sina,
+    interests: ["development", "Tennis"],
+  },
 ];
 
 const RecentConnections = () => {
   return (
     <div className="recent-connections">
+      <h2 className="recent-connections-title">Recent Connections</h2>
       <div className="recent-connections-list">
-        <h2 className="recent-connections-title">Recent Connections</h2>
         <>
           {recentConnections.map((user, index) => {
             return <UserCard key={index} user={user} />;

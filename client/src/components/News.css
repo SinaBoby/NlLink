@@ -6,6 +6,10 @@
   overflow-y: auto;
 }
 
+.news-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 @media screen and (max-width: 900px) {
   .news-wrapper {
     height: 86%;

@@ -8,9 +8,12 @@ import useFetch from "../../hooks/useFetch";
 import News from "../../components/News";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
+import RecentConnections from "../../components/RecentConnections/RecentConnections";
 
 const Dashboard = () => {
   const [userActivities, setUserActivities] = useState(null);
+  const [userRecommendedActivities, setUserRecommendedActivities] =
+    useState(null);
   const { userDetails, getMe, isMeLoading, meError, cancelMeFetch } =
     useUserDetails();
   useEffect(() => {
@@ -20,7 +23,8 @@ const Dashboard = () => {
   }, []);
 
   const onSuccess = (response) => {
-    setUserActivities(response.result);
+    setUserActivities(response.result.upcomingActivities);
+    setUserRecommendedActivities(response.result.recommendedActivities);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/activities",
@@ -62,7 +66,9 @@ const Dashboard = () => {
           {userDetails && (
             <h3 className="activity-wrapper-header"> Recommended Activities</h3>
           )}
-          {userActivities && <ActivitySlider activitiesData={userActivities} />}
+          {userRecommendedActivities && (
+            <ActivitySlider activitiesData={userRecommendedActivities} />
+          )}
         </div>
       </div>
       <div className="latest-news-wrapper">
@@ -76,10 +82,15 @@ const Dashboard = () => {
       </div>
       <div className="connections-status-wrapper">
         <div className="connections-status-img-wrapper">
-          <img src={yourConnections} alt="your-connections" />
+          <img
+            src={yourConnections}
+            alt="your-connections"
+            className="connections-status-img"
+          />
         </div>
         <div className="connections-status-details-wrapper">
-          <h3 className="connections-status-header">Your Connections</h3>
+          {/* <h3 className="connections-status-header">Your Connections</h3> */}
+          <RecentConnections />
         </div>
       </div>
     </div>

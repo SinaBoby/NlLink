@@ -22,26 +22,62 @@ const ActivitySlider = ({ activitiesData }) => {
     }
   };
   return (
-    <div className="slider-container">
-      {activitiesData.map((activity, index) => {
-        return (
-          <div
-            key={activity.title}
-            className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
-          >
-            <h2>{activity.title}</h2>
-            <h3>{activity.category}</h3>
-            <p className="activity-description">{activity.description}</p>
+    <>
+      {activitiesData.length > 0 && (
+        <div className="slider-container">
+          {activitiesData.map((activity, index) => {
+            return (
+              <div
+                key={activity.title}
+                className={
+                  slideIndex === index + 1 ? "slide active-anim" : "slide"
+                }
+              >
+                <h2 className="activity-title">{activity.title}</h2>
+                <h3>{activity.category}</h3>
+                <p className="activity-description">{activity.description}</p>
+              </div>
+            );
+          })}
+          <BtnSlider moveSlide={nextSlide} direction={"next"} />
+          <BtnSlider moveSlide={prevSlide} direction={"prev"} />
+          <div className="activity-count-wrapper">
+            {" "}
+            {slideIndex}/{activitiesData.length}
           </div>
-        );
-      })}
-      <BtnSlider moveSlide={nextSlide} direction={"next"} />
-      <BtnSlider moveSlide={prevSlide} direction={"prev"} />
-      <div className="activity-count-wrapper">
-        {" "}
-        {slideIndex}/{activitiesData.length}
-      </div>
-    </div>
+        </div>
+      )}
+      {activitiesData.length === 0 && (
+        <div className="slider-container">
+          <div className="slide active-anim">
+            <h2 className="activity-title">
+              You don&apos;t have any activities yet
+            </h2>
+          </div>
+        </div>
+      )}
+    </>
+
+    // <div className="slider-container">
+    //   {activitiesData.map((activity, index) => {
+    //   return (
+    //     <div
+    //       key={activity.title}
+    //       className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
+    //     >
+    //       <h2>{activity.title}</h2>
+    //       <h3>{activity.category}</h3>
+    //       <p className="activity-description">{activity.description}</p>
+    //     </div>
+    //   );
+    // })}
+    // <BtnSlider moveSlide={nextSlide} direction={"next"} />
+    // <BtnSlider moveSlide={prevSlide} direction={"prev"} />
+    // <div className="activity-count-wrapper">
+    //   {" "}
+    //   {slideIndex}/{activitiesData.length}
+    // </div>
+    // </div>
   );
 };
 
