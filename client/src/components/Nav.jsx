@@ -6,81 +6,73 @@ import "./Nav.css";
 import { AuthContext } from "../AuthContext";
 import TEST_ID from "./Nav.testid";
 import Dropdown from "./Dropdown";
-import useUserDetails from "../hooks/useUserRole";
 
 const Nav = () => {
-  const { userDetails } = useUserDetails();
   const [isDropdown, setDropdown] = useState();
   const { isAuthenticated } = useContext(AuthContext);
   const toggleDropdown = () => setDropdown((prev) => !prev);
 
+  let userDetails;
+
+  if (isAuthenticated) {
+    userDetails = JSON.parse(localStorage.getItem("user"));
+  }
+
   return (
-    <div className="navbar">
-      <Link to={"/"} className="logo" data-testid={TEST_ID.linkToHome}>
-        <img src={logo} />
-      </Link>
-      <div className="navbar-right">
-        <div className="collapse">
-          <Link to="/news" className="navbar-link">
-            News
-          </Link>
-          {isAuthenticated && (
-            <Link to="/activities" className="navbar-link">
-              Activities
+    <>
+      <div className="navbar">
+        <Link to={"/"} className="logo" data-testid={TEST_ID.linkToHome}>
+          <img src={logo} />
+        </Link>
+        <div className="navbar-right">
+          <div className="collapse">
+            <Link to="/news" className="navbar-link">
+              News
             </Link>
-          )}
-          {userDetails && isAuthenticated && (
-            <Link to="connect" className="navbar-link">
-              {userDetails.userType === "newComer"
-                ? "Connect to Newcomers"
-                : "Connect to Locals"}
-            </Link>
-          )}
-          <Link to="/contact" className="navbar-link">
-            Contact us
-          </Link>
-          <Link to="/about" className="navbar-link">
-            About
-          </Link>
-          {/* {isAuthenticated && (
-            <>
-            <Link
-              to="/dashboard"
-              className="navbar-link"
-              data-testid={TEST_ID.linkToUsers}
-            >
-              My Profile
-            </Link>
-            <Link to="/logout" className="navbar-link  btn-link">
-            Sign out
-          </Link>
-          </>
-          )} */}
-          {isAuthenticated ? (
-            <>
-              <Link
-                to="/dashboard"
-                className="navbar-link"
-                data-testid={TEST_ID.linkToUsers}
-              >
-                My Profile
+            {isAuthenticated && (
+              <Link to="/activities" className="navbar-link">
+                Activities
               </Link>
-              <Link to="/logout" className="navbar-link  btn-link">
-                Sign out
+            )}
+            {isAuthenticated && (
+              <Link to="connect" className="navbar-link">
+                {userDetails.userType === "NewComer"
+                  ? "Connect to Locals"
+                  : "Connect to New Comers"}
               </Link>
-            </>
-          ) : (
-            <Link to="/login" className="navbar-link  btn-link">
-              Register/Sign in
+            )}
+            <Link to="/contact" className="navbar-link">
+              Contact us
             </Link>
-          )}
+            <Link to="/about" className="navbar-link">
+              About
+            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="navbar-link"
+                  data-testid={TEST_ID.linkToUsers}
+                >
+                  My Profile
+                </Link>
+                <Link to="/logout" className="navbar-link  btn-link">
+                  Sign out
+                </Link>
+              </>
+            ) : (
+              <Link to="/login" className="navbar-link  btn-link">
+                Register/Sign in
+              </Link>
+            )}
+          </div>
+          <button onClick={toggleDropdown} className="btn-menu mobile">
+            <img src={burgerIcon} alt={"burger menu icon"} />
+          </button>
         </div>
-        <button onClick={toggleDropdown} className="btn-menu mobile">
-          <img src={burgerIcon} alt={"burger menu icon"} />
-        </button>
+        {isDropdown && <Dropdown />}
       </div>
-      {isDropdown && <Dropdown />}
-    </div>
+    </>
   );
 };
 

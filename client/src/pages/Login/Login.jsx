@@ -8,28 +8,30 @@ import { Link, useNavigate } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
 import "./Login.css";
 import { AuthContext } from "../../AuthContext";
-//import { logInfo } from "../../../../server/src/util/logging.js";
 import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
 import Spinner from "./../../components/Spinner/Spinner";
-import useUserDetails from "../../hooks/useUserRole";
+
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
-  const { setUserDetails } = useUserDetails();
-  const onSuccess = (response) => {
-    setUserDetails(response.user);
-    login(() => navigate("/dashboard"));
+  const { isAuthenticated, login } = useContext(AuthContext);
+
+  const onSuccess = (res) => {
+    const { user } = res;
+
+    setTimeout(() => {
+      login(user, () => navigate("/dashboard"));
+    }, 1000);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/authenticate",
     onSuccess
   );
   useEffect(() => {
-    /*  if (isAuthenticated) {
-      navigate("/");
-    } */
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
 
     return cancelFetch;
   }, []);
@@ -91,24 +93,26 @@ const Login = () => {
           required
         />
       </InputFieldContainer>
-      <Button className="btn btn-block" type={"submit"}>
+      <Button className="btn-block" type={"submit"}>
         Sign in
       </Button>
-      <div className="login-signup-wrapper">
-        <p>Don&apos;t have an account?</p>
-        <Link to="/user/create" className="navbar-link  btn-link">
-          Sign up
-        </Link>
-        &nbsp;&nbsp;
-        <p>Forgot your password?</p>
-        &nbsp;
-        <Button
-          type={"button"}
-          className="btn btn-inline form-btn-link"
-          onClick={() => navigate("/user/ResetPassword")}
-        >
-          Forgot My password
-        </Button>
+      <div className="login-extra-actions">
+        <div className="create-user">
+          <p>Don&apos;t have an account?</p>
+          <Link to="/user/create" className="navbar-link  btn-link">
+            Sign up
+          </Link>
+        </div>
+        <div className="forgot-password">
+          <p>Forgot your password?</p>
+          <Button
+            type={"button"}
+            className="form-btn-link"
+            onClick={() => navigate("/user/ResetPassword")}
+          >
+            Forgot My password
+          </Button>
+        </div>
       </div>
       {statusComponent}
     </Form>
