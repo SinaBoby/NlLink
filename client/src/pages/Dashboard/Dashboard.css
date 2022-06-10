@@ -79,7 +79,7 @@
   position: relative;
   width: 100%;
   background-color: #f0ebeb;
-  min-height: 300px;
+  height: 400px;
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
@@ -88,23 +88,69 @@
 
 .connections-status-img-wrapper {
   width: 40%;
+  height: 100%;
 }
 
-.connections-status-img-wrapper img {
+/* .connections-status-img {
   object-fit: cover;
   width: auto;
   height: 100%;
   max-width: 100%;
   max-height: 100%;
+} */
+.connections-status-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .connections-status-details-wrapper {
   width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  overflow-y: auto;
+  background-color: hsl(0, 0%, 100%);
 }
 
-.connections-status-header {
-  width: 100%;
+.connections-status-details-wrapper::-webkit-scrollbar {
+  display: none;
 }
+
+.connections-status-details-wrapper .recent-connections {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.connections-status-details-wrapper
+  .recent-connections
+  .recent-connections-list {
+  width: 100%;
+  height: 88%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.connections-status-details-wrapper
+  .recent-connections
+  .recent-connections-title {
+  height: 12%;
+  border: none;
+}
+
+.connections-status-details-wrapper
+  .recent-connections-list::-webkit-scrollbar {
+  display: none;
+}
+/* .connections-status-header {
+  width: 100%;
+} */
 
 @media screen and (max-width: 900px) {
   .user-activity-wrapper {
@@ -146,6 +192,7 @@
 
   .connections-status-details-wrapper {
     width: 100%;
+    height: 300px;
   }
 
   .connections-status-img-wrapper {

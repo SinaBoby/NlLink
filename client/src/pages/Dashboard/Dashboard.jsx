@@ -8,6 +8,7 @@ import useFetch from "../../hooks/useFetch";
 import News from "../../components/News";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
+import RecentConnections from "../../components/RecentConnections/RecentConnections";
 
 const Dashboard = () => {
   const [userActivities, setUserActivities] = useState(null);
@@ -81,10 +82,15 @@ const Dashboard = () => {
       </div>
       <div className="connections-status-wrapper">
         <div className="connections-status-img-wrapper">
-          <img src={yourConnections} alt="your-connections" />
+          <img
+            src={yourConnections}
+            alt="your-connections"
+            className="connections-status-img"
+          />
         </div>
         <div className="connections-status-details-wrapper">
-          <h3 className="connections-status-header">Your Connections</h3>
+          {/* <h3 className="connections-status-header">Your Connections</h3> */}
+          <RecentConnections />
         </div>
       </div>
     </div>
