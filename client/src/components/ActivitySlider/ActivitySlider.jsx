@@ -33,7 +33,7 @@ const ActivitySlider = ({ activitiesData }) => {
                   slideIndex === index + 1 ? "slide active-anim" : "slide"
                 }
               >
-                <h2>{activity.title}</h2>
+                <h2 className="activity-title">{activity.title}</h2>
                 <h3>{activity.category}</h3>
                 <p className="activity-description">{activity.description}</p>
               </div>
@@ -49,8 +49,8 @@ const ActivitySlider = ({ activitiesData }) => {
       )}
       {activitiesData.length === 0 && (
         <div className="slider-container">
-          <div>
-            <h2 className="slide active-anim">
+          <div className="slide active-anim">
+            <h2 className="activity-title">
               You don&apos;t have any activities yet
             </h2>
           </div>
