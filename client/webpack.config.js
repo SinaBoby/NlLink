@@ -26,7 +26,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: ["@babel/preset-env", "@babel/preset-react"]
           },
         },
       },
@@ -42,7 +42,7 @@ module.exports = {
     // All variables in our .env should be mentioned here
     new webpack.EnvironmentPlugin({
       // Default is '' because on our heroku servers we want to have it default to our current URL
-      BASE_SERVER_URL: "http://localhost:5000",
+      BASE_SERVER_URL: "",
     }),
   ],
   // To tell the dev server that everything should go back to index.html

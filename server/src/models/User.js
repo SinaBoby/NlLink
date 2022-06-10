@@ -1,23 +1,74 @@
 import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
-import { logError } from "../util/logging.js";
+import { logError, logInfo } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
-
+const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,23}$/i;
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,50})/;
 const userSchema = new mongoose.Schema(
   {
-    firstName: { type: String, required: true, trim: true },
-    lastName: { type: String, required: true, trim: true },
-    userName: { type: String, required: true, unique: true, trim: true },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true },
+    firstName: {
+      type: String,
+      required: "Required field error! Please add your {PATH} to the form",
+      minLength: 1,
+      maxLength: [100, "{PATH} should be maximum 100 characters"],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: "Required field error! Please add your {PATH} to the form",
+      minLength: 1,
+      maxLength: [100, "{PATH} should be maximum 100 characters"],
+      trim: true,
+    },
+    userName: {
+      type: String,
+      required: "Required field error! Please add your {PATH} to the form",
+      unique: true,
+      minLength: 2,
+      maxLength: [100, "{PATH} should be maximum 100 characters"],
+      trim: true,
+      validate: {
+        validator: (value) => userNameRegex.test(value),
+        message: (props) => `${props.value} is not a valid userName`,
+      },
+    },
+    email: {
+      type: String,
+      required: "Required field error! Please add your {PATH} to the form",
+      minLength: [3, "{PATH} should be minimum 320 characters"],
+      maxLength: [320, "{PATH} should be maximum 320 characters"],
+      match: [
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+        "{VALUE} is not a valid email address",
+      ],
+      unique: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: "Required field error! Please add your {PATH} to the form",
+      minLength: [6, "{PATH} should be minimum 6 characters"],
+      maxLength: [250, "{PATH} should be maximum 250 characters"],
+      validate: {
+        validator: (value) => passwordRegex.test(value),
+        message: (props) => `${props.value} is not a valid password`,
+      },
+    },
     userType: {
       type: String,
-      enum: ["NewComer", "Local"],
-      required: true,
+      enum: {
+        values: ["NewComer", "Local"],
+        message: (props) => `${props.value} is not a valid userType`,
+      },
+      required: "Required field error! Please add your {PATH} to the form",
       default: "NewComer",
     },
     phoneNumber: {
       type: String,
+      minLength: 8,
+      maxLength: 16,
+      match: [/[+|00][0-9]{7,15}/, "Please fill a valid phone Number"],
     },
     profileImage: {
       alt: String,
@@ -26,25 +77,45 @@ const userSchema = new mongoose.Schema(
         contentType: String,
       },
     },
-    birthDay: { type: Date, required: true },
+    birthDay: {
+      type: Date,
+      required: "Required field error! Please add your {PATH} to the form",
+      validate: {
+        validator: (value) => {
+          return value < Date.now() - 18 * 365 * 24 * 60 * 60 * 1000;
+        },
+        message: (newDate) =>
+          `${
+            newDate.value.getUTCMonth() +
+            1 +
+            "-" +
+            newDate.value.getUTCDate() +
+            "-" +
+            newDate.value.getUTCFullYear()
+          } is not Allowed. you need to be above 18! `,
+      },
+    },
     joinedAt: { type: Date, default: () => Date.now(), immutable: true },
     interests: [String],
     province: {
       type: String,
-      enum: [
-        "Drenthe",
-        "Flevoland",
-        "Friesland",
-        "Gelderland",
-        "Groningen",
-        "Limburg",
-        "North Brabant",
-        "North Holland",
-        "Overijssel",
-        "South Holland",
-        "Utrecht",
-        "Zeeland",
-      ],
+      enum: {
+        values: [
+          "Drenthe",
+          "Flevoland",
+          "Friesland",
+          "Gelderland",
+          "Groningen",
+          "Limburg",
+          "North Brabant",
+          "North Holland",
+          "Overijssel",
+          "South Holland",
+          "Utrecht",
+          "Zeeland",
+        ],
+        message: (props) => `${props.value} is not a dutch province`,
+      },
     },
     isActive: Boolean,
     createdActivities: [
@@ -71,6 +142,11 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+userSchema.virtual("age").get(function () {
+  const currentDate = new Date();
+  //const age = Date.now().getUTCFullYear() - this.birthDay.getUTCFullYear();
+  return currentDate.getFullYear() - this.birthDay.getUTCFullYear();
+});
 userSchema.methods.isCorrectPassword = async function (password) {
   try {
     // Compare password
@@ -82,6 +158,31 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return false;
 };
 const User = mongoose.model("user", userSchema);
+userSchema.pre("save", async function (next) {
+  try {
+    const savedUsers = await User.find();
+    /* for (let user in savedUsers) {
+      logInfo(user.userName);
+    } */
+    logInfo(savedUsers);
+  } catch (error) {
+    logError(error);
+    next(error);
+  }
+});
+//Custom validators to check uniqueness of email & userName
+userSchema.path("email").validate(async function (value) {
+  const emailCount = await User.count({
+    email: value,
+  });
+  return !emailCount;
+}, "Email already exists");
+userSchema.path("userName").validate(async function (value) {
+  const userNameCount = await User.count({
+    userName: value,
+  });
+  return !userNameCount;
+}, "userName already exists");
 
 export const validateUser = (userObject) => {
   const errorList = [];
@@ -107,30 +208,6 @@ export const validateUser = (userObject) => {
 
   if (validatedKeysMessage.length > 0) {
     errorList.push(validatedKeysMessage);
-  }
-
-  if (userObject.firstName == null) {
-    errorList.push("firstName is a required field");
-  }
-
-  if (userObject.lastName == null) {
-    errorList.push("lastName is a required field");
-  }
-
-  if (userObject.userName == null) {
-    errorList.push("userName is a required field");
-  }
-
-  if (userObject.email == null) {
-    errorList.push("email is a required field");
-  }
-
-  if (userObject.password == null) {
-    errorList.push("password is a required field");
-  }
-
-  if (userObject.birthDay == null) {
-    errorList.push("birthDay is a required field");
   }
 
   return errorList;

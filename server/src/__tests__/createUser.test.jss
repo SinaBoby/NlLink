@@ -27,7 +27,8 @@ const testUserBase = {
   lastName: "Doe",
   userName: "JDoe",
   email: "john@doe.com",
-  password: "mypassword",
+  userType: "local",
+  password: "mypasswordD@1",
   birthDay: "01-02-2000",
 };
 

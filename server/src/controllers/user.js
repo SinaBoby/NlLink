@@ -50,33 +50,39 @@ export const logout = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { user } = req.body;
-
     if (typeof user !== "object") {
       return res.status(400).json({
         success: false,
-        msg: `You need to provide a 'user' object. Received: ${JSON.stringify(
-          user
-        )}`,
+        msg: `You need to provide a 'user' object. Received: ${typeof user}`,
       });
     }
-
     const errorList = validateUser(user);
-
     if (errorList.length > 0) {
+      logError(errorList);
       return res
-        .status(400)
+        .status(500)
         .json({ success: false, msg: validationErrorMessage(errorList) });
     } else {
       //const userWithHashedPassword = await getUserWithHashedPassword(user);
 
       const newUser = await User.create(user);
-
+      logInfo(newUser.age);
       return res.status(201).json({ success: true, user: newUser });
     }
   } catch (error) {
-    logError(error);
-    return res
-      .status(500)
-      .json({ success: false, msg: "Unable to create user, try again later" });
+    let errors = [];
+    logError(error.errors);
+    if (error.errors) {
+      Object.keys(error.errors).forEach((key) => {
+        errors.push(`${key} : ${error.errors[key].message}`);
+      });
+      logError(error);
+      return res
+        .status(500)
+        .json({ success: false, msg: validationErrorMessage(errors) });
+    } else {
+      logError(error);
+      return res.status(500).json({ success: false, msg: error.message });
+    }
   }
 };
