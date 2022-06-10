@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
 const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$/i;
 const passwordRegex =
@@ -159,18 +159,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return false;
 };
 const User = mongoose.model("user", userSchema);
-userSchema.pre("save", async function (next) {
-  try {
-    const savedUsers = await User.find();
-    /* for (let user in savedUsers) {
-      logInfo(user.userName);
-    } */
-    logInfo(savedUsers);
-  } catch (error) {
-    logError(error);
-    next(error);
-  }
-});
 //Custom validators to check uniqueness of email & userName
 userSchema.path("email").validate(async function (value) {
   const emailCount = await User.count({
