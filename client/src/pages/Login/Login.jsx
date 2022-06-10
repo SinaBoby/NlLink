@@ -68,9 +68,14 @@ const Login = () => {
           name="userName"
           type="userName"
           value={userName}
+          title="Required field. Should follow the pattern"
+          minLength="3"
+          maxLength="64"
+          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$"
           onChange={(value) => setUserName(value)}
           className="login-input"
           data-testid={TEST_ID.userNameInput}
+          required
         />
       </InputFieldContainer>
       <InputFieldContainer>
@@ -79,9 +84,13 @@ const Login = () => {
           name="password"
           value={password}
           type="password"
+          title="Required field"
+          minLength="6"
+          maxLength="64"
           onChange={(value) => setPassword(value)}
           className="login-input"
           data-testid={TEST_ID.passwordInput}
+          required
         />
       </InputFieldContainer>
       <Button className="btn-block" type={"submit"}>

@@ -1,10 +1,14 @@
 .first-name-wrapper,
-.password-wrapper {
+.password-wrapper,
+.email-input-wrapper,
+.userType-input-wrapper {
   width: 45%;
 }
 
 .last-name-wrapper,
-.confirm-password-wrapper {
+.confirm-password-wrapper,
+.phone-input-wrapper,
+.birthDay-input-wrapper {
   width: 45%;
   margin-left: auto;
 }
@@ -33,7 +37,8 @@
   margin-bottom: 0.5rem;
 }
 
-.password-wrapper {
+.password-wrapper,
+.username-wrapper {
   position: relative;
 }
 
