@@ -12,13 +12,11 @@ import RecentConnections from "../../components/RecentConnections/RecentConnecti
 
 const Dashboard = () => {
   const [userActivities, setUserActivities] = useState(null);
+  const { userDetails, isMeLoading, meError, cancelMeFetch } = useUserDetails();
   const [userRecommendedActivities, setUserRecommendedActivities] =
     useState(null);
-  const { userDetails, getMe, isMeLoading, meError, cancelMeFetch } =
-    useUserDetails();
-  useEffect(() => {
-    getMe();
 
+  useEffect(() => {
     return cancelMeFetch;
   }, []);
 
