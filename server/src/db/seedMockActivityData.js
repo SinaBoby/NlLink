@@ -48,6 +48,22 @@ const activitiesData = [
     },
     maxPeople: 25,
   },
+  {
+    title: "Amsterdam Canal Cruise",
+    category: "City Tour",
+    createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
+    startAt: new Date("2022-08-27"),
+    endAt: new Date("2022-08-27"),
+    description:
+      "Cruise down the famous canals of Amsterdam during this 60-minute (for travel date before 1 July duration of 75 min) boat tour. Hop aboard the classic wooden saloon boat and sit back and enjoy the beautiful city pass you by. See landmarks while nibbling on Dutch cheese and having a drink.",
+    joinedBy: [],
+    location: {
+      city: "Amsterdam",
+      street: "museumplein",
+      postCode: "6789BC",
+    },
+    maxPeople: 35,
+  },
 ];
 
 const seedActivityCollection = async () => {

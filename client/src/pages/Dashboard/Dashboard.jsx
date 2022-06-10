@@ -11,6 +11,8 @@ import Error from "../../components/Error/Error";
 
 const Dashboard = () => {
   const [userActivities, setUserActivities] = useState(null);
+  const [userRecommendedActivities, setUserRecommendedActivities] =
+    useState(null);
   const { userDetails, getMe, isMeLoading, meError, cancelMeFetch } =
     useUserDetails();
   useEffect(() => {
@@ -20,7 +22,8 @@ const Dashboard = () => {
   }, []);
 
   const onSuccess = (response) => {
-    setUserActivities(response.result);
+    setUserActivities(response.result.upcomingActivities);
+    setUserRecommendedActivities(response.result.recommendedActivities);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/activities",
@@ -62,7 +65,9 @@ const Dashboard = () => {
           {userDetails && (
             <h3 className="activity-wrapper-header"> Recommended Activities</h3>
           )}
-          {userActivities && <ActivitySlider activitiesData={userActivities} />}
+          {userRecommendedActivities && (
+            <ActivitySlider activitiesData={userRecommendedActivities} />
+          )}
         </div>
       </div>
       <div className="latest-news-wrapper">
