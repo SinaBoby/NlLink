@@ -21,3 +21,18 @@
 .empty-users-fallback {
   padding: 1rem;
 }
+
+@media screen and (max-width: 900px) {
+  .card-wrapper {
+    flex-direction: column;
+  }
+
+  .btn-wrapper {
+    align-self: flex-start;
+  }
+
+  .btn-inline {
+    width: max-content;
+    padding: 0.5rem;
+  }
+}
