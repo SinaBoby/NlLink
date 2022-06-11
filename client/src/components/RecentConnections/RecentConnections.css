@@ -13,11 +13,16 @@
 
 .recent-connections-title {
   text-align: center;
+  padding: 1rem;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.5);
 }
 
 @media screen and (max-width: 1000px) {
   .recent-connections {
     width: 100%;
+  }
+
+  .recent-connections-title {
+    padding: 2rem;
   }
 }

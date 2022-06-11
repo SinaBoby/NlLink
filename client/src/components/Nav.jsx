@@ -7,11 +7,13 @@ import { AuthContext } from "../AuthContext";
 import TEST_ID from "./Nav.testid";
 import Dropdown from "./Dropdown";
 import useUserDetails from "./../hooks/useUserDetails";
+import { useWindowSize } from "./../hooks/useWindowSize";
 
 const Nav = () => {
   const [isDropdown, setDropdown] = useState();
   const { isAuthenticated } = useContext(AuthContext);
   const { userDetails } = useUserDetails();
+  const [width] = useWindowSize();
   const toggleDropdown = () => setDropdown((prev) => !prev);
 
   return (
@@ -66,7 +68,9 @@ const Nav = () => {
             <img src={burgerIcon} alt={"burger menu icon"} />
           </button>
         </div>
-        {isDropdown && <Dropdown />}
+        {isDropdown && width < 1080 && (
+          <Dropdown closeDropdown={() => setDropdown(false)} />
+        )}
       </div>
     </>
   );
