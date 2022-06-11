@@ -20,7 +20,9 @@ const Logout = () => {
       credentials: "include",
     });
 
-    return cancelFetch;
+    return () => {
+      cancelFetch();
+    };
   }, []);
 
   return (

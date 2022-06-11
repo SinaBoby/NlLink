@@ -2,7 +2,7 @@ import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
 
-export const getUserDetails = async (req, res) => {
+/* export const getUserDetails = async (req, res) => {
   try {
     const userName = req.userName;
     if (!userName) {
@@ -21,7 +21,7 @@ export const getUserDetails = async (req, res) => {
       .status(500)
       .json({ success: false, msg: "Server Error, try again later" });
   }
-};
+}; */
 
 export const getLoggedInUser = async (req, res) => {
   try {
@@ -46,10 +46,14 @@ export const getLoggedInUser = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    if ("token" in req.cookies) {
-      return res.status(200).clearCookie("token").json({
-        success: true,
-      });
+    if ("token" in req.cookies && "userStatus" in req.cookies) {
+      return res
+        .status(200)
+        .clearCookie("token")
+        .clearCookie("userStatus")
+        .json({
+          success: true,
+        });
     } else {
       return res.status(401).json({
         success: false,
