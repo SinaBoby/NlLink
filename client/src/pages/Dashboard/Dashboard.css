@@ -75,11 +75,12 @@
   padding-left: 5%;
   padding-top: 2%;
 }
+
 .connections-status-wrapper {
   position: relative;
   width: 100%;
   background-color: #f0ebeb;
-  height: 400px;
+  height: 500px;
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
@@ -91,13 +92,6 @@
   height: 100%;
 }
 
-/* .connections-status-img {
-  object-fit: cover;
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-} */
 .connections-status-img {
   width: 100%;
   height: 100%;
@@ -124,6 +118,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 .connections-status-details-wrapper
   .recent-connections
   .recent-connections-list {
@@ -146,6 +141,7 @@
   padding-left: 5%;
   padding-top: 2%;
   text-align: left;
+  font-size: 1.3rem;
 }
 
 .connections-status-details-wrapper
@@ -156,9 +152,6 @@
 .connections-status-details-wrapper .recent-connections .card {
   width: 90%;
   height: 100px;
-  /* border: 1px solid #2f2f2f; */
-  /* background-color: hsl(220, 23%, 23%);
-  color: #ffffff; */
   margin: 10px auto;
   transition-property: width;
   transition-duration: 300ms;
@@ -213,12 +206,12 @@
 
   .connections-status-details-wrapper {
     width: 100%;
-    height: 300px;
+    height: 60%;
   }
 
   .connections-status-img-wrapper {
     width: 100%;
-    height: 200px;
+    height: 40%;
   }
 
   .connections-status-img-wrapper img {
