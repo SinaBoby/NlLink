@@ -1,6 +1,6 @@
 import React from "react";
-import "./Input.css";
 import PropTypes from "prop-types";
+import "./Input.css";
 
 const Input = ({ name, value, onChange, ...rest }) => {
   return (

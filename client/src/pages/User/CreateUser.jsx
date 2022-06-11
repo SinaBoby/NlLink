@@ -17,7 +17,7 @@ import { logInfo } from "../../../../server/src/util/logging";
 
 const PasswordHint = () => {
   return (
-    <div className="password-hint">
+    <div className="hint password-hint">
       <h3> Password must contain at least:</h3>
       <ul>
         <li>Be 6 characters or longer</li>
@@ -31,7 +31,7 @@ const PasswordHint = () => {
 };
 const UserHint = () => {
   return (
-    <div className="password-hint">
+    <div className="hint userName-hint">
       <h3> Username should follow this pattern:</h3>
       <ul>
         <li>Minimum 3 and maximum 23 characters </li>
@@ -265,8 +265,6 @@ const CreateUser = () => {
           placeholder="select the country & enter your phone number"
           onChange={(value) => setPhoneNumber(value)}
           data-testid={TEST_ID.phoneNumberInput}
-          className="input"
-          style={{ padding: "0 0 0 0.8rem" }}
           required
         />
       </InputFieldContainer>
