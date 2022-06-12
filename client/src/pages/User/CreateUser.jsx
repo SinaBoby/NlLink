@@ -13,7 +13,7 @@ import Spinner from "./../../components/Spinner/Spinner";
 import { AuthContext } from "../../AuthContext";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { logInfo } from "../../../../server/src/util/logging";
+import Error from "../../components/Error/Error";
 
 const PasswordHint = () => {
   return (
@@ -114,10 +114,6 @@ const CreateUser = () => {
     }
     return age;
   }
-  useEffect(() => {
-    logInfo(getAge(birthDay));
-  });
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -127,19 +123,15 @@ const CreateUser = () => {
       getAge(birthDay) >= 18
     ) {
       setPassError(
-        new Error(
-          "Passwords you entered are not same & outside the pattern please try again"
-        )
+        "Passwords you entered are not same & outside the pattern please try again"
       );
-      setUserError(new Error("Please check the userName pattern again"));
+      setUserError("Please check the userName pattern again");
     } else if (password !== confirmPassword) {
-      setPassError(
-        new Error("Password you entered are not same please try again")
-      );
+      setPassError("Password you entered are not same please try again");
     } else if (!strongRegex.test(password)) {
-      setPassError(new Error("Please check the password pattern again"));
+      setPassError("Please check the password pattern again");
     } else if (getAge(birthDay) < 18) {
-      setAgeError(new Error("You need to be above 18 in order to sign up"));
+      setAgeError("You need to be above 18 in order to sign up");
     } else {
       performFetch({
         method: "POST",
@@ -346,10 +338,10 @@ const CreateUser = () => {
       >
         Create new account
       </Button>
-      {statusComponent}
-      {passError && <h2>{passError.toString()}</h2>}
-      {userError && <h2>{userError.toString()}</h2>}
-      {ageError && <h2>{ageError.toString()}</h2>}
+      {statusComponent && <Error>{statusComponent}</Error>}
+      {passError && <Error>{passError}</Error>}
+      {userError && <Error>{userError}</Error>}
+      {ageError && <Error>{ageError}</Error>}
     </Form>
   );
 };

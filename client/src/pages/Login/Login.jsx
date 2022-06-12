@@ -3,6 +3,7 @@ import Input from "../../components/Forms/Input";
 import Label from "../../components/Forms/Label";
 import Form from "../../components/Forms/Form";
 import Button from "../../components/Button";
+import Error from "../../components/Error/Error";
 import useFetch from "../../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
@@ -53,9 +54,9 @@ const Login = () => {
   let statusComponent = null;
   if (error != null) {
     statusComponent = (
-      <div data-testid={TEST_ID.errorContainer}>
+      <Error data-testid={TEST_ID.errorContainer}>
         Error while trying to create user: {error.toString()}
-      </div>
+      </Error>
     );
   } else if (isLoading) {
     statusComponent = <Spinner />;
@@ -114,7 +115,7 @@ const Login = () => {
           </Button>
         </div>
       </div>
-      {statusComponent}
+      {statusComponent && statusComponent}
     </Form>
   );
 };

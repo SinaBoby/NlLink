@@ -1,7 +1,7 @@
 import express from "express";
 import {
   createUser,
-  getUserDetails,
+  // getUserDetails,
   getLoggedInUser,
   logout,
 } from "../controllers/user.js";
@@ -11,7 +11,7 @@ import getNews from "../controllers/news.js";
 import getUserRecentChat from "../controllers/userChat.js";
 const userRouter = express.Router();
 
-userRouter.get("/", withAuth, getUserDetails);
+//userRouter.get("/", withAuth, getUserDetails);
 userRouter.post("/logout", withAuth, logout);
 userRouter.get("/me", withAuth, getLoggedInUser);
 userRouter.post("/create", createUser);

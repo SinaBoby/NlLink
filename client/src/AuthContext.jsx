@@ -5,10 +5,10 @@ import { getCookie } from "./util/getCookie";
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const logout = (cb) => {
-    document.cookie =
-      "userStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    /* document.cookie =
+      "userStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
     setIsAuthenticated(isUserAuthenticated());
-    localStorage.removeItem("user");
+    //localStorage.removeItem("user");
     cb();
   };
 
@@ -18,11 +18,11 @@ export const AuthProvider = ({ children }) => {
       1 hour from now
     */
 
-    const now = new Date();
+    /* const now = new Date();
 
     now.setTime(now.getTime() + 60 * 60 * 1000);
     const expirationDate = `expires=${now.toUTCString()}`;
-    document.cookie = `userStatus=authenticated;${expirationDate};path=/`;
+    document.cookie = `userStatus=authenticated;${expirationDate};path=/`; */
     setIsAuthenticated(isUserAuthenticated());
     cb();
   };

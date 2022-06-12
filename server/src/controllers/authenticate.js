@@ -33,6 +33,7 @@ const authenticate = function (req, res) {
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "1h",
           });
+          const userStatus = "authenticated";
           res.status(200);
           res.set("Access-Control-Allow-Origin", req.headers.origin);
           res.set("Access-Control-Allow-Credentials", "true");
@@ -42,6 +43,11 @@ const authenticate = function (req, res) {
           );
           res.cookie("token", token, {
             httpOnly: true,
+            origin: req.headers.origin,
+            expires: cookieExpIn,
+          });
+          res.cookie("userStatus", userStatus, {
+            httpOnly: false,
             origin: req.headers.origin,
             expires: cookieExpIn,
           });
