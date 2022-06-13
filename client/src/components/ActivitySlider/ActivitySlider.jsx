@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BtnSlider from "./BtnSlider";
 import "./ActivitySlider.css";
 import PropTypes from "prop-types";
+// import "../../images/city-tour.jpg";
 
 const ActivitySlider = ({ activitiesData }) => {
   const [slideIndex, setSlideIndex] = useState(1);
@@ -21,10 +22,15 @@ const ActivitySlider = ({ activitiesData }) => {
       setSlideIndex(activitiesData.length);
     }
   };
+
   return (
     <>
       {activitiesData.length > 0 && (
         <div className="slider-container">
+          <div className="activity-count-wrapper">
+            {" "}
+            {slideIndex}/{activitiesData.length}
+          </div>
           {activitiesData.map((activity, index) => {
             return (
               <div
@@ -32,19 +38,20 @@ const ActivitySlider = ({ activitiesData }) => {
                 className={
                   slideIndex === index + 1 ? "slide active-anim" : "slide"
                 }
+                style={{
+                  backgroundImage: `url(../../images/${activity.category
+                    .replace(/\s+/g, "-")
+                    .toLowerCase()}.jpg)`,
+                }}
               >
                 <h2 className="activity-title">{activity.title}</h2>
                 <h3>{activity.category}</h3>
                 <p className="activity-description">{activity.description}</p>
+                <BtnSlider moveSlide={nextSlide} direction={"next"} />
+                <BtnSlider moveSlide={prevSlide} direction={"prev"} />
               </div>
             );
           })}
-          <BtnSlider moveSlide={nextSlide} direction={"next"} />
-          <BtnSlider moveSlide={prevSlide} direction={"prev"} />
-          <div className="activity-count-wrapper">
-            {" "}
-            {slideIndex}/{activitiesData.length}
-          </div>
         </div>
       )}
       {activitiesData.length === 0 && (
@@ -57,27 +64,6 @@ const ActivitySlider = ({ activitiesData }) => {
         </div>
       )}
     </>
-
-    // <div className="slider-container">
-    //   {activitiesData.map((activity, index) => {
-    //   return (
-    //     <div
-    //       key={activity.title}
-    //       className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
-    //     >
-    //       <h2>{activity.title}</h2>
-    //       <h3>{activity.category}</h3>
-    //       <p className="activity-description">{activity.description}</p>
-    //     </div>
-    //   );
-    // })}
-    // <BtnSlider moveSlide={nextSlide} direction={"next"} />
-    // <BtnSlider moveSlide={prevSlide} direction={"prev"} />
-    // <div className="activity-count-wrapper">
-    //   {" "}
-    //   {slideIndex}/{activitiesData.length}
-    // </div>
-    // </div>
   );
 };
 

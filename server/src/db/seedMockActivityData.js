@@ -4,7 +4,7 @@ import Activity from "../models/Activity.js";
 const activitiesData = [
   {
     title: "City Tour Activity",
-    category: "Tour",
+    category: "Food",
     createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
     startAt: new Date("2022-08-22"),
     endAt: new Date("2022-08-22"),
@@ -50,7 +50,71 @@ const activitiesData = [
   },
   {
     title: "Amsterdam Canal Cruise",
-    category: "City Tour",
+    category: "Sport",
+    createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
+    startAt: new Date("2022-08-27"),
+    endAt: new Date("2022-08-27"),
+    description:
+      "Cruise down the famous canals of Amsterdam during this 60-minute (for travel date before 1 July duration of 75 min) boat tour. Hop aboard the classic wooden saloon boat and sit back and enjoy the beautiful city pass you by. See landmarks while nibbling on Dutch cheese and having a drink.",
+    joinedBy: [mongoose.Types.ObjectId("629d2140d0fac134a75d3c69")],
+    location: {
+      city: "Amsterdam",
+      street: "museumplein",
+      postCode: "6789BC",
+    },
+    maxPeople: 35,
+  },
+  {
+    title: "Amsterdam Canal Cruise",
+    category: "Training",
+    createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
+    startAt: new Date("2022-08-27"),
+    endAt: new Date("2022-08-27"),
+    description:
+      "Cruise down the famous canals of Amsterdam during this 60-minute (for travel date before 1 July duration of 75 min) boat tour. Hop aboard the classic wooden saloon boat and sit back and enjoy the beautiful city pass you by. See landmarks while nibbling on Dutch cheese and having a drink.",
+    joinedBy: [],
+    location: {
+      city: "Amsterdam",
+      street: "museumplein",
+      postCode: "6789BC",
+    },
+    maxPeople: 35,
+  },
+  {
+    title: "Amsterdam Canal Cruise",
+    category: "Music",
+    createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
+    startAt: new Date("2022-08-27"),
+    endAt: new Date("2022-08-27"),
+    description:
+      "Cruise down the famous canals of Amsterdam during this 60-minute (for travel date before 1 July duration of 75 min) boat tour. Hop aboard the classic wooden saloon boat and sit back and enjoy the beautiful city pass you by. See landmarks while nibbling on Dutch cheese and having a drink.",
+    joinedBy: [],
+    location: {
+      city: "Amsterdam",
+      street: "museumplein",
+      postCode: "6789BC",
+    },
+    maxPeople: 35,
+  },
+  {
+    title: "Amsterdam Canal Cruise",
+    category: "Volunteer Work",
+    createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
+    startAt: new Date("2022-08-27"),
+    endAt: new Date("2022-08-27"),
+    description:
+      "Cruise down the famous canals of Amsterdam during this 60-minute (for travel date before 1 July duration of 75 min) boat tour. Hop aboard the classic wooden saloon boat and sit back and enjoy the beautiful city pass you by. See landmarks while nibbling on Dutch cheese and having a drink.",
+    joinedBy: [],
+    location: {
+      city: "Amsterdam",
+      street: "museumplein",
+      postCode: "6789BC",
+    },
+    maxPeople: 35,
+  },
+  {
+    title: "Amsterdam Canal Cruise",
+    category: "Language",
     createdBy: mongoose.Types.ObjectId("629d2140d0fac134a75d3c69"),
     startAt: new Date("2022-08-27"),
     endAt: new Date("2022-08-27"),
