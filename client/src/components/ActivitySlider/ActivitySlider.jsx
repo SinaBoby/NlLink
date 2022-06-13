@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BtnSlider from "./BtnSlider";
 import "./ActivitySlider.css";
 import PropTypes from "prop-types";
-// import "../../images/city-tour.jpg";
+import getCategoryImageUrl from "../../util/getCategoryImageUrl";
 
 const ActivitySlider = ({ activitiesData }) => {
   const [slideIndex, setSlideIndex] = useState(1);
@@ -34,14 +34,14 @@ const ActivitySlider = ({ activitiesData }) => {
           {activitiesData.map((activity, index) => {
             return (
               <div
-                key={activity.title}
+                key={index}
                 className={
                   slideIndex === index + 1 ? "slide active-anim" : "slide"
                 }
                 style={{
-                  backgroundImage: `url(../../images/${activity.category
-                    .replace(/\s+/g, "-")
-                    .toLowerCase()}.jpg)`,
+                  backgroundImage: `url(${getCategoryImageUrl(
+                    activity.category
+                  )})`,
                 }}
               >
                 <h2 className="activity-title">{activity.title}</h2>
