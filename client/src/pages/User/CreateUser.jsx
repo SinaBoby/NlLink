@@ -297,15 +297,7 @@ const CreateUser = () => {
       <InputFieldContainer className="email-input-wrapper">
         <Label>
           Email address <span className="required-star">*</span>{" "}
-          <span>
-            {emailError &&
-              toast.error(emailError, {
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })}
-          </span>
+          <span>{emailError && <Error>{emailError}</Error>}</span>
         </Label>
         <Input
           name="email"
