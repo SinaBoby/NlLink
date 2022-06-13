@@ -30,7 +30,11 @@
   background-color: hsl(0, 0%, 100%);
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
 }
-
+.hint-sign {
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+}
 .password-hint {
   left: 5rem;
 }
@@ -52,18 +56,33 @@
 
 .PhoneInput {
   width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.31rem 0.8rem;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .PhoneInputInput {
   width: 100%;
   min-height: 1.8rem;
-  padding: 0.8rem;
+
   outline: none;
-  border-radius: 0.5rem;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+
+  overflow-x: scroll;
   border: none;
 }
-
+.PhoneInputCountrySelect {
+  background-color: transparent;
+}
+form span p.error-msg {
+  color: red;
+  font-size: 0.9rem;
+  width: 100%;
+  text-align: center;
+}
+.required-star {
+  color: red;
+  padding: 2px;
+}
 @media screen and (max-width: 900px) {
   .first-name-wrapper,
   .last-name-wrapper {

@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
 import { logError } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
-const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$/i;
+const userNameRegex = /^[a-zA-Z][a-zA-Z0-9-_@.]{2,64}$/i;
 const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,64})/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})/;
 const userSchema = new mongoose.Schema(
   {
     firstName: {
