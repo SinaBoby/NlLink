@@ -54,20 +54,30 @@ const CreateUser = () => {
   const [userName, setUserName] = useState("");
   const [isHint, setIsHint] = useState(false);
   const [userHint, setUserHint] = useState(false);
-  const [validUsername, setValidUserName] = useState(false);
+  const [isValidUsername, setIsValidUserName] = useState(false);
   const [userError, setUserError] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isValidPassword, setIsValidPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [isValidPhone, setIsValidPhone] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [userType, setUserType] = useState("NewComer");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passError, setPassError] = useState("");
   const [ageError, setAgeError] = useState("");
+  const [isValidAge, setIsValidAge] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,64})"
   );
-  const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$");
+  const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_@.]{2,64}$");
+  const emailRegex = new RegExp(
+    "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
+  );
+  const phoneRegex = /[+|00][0-9]{7,15}/;
   const onSuccess = () => {
     clearForm();
     navigate("/login");
@@ -76,7 +86,31 @@ const CreateUser = () => {
     "/user/create",
     onSuccess
   );
-
+  const userNameValidation = () => {
+    isValidUsername
+      ? setUserError("")
+      : setUserError("Please check the username pattern again.");
+  };
+  const passwordValidation = () => {
+    isValidPassword
+      ? setPassError("")
+      : setPassError("Please check the password pattern again.");
+  };
+  const emailValidation = () => {
+    isValidEmail
+      ? setEmailError("")
+      : setEmailError("Please enter a valid Email address.");
+  };
+  const phoneValidation = () => {
+    isValidPhone
+      ? setPhoneError("")
+      : setPhoneError("Please enter a valid Phone number.");
+  };
+  const ageValidation = () => {
+    isValidAge
+      ? setAgeError("")
+      : setAgeError("You need to be above 18 in order to sign up.");
+  };
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
@@ -91,7 +125,16 @@ const CreateUser = () => {
     if (userError) {
       setTimeout(() => setUserError(null), 3000);
     }
-  }, [passError, userError]);
+    if (emailError) {
+      setTimeout(() => setEmailError(null), 3000);
+    }
+    if (phoneError) {
+      setTimeout(() => setPhoneError(""), 3000);
+    }
+    if (ageError) {
+      setTimeout(() => setAgeError(""), 3000);
+    }
+  }, [passError, userError, emailError, phoneError, ageError]);
 
   const clearForm = () => {
     setFirstName("");
@@ -119,7 +162,7 @@ const CreateUser = () => {
     if (
       password !== confirmPassword &&
       !strongRegex.test(password) &&
-      !validUsername &&
+      !isValidUsername &&
       getAge(birthDay) >= 18
     ) {
       setPassError(
@@ -165,9 +208,9 @@ const CreateUser = () => {
   let statusComponent = null;
   if (error != null) {
     statusComponent = (
-      <div data-testid={TEST_ID.errorContainer}>
+      <Error data-testid={TEST_ID.errorContainer}>
         Error while trying to create user: {error}
-      </div>
+      </Error>
     );
   } else if (isLoading) {
     statusComponent = <Spinner data-testid={TEST_ID.loadingContainer} />;
@@ -176,11 +219,13 @@ const CreateUser = () => {
   return (
     <Form onSubmit={handleSubmit} title="Join NlLink">
       <InputFieldContainer className="first-name-wrapper">
-        <Label>First Name</Label>
+        <Label>
+          First Name <span className="required-star">*</span>
+        </Label>
         <Input
           name="firstName"
           value={firstName}
-          placeholder="Required"
+          placeholder="First Name"
           maxLength="100"
           title="Required field"
           onChange={(value) => setFirstName(value)}
@@ -189,48 +234,61 @@ const CreateUser = () => {
         />
       </InputFieldContainer>
       <InputFieldContainer className="last-name-wrapper">
-        <Label>Last Name</Label>
+        <Label>
+          Last Name <span className="required-star">*</span>
+        </Label>
         <Input
           name="lastName"
           value={lastName}
           maxLength="100"
-          placeholder="Required"
+          placeholder="Last Name"
           title="Required field"
           onChange={(value) => setLastName(value)}
           data-testid={TEST_ID.lastNameInput}
           required
         />
       </InputFieldContainer>
-      <InputFieldContainer
-        className="username-wrapper"
-        onMouseEnter={() => setUserHint(true)}
-        onMouseLeave={() => setUserHint(false)}
-      >
-        <Label>Username</Label>
+      <InputFieldContainer className="username-wrapper">
+        <Label>
+          Username <span className="required-star">* </span>{" "}
+          <span
+            className="hint-sign"
+            onMouseEnter={() => setUserHint(true)}
+            onMouseLeave={() => setUserHint(false)}
+          >
+            {" "}
+            ?
+          </span>
+          <span>{userError && <Error>{userError}</Error>}</span>
+        </Label>
         <Input
           name="userName"
           value={userName}
           minLength="3"
           maxLength="64"
-          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$"
-          placeholder="Required, should not be used before"
+          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{2,64}$"
+          placeholder="Username, should not be used before."
           title="Required field, should not be used before"
           onChange={(value) => {
             setUserName(value);
             USER_REGEX.test(value)
-              ? setValidUserName(true)
-              : setValidUserName(false);
+              ? setIsValidUserName(true)
+              : setIsValidUserName(false);
           }}
+          onBlur={userNameValidation}
           data-testid={TEST_ID.userNameInput}
           style={{
-            background: validUsername ? "lightGreen" : "white",
+            background: isValidUsername ? "lightGreen" : "white",
           }}
           required
         />
         {userHint && <UserHint />}
       </InputFieldContainer>
       <InputFieldContainer className="email-input-wrapper">
-        <Label>Email Address</Label>
+        <Label>
+          Email address <span className="required-star">*</span>{" "}
+          <span>{emailError && <Error>{emailError}</Error>}</span>
+        </Label>
         <Input
           name="email"
           type="email"
@@ -239,59 +297,99 @@ const CreateUser = () => {
           title="Required field, please enter a valid email address"
           value={email}
           pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-          placeholder="Required, foo@domain.com"
-          onChange={(value) => setEmail(value)}
+          placeholder="foo@domain.com"
+          onChange={(value) => {
+            setEmail(value);
+            emailRegex.test(value)
+              ? setIsValidEmail(true)
+              : setIsValidEmail(false);
+          }}
+          onBlur={emailValidation}
+          style={{
+            background: isValidEmail ? "lightGreen" : "white",
+          }}
           data-testid={TEST_ID.emailInput}
           required
         />
       </InputFieldContainer>
       <InputFieldContainer className="phone-input-wrapper">
-        <Label>Phone Number</Label>
+        <Label>
+          Mobile Number <span className="required-star">*</span>{" "}
+          <span>{phoneError && <Error>{phoneError}</Error>}</span>
+        </Label>
         <PhoneInput
           name="phoneNumber"
           value={phoneNumber}
           defaultCountry="NL"
           minLength="8"
           maxLength="16"
-          title="Required field, please enter a valid mobile phone number"
-          placeholder="select the country & enter your phone number"
-          onChange={(value) => setPhoneNumber(value)}
+          title="Required field, please enter a valid mobile number"
+          placeholder="First select the country."
+          onChange={(value) => {
+            setPhoneNumber(value);
+
+            phoneRegex.test(phoneNumber)
+              ? setIsValidPhone(true)
+              : setIsValidPhone(false);
+          }}
+          onBlur={phoneValidation}
+          style={{
+            background: isValidPhone ? "lightGreen" : "white",
+          }}
           data-testid={TEST_ID.phoneNumberInput}
           required
         />
       </InputFieldContainer>
       <InputFieldContainer className="userType-input-wrapper">
-        <Label>User Type</Label>
+        <Label>
+          User type <span className="required-star">*</span>{" "}
+        </Label>
         <Select
           value={userType}
           title="Required field"
           onChange={(value) => setUserType(value)}
           options={[
-            { value: "New comer", text: "New comer" },
+            { value: "Newcomer", text: "Newcomer" },
             { value: "Local", text: "Local" },
           ]}
           required
         />
       </InputFieldContainer>
       <InputFieldContainer className="birthDay-input-wrapper">
-        <Label>Birth Day</Label>
+        <Label>
+          Date of birth <span className="required-star">*</span>{" "}
+          <span>{ageError && <Error>{ageError}</Error>}</span>
+        </Label>
         <Input
           name="birthDay"
           title="Required field, You need to be above 18!"
           type="date"
           value={birthDay}
-          onChange={(value) => setBirthDay(value)}
+          onChange={(value) => {
+            setBirthDay(value);
+            getAge(birthDay) >= 18 ? setIsValidAge(true) : setIsValidAge(false);
+          }}
+          onBlur={ageValidation}
+          style={{
+            background: isValidAge ? "lightGreen" : "white",
+          }}
           data-testid={TEST_ID.birthDayInput}
           required
         />
       </InputFieldContainer>
 
-      <InputFieldContainer
-        className="password-wrapper"
-        onMouseEnter={() => setIsHint(true)}
-        onMouseLeave={() => setIsHint(false)}
-      >
-        <Label>Password ?</Label>
+      <InputFieldContainer className="password-wrapper">
+        <Label>
+          Password <span className="required-star">*</span>{" "}
+          <span
+            className="hint-sign"
+            onMouseEnter={() => setIsHint(true)}
+            onMouseLeave={() => setIsHint(false)}
+          >
+            ?{isHint && <PasswordHint />}
+          </span>
+          <span>{passError && <Error>{passError}</Error>}</span>
+        </Label>
         <Input
           name="password"
           title="Required field"
@@ -299,18 +397,25 @@ const CreateUser = () => {
           type="password"
           minLength="6"
           maxLength="64"
-          onChange={(value) => setPassword(value)}
+          onChange={(value) => {
+            setPassword(value);
+            strongRegex.test(value)
+              ? setIsValidPassword(true)
+              : setIsValidPassword(false);
+          }}
+          onBlur={passwordValidation}
           data-testid={TEST_ID.passwordInput}
           id="passwordInput"
           style={{
-            background: strongRegex.test(password) ? "lightGreen" : "white",
+            background: isValidPassword ? "lightGreen" : "white",
           }}
           required
         />
-        {isHint && <PasswordHint />}
       </InputFieldContainer>
       <InputFieldContainer className="confirm-password-wrapper">
-        <Label>Confirm Password</Label>
+        <Label>
+          Confirm password <span className="required-star">*</span>{" "}
+        </Label>
         <Input
           name="confirmPassword"
           value={confirmPassword}
@@ -338,10 +443,7 @@ const CreateUser = () => {
       >
         Create new account
       </Button>
-      {statusComponent && <Error>{statusComponent}</Error>}
-      {passError && <Error>{passError}</Error>}
-      {userError && <Error>{userError}</Error>}
-      {ageError && <Error>{ageError}</Error>}
+      {statusComponent && statusComponent}
     </Form>
   );
 };
