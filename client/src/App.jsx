@@ -15,13 +15,25 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
 import Connect from "./pages/Connect/Connect";
 import RecommendedConnections from "./pages/RecommendedConnections/RecommendedConnections";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <>
       <AuthProvider>
         <UserDetailsProvider>
           <Nav />
+          <ToastContainer
+            position="bottom-left"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/news" element={<News />} />

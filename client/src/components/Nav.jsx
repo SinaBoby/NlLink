@@ -60,7 +60,7 @@ const Nav = () => {
               </>
             ) : (
               <Link to="/login" className="navbar-link  btn-link">
-                Register/Sign in
+                Sign in
               </Link>
             )}
           </div>

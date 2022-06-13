@@ -14,11 +14,13 @@ import { AuthContext } from "../../AuthContext";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Error from "../../components/Error/Error";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PasswordHint = () => {
   return (
     <div className="hint password-hint">
-      <h3> Password must contain at least:</h3>
+      <h3> Password Requirements:</h3>
       <ul>
         <li>Be 6 characters or longer</li>
         <li>1 lowercase alphabetical character</li>
@@ -32,7 +34,7 @@ const PasswordHint = () => {
 const UserHint = () => {
   return (
     <div className="hint userName-hint">
-      <h3> Username should follow this pattern:</h3>
+      <h3> Username Requirements:</h3>
       <ul>
         <li>Minimum 3 and maximum 23 characters </li>
         <li>First character should be alphabetical</li>
@@ -71,7 +73,7 @@ const CreateUser = () => {
   const [ageError, setAgeError] = useState("");
   const [isValidAge, setIsValidAge] = useState("");
   const strongRegex = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,64})"
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})"
   );
   const USER_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9-_@.]{2,64}$");
   const emailRegex = new RegExp(
@@ -259,7 +261,15 @@ const CreateUser = () => {
             {" "}
             ?
           </span>
-          <span>{userError && <Error>{userError}</Error>}</span>
+          <span>
+            {userError &&
+              toast.error(userError, {
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })}
+          </span>
         </Label>
         <Input
           name="userName"
@@ -287,7 +297,15 @@ const CreateUser = () => {
       <InputFieldContainer className="email-input-wrapper">
         <Label>
           Email address <span className="required-star">*</span>{" "}
-          <span>{emailError && <Error>{emailError}</Error>}</span>
+          <span>
+            {emailError &&
+              toast.error(emailError, {
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })}
+          </span>
         </Label>
         <Input
           name="email"
@@ -315,7 +333,15 @@ const CreateUser = () => {
       <InputFieldContainer className="phone-input-wrapper">
         <Label>
           Mobile Number <span className="required-star">*</span>{" "}
-          <span>{phoneError && <Error>{phoneError}</Error>}</span>
+          <span>
+            {phoneError &&
+              toast.error(phoneError, {
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })}
+          </span>
         </Label>
         <PhoneInput
           name="phoneNumber"
@@ -358,7 +384,15 @@ const CreateUser = () => {
       <InputFieldContainer className="birthDay-input-wrapper">
         <Label>
           Date of birth <span className="required-star">*</span>{" "}
-          <span>{ageError && <Error>{ageError}</Error>}</span>
+          <span>
+            {ageError &&
+              toast.error(ageError, {
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })}
+          </span>
         </Label>
         <Input
           name="birthDay"
@@ -388,7 +422,15 @@ const CreateUser = () => {
           >
             ?{isHint && <PasswordHint />}
           </span>
-          <span>{passError && <Error>{passError}</Error>}</span>
+          <span>
+            {passError &&
+              toast.error(passError, {
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })}
+          </span>
         </Label>
         <Input
           name="password"
