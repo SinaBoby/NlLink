@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import NewsCard from "./NewsCard";
+import DashboardNewsCard from "./DashboardNewsCard";
 import useFetch from "../hooks/useFetch";
-import "./News.css";
+import "./DashboardNews.css";
 
-const News = () => {
+const DashboardNews = () => {
   const [newsData, setNewsData] = useState(null);
 
   const onSuccess = (response) => {
@@ -30,10 +30,10 @@ const News = () => {
       {error && <div>{error}</div>}
       {newsData &&
         newsData.map((news) => {
-          return <NewsCard key={news.title} news={news} />;
+          return <DashboardNewsCard key={news.title} news={news} />;
         })}
     </div>
   );
 };
 
-export default News;
+export default DashboardNews;
