@@ -10,7 +10,7 @@ const DashboardNews = () => {
     setNewsData(response.result);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/user/news",
+    "/news",
     onSuccess
   );
   useEffect(() => {

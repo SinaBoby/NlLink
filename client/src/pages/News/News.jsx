@@ -11,7 +11,7 @@ const News = () => {
     setNewsData(response.result);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/user/news",
+    "/news",
     onSuccess
   );
   useEffect(() => {
@@ -23,7 +23,7 @@ const News = () => {
   }, []);
 
   if (isLoading) {
-    return <div></div>;
+    return <div>is loading</div>;
   }
 
   return (
@@ -35,6 +35,7 @@ const News = () => {
       <div className="news-section-wrapper">
         {newsData &&
           newsData.map((news) => {
+            console.log(news);
             return <NewsCard key={news.title} news={news} />;
           })}
       </div>

@@ -25,7 +25,7 @@ const Dashboard = () => {
     setUserRecommendedActivities(response.result.recommendedActivities);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/user/activities",
+    "/activities",
     onSuccess
   );
   useEffect(() => {

@@ -7,11 +7,18 @@ const NewsCard = ({ news }) => {
     <>
       {news && (
         <div className="news-card-wrapper">
-          <img src={news.imageUrl} alt={news.title} />
-          <h2>{news.title}</h2>
-          <p>{news.content}</p>
-          <cite>{news.sources[0]}</cite>
-          <Link to="/news/details">Read More...</Link>
+          <div className="news-card-image-wrapper">
+            <img src={news.imageUrl} alt={news.title} />
+          </div>
+          <h2 className="news-card-title">{news.title}</h2>
+          <div className="news-card-content-wrapper">
+            <p className="news-card-content">{news.content}</p>
+          </div>
+          <div className="read-more-link-wrapper">
+            <Link to="/news/details" state={{ newsId: news._id }}>
+              Read More
+            </Link>
+          </div>
         </div>
       )}
     </>
