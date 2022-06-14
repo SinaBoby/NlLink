@@ -45,7 +45,7 @@ const ActivitySlider = ({ activitiesData }) => {
                 }}
               >
                 <h2 className="activity-title">{activity.title}</h2>
-                <h3>{activity.category}</h3>
+                <h3 className="activity-category">{activity.category}</h3>
                 <p className="activity-description">{activity.description}</p>
                 <BtnSlider moveSlide={nextSlide} direction={"next"} />
                 <BtnSlider moveSlide={prevSlide} direction={"prev"} />
