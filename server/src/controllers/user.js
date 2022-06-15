@@ -92,7 +92,7 @@ export const createUser = async (req, res) => {
       data: fs.readFileSync(
         path.join(__dirname + "/uploads/" + req.file.filename)
       ),
-      contentType: "image/jpeg",
+      contentType: req.file.mimetype,
     };
     let user = {
       firstName,

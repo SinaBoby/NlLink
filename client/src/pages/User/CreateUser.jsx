@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Select from "../../components/Forms/Select";
 import Input from "../../components/Forms/Input";
+import InputFile from "../../components/Forms/InputFile";
 import Label from "../../components/Forms/Label";
 import useFetch from "../../hooks/useFetch";
 import TEST_ID from "./CreateUser.testid";
@@ -15,6 +16,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Error from "../../components/Error/Error";
 import { toast } from "react-toastify";
+import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
 
 const PasswordHint = () => {
@@ -173,6 +175,9 @@ const CreateUser = () => {
     }
     return age;
   }
+  useEffect(() => {
+    logInfo(profileImage);
+  }, [profileImage]);
 
   const isFormValid = () => {
     const validationArray = [
@@ -293,19 +298,6 @@ const CreateUser = () => {
 
   return (
     <Form onSubmit={handleSubmit} title="Join NlLink">
-      <InputFieldContainer className="first-name-wrapper">
-        <Label>profile Image</Label>
-        <input
-          name="profileImage"
-          value=""
-          placeholder="Upload your Image"
-          type="file"
-          id="profileImage"
-          onChange={(e) => {
-            setProfileImage(e.target.files[0]);
-          }}
-        />
-      </InputFieldContainer>
       <InputFieldContainer className="first-name-wrapper">
         <Label>
           First Name <span className="required-star">*</span>
@@ -551,6 +543,21 @@ const CreateUser = () => {
         />
         Show password
       </label>
+      <InputFieldContainer className="profile-image-wrapper">
+        <Label for="proFileImage">profile Image</Label>
+        <InputFile
+          name="profileImage"
+          accept="image/*"
+          //className="profile-image-input"
+          //placeholder={profileImage && profileImage.name }
+          className={"input profile-image-input"}
+          id="profileImage"
+          onChange={(e) => {
+            logInfo(e.target.value);
+            setProfileImage(e.target.files[0]);
+          }}
+        />
+      </InputFieldContainer>
       <Button
         className="btn-block"
         data-testid={TEST_ID.submitButton}
