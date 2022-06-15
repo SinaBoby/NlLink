@@ -41,11 +41,24 @@ const NewsDetails = () => {
 
       {newsDetails && (
         <div className="news-details-container">
-          {" "}
-          <h2>{newsDetails.title}</h2>
-          <time>{timeDifference}</time>
-          <p>{newsDetails.content}</p>
-          <cite>{newsDetails.sources[0]}</cite>
+          <div className="news-details-banner">
+            <div className="news-details-img-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1544056113-76ec529669b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                alt=""
+              />
+            </div>
+            <div className="news-details-header">
+              <h2 className="news-details-title">{newsDetails.title}</h2>
+              <span className="news-details-category">
+                {newsDetails.category}
+              </span>
+              <time className="news-details-time">{timeDifference}</time>
+            </div>
+          </div>
+
+          <p className="news-details-content">{newsDetails.content}</p>
+          <cite className="news-details-source">{newsDetails.sources[0]}</cite>
         </div>
       )}
     </>
