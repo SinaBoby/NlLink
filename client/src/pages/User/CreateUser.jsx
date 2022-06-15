@@ -74,6 +74,7 @@ const CreateUser = () => {
   const [isValidAge, setIsValidAge] = useState("");
   const [isEqualPass, setIsEqualPass] = useState("");
   const [equalPassError, setEqualPassError] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})"
   );
@@ -244,23 +245,20 @@ const CreateUser = () => {
         progress: undefined,
       })
     } else */ if (isFormValid() === true) {
+      const data = new FormData();
+      data.append("profileImage", profileImage);
+      data.append("firstName", firstName);
+      data.append("lastName", lastName);
+      data.append("userName", userName);
+      data.append("password", password);
+      data.append("email", email);
+      data.append("birthDay", birthDay);
+      data.append("phoneNumber", phoneNumber);
+      data.append("userType", userType);
+
       performFetch({
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            firstName,
-            lastName,
-            userName,
-            password,
-            email,
-            birthDay,
-            phoneNumber,
-            userType,
-          },
-        }),
+        body: data,
       });
     } else {
       isFormValid().map((error) => {
@@ -295,6 +293,19 @@ const CreateUser = () => {
 
   return (
     <Form onSubmit={handleSubmit} title="Join NlLink">
+      <InputFieldContainer className="first-name-wrapper">
+        <Label>profile Image</Label>
+        <input
+          name="profileImage"
+          value=""
+          placeholder="Upload your Image"
+          type="file"
+          id="profileImage"
+          onChange={(e) => {
+            setProfileImage(e.target.files[0]);
+          }}
+        />
+      </InputFieldContainer>
       <InputFieldContainer className="first-name-wrapper">
         <Label>
           First Name <span className="required-star">*</span>

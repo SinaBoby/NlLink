@@ -1,6 +1,9 @@
 import User, { validateUser } from "../models/User.js";
 import { logError } from "../util/logging.js";
 import validationErrorMessage from "../util/validationErrorMessage.js";
+import * as fs from "node:fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 /* export const getUserDetails = async (req, res) => {
   try {
@@ -22,6 +25,7 @@ import validationErrorMessage from "../util/validationErrorMessage.js";
       .json({ success: false, msg: "Server Error, try again later" });
   }
 }; */
+// Step 5 - set up multer for storing uploaded files
 
 export const getLoggedInUser = async (req, res) => {
   try {
@@ -70,7 +74,38 @@ export const logout = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { user } = req.body;
+    //console.log(__filename);
+
+    const filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(filename);
+    const {
+      firstName,
+      lastName,
+      userName,
+      userType,
+      email,
+      password,
+      phoneNumber,
+      birthDay,
+    } = req.body;
+    const profileImage = {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.file.filename)
+      ),
+      contentType: "image/jpeg",
+    };
+    let user = {
+      firstName,
+      lastName,
+      userName,
+      userType,
+      email,
+      password,
+      phoneNumber,
+      birthDay,
+      profileImage,
+    };
+
     const errorList = validateUser(user);
     if (typeof user !== "object") {
       return res.status(400).json({
