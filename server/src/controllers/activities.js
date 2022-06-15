@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 // import { logInfo } from "../util/logging.js";
 
-const getUserActivities = async (req, res) => {
+const getActivities = async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const userName = req.userName;
@@ -26,4 +26,4 @@ const getUserActivities = async (req, res) => {
   }
 };
 
-export default getUserActivities;
+export default getActivities;

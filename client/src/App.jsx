@@ -17,6 +17,8 @@ import Connect from "./pages/Connect/Connect";
 import RecommendedConnections from "./pages/RecommendedConnections/RecommendedConnections";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewsDetails from "./pages/News/NewsDetails";
+
 const App = () => {
   return (
     <>
@@ -41,6 +43,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/news/details/" element={<NewsDetails />} />
             <Route element={<RequireAuth />}>
               <Route path="/connect" element={<Connect />} />
               <Route

@@ -1,0 +1,22 @@
+.news-container {
+  min-height: 80vh;
+  width: 100%;
+}
+
+.news-hero-wrapper {
+  width: 100%;
+  height: 300px;
+}
+
+.news-hero-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-section-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

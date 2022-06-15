@@ -1,14 +1,7 @@
 import express from "express";
 import path from "path";
-import {
-  createUser,
-  // getUserDetails,
-  getLoggedInUser,
-  logout,
-} from "../controllers/user.js";
-import getUserActivities from "../controllers/userActivities.js";
+import { createUser, getLoggedInUser, logout } from "../controllers/user.js";
 import withAuth from "../middlewares/middleware.js";
-import getNews from "../controllers/news.js";
 import getUserRecentChat from "../controllers/userChat.js";
 import multer from "multer";
 const userRouter = express.Router();
@@ -25,12 +18,10 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-//userRouter.get("/", withAuth, getUserDetails);
+
 userRouter.post("/logout", withAuth, logout);
 userRouter.get("/me", withAuth, getLoggedInUser);
 userRouter.post("/create", upload.single("profileImage"), createUser);
-userRouter.get("/activities", withAuth, getUserActivities);
 userRouter.get("/recent-chat", withAuth, getUserRecentChat);
-userRouter.get("/news", withAuth, getNews);
 
 export default userRouter;
