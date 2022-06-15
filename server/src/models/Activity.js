@@ -3,7 +3,22 @@ import mongoose from "mongoose";
 const activitySchema = new mongoose.Schema(
   {
     title: String,
-    category: "String",
+    category: {
+      type: String,
+      enum: {
+        values: [
+          "Sport",
+          "Language",
+          "City Tour",
+          "Museum",
+          "Food",
+          "Training",
+          "Music",
+          "Volunteer Work",
+        ],
+        message: (props) => `${props.value} is not a valid category`,
+      },
+    },
     createdBy: {
       type: mongoose.SchemaTypes.ObjectID,
       ref: "User",
@@ -33,7 +48,6 @@ const activitySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// module.exports = mongoose.model("Activity", activitySchema);
 
 const Activity = mongoose.model("Activity", activitySchema);
 export default Activity;

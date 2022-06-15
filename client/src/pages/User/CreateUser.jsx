@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Select from "../../components/Forms/Select";
 import Input from "../../components/Forms/Input";
+import InputFile from "../../components/Forms/InputFile";
 import Label from "../../components/Forms/Label";
 import useFetch from "../../hooks/useFetch";
 import TEST_ID from "./CreateUser.testid";
@@ -15,6 +16,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Error from "../../components/Error/Error";
 import { toast } from "react-toastify";
+import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
 
 const PasswordHint = () => {
@@ -72,6 +74,9 @@ const CreateUser = () => {
   const [passError, setPassError] = useState("");
   const [ageError, setAgeError] = useState("");
   const [isValidAge, setIsValidAge] = useState("");
+  const [isEqualPass, setIsEqualPass] = useState("");
+  const [equalPassError, setEqualPassError] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})"
   );
@@ -79,7 +84,7 @@ const CreateUser = () => {
   const emailRegex = new RegExp(
     "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
   );
-  const phoneRegex = /[+|00][0-9]{7,15}/;
+  const phoneRegex = /^\+|00[1-9]{1,3}[0-9]{4,12}$/;
   const onSuccess = () => {
     clearForm();
     navigate("/login");
@@ -92,26 +97,37 @@ const CreateUser = () => {
     isValidUsername
       ? setUserError("")
       : setUserError("Please check the username pattern again.");
+    return isValidUsername ? true : userError;
   };
   const passwordValidation = () => {
     isValidPassword
       ? setPassError("")
       : setPassError("Please check the password pattern again.");
+    return isValidPassword ? true : passError;
   };
   const emailValidation = () => {
     isValidEmail
       ? setEmailError("")
       : setEmailError("Please enter a valid Email address.");
+    return isValidEmail ? true : emailError;
   };
   const phoneValidation = () => {
     isValidPhone
       ? setPhoneError("")
       : setPhoneError("Please enter a valid Phone number.");
+    return isValidPhone ? true : phoneError;
   };
   const ageValidation = () => {
     isValidAge
       ? setAgeError("")
-      : setAgeError("You need to be above 18 in order to sign up.");
+      : setAgeError("You need to be above 18 to sign up.");
+    return isValidAge ? true : ageError;
+  };
+  const confirmPassValidation = () => {
+    isEqualPass
+      ? setEqualPassError("")
+      : setEqualPassError("Passwords are not same, try again");
+    return isEqualPass ? true : equalPassError;
   };
   useEffect(() => {
     if (isAuthenticated) {
@@ -120,7 +136,7 @@ const CreateUser = () => {
 
     return cancelFetch;
   }, []);
-  useEffect(() => {
+  /*  useEffect(() => {
     if (passError) {
       setTimeout(() => setPassError(null), 3000);
     }
@@ -136,7 +152,7 @@ const CreateUser = () => {
     if (ageError) {
       setTimeout(() => setAgeError(""), 3000);
     }
-  }, [passError, userError, emailError, phoneError, ageError]);
+  }, [passError, userError, emailError, phoneError, ageError]); */
 
   const clearForm = () => {
     setFirstName("");
@@ -159,9 +175,35 @@ const CreateUser = () => {
     }
     return age;
   }
+  useEffect(() => {
+    logInfo(profileImage);
+  }, [profileImage]);
+
+  const isFormValid = () => {
+    const validationArray = [
+      userNameValidation(),
+      emailValidation(),
+      phoneValidation(),
+      ageValidation(),
+      passwordValidation(),
+      confirmPassValidation(),
+    ];
+    const errorArray = [];
+    for (let validation of validationArray) {
+      if (validation !== true) {
+        errorArray.push(validation);
+      }
+    }
+    if (errorArray.length === 0) {
+      return true;
+    } else {
+      return errorArray;
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
+    isFormValid();
+    /*    if (
       password !== confirmPassword &&
       !strongRegex.test(password) &&
       !isValidUsername &&
@@ -170,31 +212,67 @@ const CreateUser = () => {
       setPassError(
         "Passwords you entered are not same & outside the pattern please try again"
       );
+      toast.error(passError, {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
       setUserError("Please check the userName pattern again");
+      toast.error(userError, {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } else if (password !== confirmPassword) {
       setPassError("Password you entered are not same please try again");
+      toast.error(passError, {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } else if (!strongRegex.test(password)) {
       setPassError("Please check the password pattern again");
+      toast.error(passError, {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } else if (getAge(birthDay) < 18) {
       setAgeError("You need to be above 18 in order to sign up");
-    } else {
+      toast.error(ageError, {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    } else */ if (isFormValid() === true) {
+      const data = new FormData();
+      data.append("profileImage", profileImage);
+      data.append("firstName", firstName);
+      data.append("lastName", lastName);
+      data.append("userName", userName);
+      data.append("password", password);
+      data.append("email", email);
+      data.append("birthDay", birthDay);
+      data.append("phoneNumber", phoneNumber);
+      data.append("userType", userType);
+
       performFetch({
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            firstName,
-            lastName,
-            userName,
-            password,
-            email,
-            birthDay,
-            phoneNumber,
-            userType,
-          },
-        }),
+        body: data,
+      });
+    } else {
+      isFormValid().map((error) => {
+        toast.error(error, {
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
     }
   };
@@ -261,15 +339,7 @@ const CreateUser = () => {
             {" "}
             ?
           </span>
-          <span>
-            {userError &&
-              toast.error(userError, {
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })}
-          </span>
+          <span>{userError && <Error>{userError}</Error>}</span>
         </Label>
         <Input
           name="userName"
@@ -286,6 +356,9 @@ const CreateUser = () => {
               : setIsValidUserName(false);
           }}
           onBlur={userNameValidation}
+          onFocus={() => {
+            setUserError("");
+          }}
           data-testid={TEST_ID.userNameInput}
           style={{
             background: isValidUsername ? "lightGreen" : "white",
@@ -315,6 +388,9 @@ const CreateUser = () => {
               : setIsValidEmail(false);
           }}
           onBlur={emailValidation}
+          onFocus={() => {
+            setEmailError("");
+          }}
           style={{
             background: isValidEmail ? "lightGreen" : "white",
           }}
@@ -324,16 +400,8 @@ const CreateUser = () => {
       </InputFieldContainer>
       <InputFieldContainer className="phone-input-wrapper">
         <Label>
-          Mobile Number <span className="required-star">*</span>{" "}
-          <span>
-            {phoneError &&
-              toast.error(phoneError, {
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })}
-          </span>
+          Mobile Number <span className="required-star">*</span>
+          <span>{phoneError && <Error>{phoneError}</Error>}</span>
         </Label>
         <PhoneInput
           name="phoneNumber"
@@ -346,11 +414,14 @@ const CreateUser = () => {
           onChange={(value) => {
             setPhoneNumber(value);
 
-            phoneRegex.test(phoneNumber)
+            phoneRegex.test(value)
               ? setIsValidPhone(true)
               : setIsValidPhone(false);
           }}
           onBlur={phoneValidation}
+          onFocus={() => {
+            setPhoneError("");
+          }}
           style={{
             background: isValidPhone ? "lightGreen" : "white",
           }}
@@ -376,15 +447,7 @@ const CreateUser = () => {
       <InputFieldContainer className="birthDay-input-wrapper">
         <Label>
           Date of birth <span className="required-star">*</span>{" "}
-          <span>
-            {ageError &&
-              toast.error(ageError, {
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })}
-          </span>
+          <span>{ageError && <Error>{ageError}</Error>}</span>
         </Label>
         <Input
           name="birthDay"
@@ -393,9 +456,12 @@ const CreateUser = () => {
           value={birthDay}
           onChange={(value) => {
             setBirthDay(value);
-            getAge(birthDay) >= 18 ? setIsValidAge(true) : setIsValidAge(false);
+            getAge(value) >= 18 ? setIsValidAge(true) : setIsValidAge(false);
           }}
           onBlur={ageValidation}
+          onFocus={() => {
+            setAgeError("");
+          }}
           style={{
             background: isValidAge ? "lightGreen" : "white",
           }}
@@ -414,15 +480,7 @@ const CreateUser = () => {
           >
             ?{isHint && <PasswordHint />}
           </span>
-          <span>
-            {passError &&
-              toast.error(passError, {
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })}
-          </span>
+          <span>{passError && <Error>{passError}</Error>}</span>
         </Label>
         <Input
           name="password"
@@ -438,6 +496,9 @@ const CreateUser = () => {
               : setIsValidPassword(false);
           }}
           onBlur={passwordValidation}
+          onFocus={() => {
+            setPassError("");
+          }}
           data-testid={TEST_ID.passwordInput}
           id="passwordInput"
           style={{
@@ -448,7 +509,8 @@ const CreateUser = () => {
       </InputFieldContainer>
       <InputFieldContainer className="confirm-password-wrapper">
         <Label>
-          Confirm password <span className="required-star">*</span>{" "}
+          Confirm password <span className="required-star">*</span>
+          <span>{equalPassError && <Error>{equalPassError}</Error>}</span>
         </Label>
         <Input
           name="confirmPassword"
@@ -457,8 +519,19 @@ const CreateUser = () => {
           type="password"
           minLength="6"
           maxLength="64"
-          onChange={(value) => setConfirmPassword(value)}
+          //onChange={(value) => setConfirmPassword(value)}
+          onChange={(value) => {
+            setConfirmPassword(value);
+            value === password ? setIsEqualPass(true) : setIsEqualPass(false);
+          }}
+          onBlur={confirmPassValidation}
+          onFocus={() => {
+            setEqualPassError("");
+          }}
           data-testid={TEST_ID.passwordInput}
+          style={{
+            background: isEqualPass ? "lightGreen" : "white",
+          }}
           required
         />
       </InputFieldContainer>
@@ -470,6 +543,21 @@ const CreateUser = () => {
         />
         Show password
       </label>
+      <InputFieldContainer className="profile-image-wrapper">
+        <Label for="proFileImage">profile Image</Label>
+        <InputFile
+          name="profileImage"
+          accept="image/*"
+          //className="profile-image-input"
+          //placeholder={profileImage && profileImage.name }
+          className={"input profile-image-input"}
+          id="profileImage"
+          onChange={(e) => {
+            logInfo(e.target.value);
+            setProfileImage(e.target.files[0]);
+          }}
+        />
+      </InputFieldContainer>
       <Button
         className="btn-block"
         data-testid={TEST_ID.submitButton}

@@ -72,11 +72,8 @@ const userSchema = new mongoose.Schema(
       match: [/[+|00][0-9]{7,15}/, "Please fill a valid phone Number"],
     },
     profileImage: {
-      alt: String,
-      img: {
-        data: Buffer,
-        contentType: String,
-      },
+      data: Buffer,
+      contentType: String,
     },
     birthDay: {
       type: Date,

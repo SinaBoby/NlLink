@@ -12,6 +12,7 @@ const getActivities = async (req, res) => {
     const upcomingActivities = await Activity.find({
       joinedBy: { $in: [mongoose.Types.ObjectId(user._id)] },
     });
+
     const recommendedActivities = await Activity.find({
       joinedBy: { $ne: mongoose.Types.ObjectId(user._id) },
     });
