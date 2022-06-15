@@ -1,19 +1,18 @@
 .news-card-wrapper {
   height: 300px;
   width: calc(100% - 2rem);
-  padding: 0.2rem;
   margin: 1rem;
   background-color: #f4dcdc;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
+  color: black;
 }
 
 .news-card-image-wrapper {
   width: 100%;
   height: 50%;
-  border: 1px solid black;
 }
 
 .news-card-image-wrapper img {
@@ -22,34 +21,68 @@
   object-fit: cover;
 }
 
+.news-card-details-wrapper {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: space-around;
+}
+
 .news-card-title {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  height: calc(15% - 0.4rem);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 1.4rem;
 }
 
 .news-card-content-wrapper {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
-.read-more-link-wrapper {
+.news-card-link-wrapper {
   width: 100%;
-  height: 5%;
+  height: 10%;
   display: flex;
   justify-content: flex-end;
+  margin-left: auto;
+}
+
+.news-card-link {
+  color: black;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.news-card-link:hover {
+  opacity: 1;
 }
 
 @media screen and (min-width: 480px) {
   .news-card-wrapper {
     height: 300px;
     width: calc(50% - 2rem);
-    padding: 0.2rem;
     margin: 1rem;
+  }
+
+  .news-card-content-wrapper {
+    -webkit-line-clamp: 2;
+    line-height: 1.2rem;
+  }
+
+  .news-card-title {
+    -webkit-line-clamp: 2;
+    font-size: 1.2rem;
   }
 }
 
@@ -57,8 +90,21 @@
   .news-card-wrapper {
     height: 300px;
     width: calc(33% - 2rem);
-    padding: 0.2rem;
     margin: 1rem;
+  }
+
+  .news-card-title {
+    -webkit-line-clamp: 2;
+    font-size: 1.3rem;
+  }
+
+  .news-card-content-wrapper {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -66,7 +112,17 @@
   .news-card-wrapper {
     height: 400px;
     width: calc(25% - 2rem);
-    padding: 0.2rem;
     margin: 1rem;
+  }
+
+  .news-card-content-wrapper {
+    -webkit-line-clamp: 4;
+    line-height: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-card-title {
+    -webkit-line-clamp: 2;
+    font-size: 1.3rem;
   }
 }

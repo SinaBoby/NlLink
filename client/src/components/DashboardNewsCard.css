@@ -27,14 +27,23 @@
   line-height: 1.1rem;
 }
 
-.dashboard-news-card-wrapper cite {
-  font-size: 0.8rem;
+.dashboard-news-card-link {
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.8;
 }
 
+.dashboard-news-card-link:hover {
+  opacity: 1;
+}
+/* .dashboard-news-card-wrapper cite {
+  font-size: 0.8rem;
+} */
+
 @media screen and (max-width: 900px) {
-  .dashboard-news-card-wrapper cite {
+  /* .dashboard-news-card-wrapper cite {
     font-size: 0.7rem;
-  }
+  } */
 
   .dashboard-news-card-content {
     /* display: -webkit-box;

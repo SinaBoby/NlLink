@@ -13,14 +13,20 @@ const NewsCard = ({ news }) => {
               alt={news.title}
             />
           </div>
-          <h2 className="news-card-title">{news.title}</h2>
-          <div className="news-card-content-wrapper">
-            <p className="news-card-content">{news.content}</p>
-          </div>
-          <div className="read-more-link-wrapper">
-            <Link to="/news/details" state={{ newsId: news._id }}>
-              Read More
-            </Link>
+          <div className="news-card-details-wrapper">
+            <h2 className="news-card-title">{news.title}</h2>
+            <div className="news-card-content-wrapper">
+              <p className="news-card-content">{news.content}</p>
+            </div>
+            <div className="news-card-link-wrapper">
+              <Link
+                to="/news/details"
+                state={{ newsId: news._id }}
+                className="news-card-link"
+              >
+                Read More
+              </Link>
+            </div>
           </div>
         </div>
       )}
