@@ -7,6 +7,12 @@ import withAuth from "./middlewares/middleware.js";
 import interestRouter from "./routes/interests.js";
 import locationRouter from "./routes/location.js";
 import searchRouter from "./routes/search.js";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filename);
 // Create an express server
 const app = express();
 const allowedOrigins = [
@@ -35,6 +41,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 // Add middleware so that can express can parse cookies passed by our browser
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname));
 /****** Attach routes ******/
 /**
  * We use /api/ at the start of every route!
