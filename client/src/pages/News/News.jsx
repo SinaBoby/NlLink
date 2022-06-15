@@ -35,7 +35,6 @@ const News = () => {
       <div className="news-section-wrapper">
         {newsData &&
           newsData.map((news) => {
-            console.log(news);
             return <NewsCard key={news.title} news={news} />;
           })}
       </div>

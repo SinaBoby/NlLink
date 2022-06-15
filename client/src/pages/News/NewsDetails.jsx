@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import getTimeDifference from "../../util/getTimeDifference";
 
 import "./NewsDetails.css";
 
 const NewsDetails = () => {
-  const [newsData, setNewsData] = useState(null);
+  const [newsDetails, setNewsDetails] = useState(null);
+  const location = useLocation();
+  const newsId = location.state?.newsId;
 
   const onSuccess = (response) => {
-    setNewsData(response.result);
+    setNewsDetails(response.result[0]);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/user/news",
+    `/news/${newsId}`,
     onSuccess
   );
   useEffect(() => {
@@ -23,15 +26,29 @@ const NewsDetails = () => {
   }, []);
 
   if (isLoading) {
-    return <div></div>;
+    return <div>....</div>;
   }
-  const location = useLocation();
-  console.log(location, "location");
-  const newsId = location.state?.newsId;
-  console.log(newsId);
+  let timeDifference;
+  if (newsDetails) {
+    const currentTime = new Date();
+    const publishingTime = new Date(newsDetails.createdAt);
+    timeDifference = getTimeDifference(currentTime, publishingTime);
+  }
 
   return (
-    <div className="news-details-container">{error && <div>{error}</div>}</div>
+    <>
+      {error && <div>{error}</div>}
+
+      {newsDetails && (
+        <div className="news-details-container">
+          {" "}
+          <h2>{newsDetails.title}</h2>
+          <time>{timeDifference}</time>
+          <p>{newsDetails.content}</p>
+          <cite>{newsDetails.sources[0]}</cite>
+        </div>
+      )}
+    </>
   );
 };
 
