@@ -35,6 +35,24 @@ const newsData = [
     ],
     category: "finance",
   },
+  {
+    title: "Dutch labour crisis 4",
+    content:
+      "The Netherlands continues to face a growing shortage of workers, with recent figures published by Statistics Netherlands (CBS) revealing the extent of the national labour crisis. In the first quarter of this year, the Dutch unemployment rate reached its lowest level in almost 20 years, while the number of job vacancies continued to rise.",
+    sources: [
+      "https://www.iamexpat.nl/career/employment-news/dutch-labour-crisis-worsens-number-job-vacancies-continues-rise",
+    ],
+    category: "finance",
+  },
+  {
+    title: "Dutch labour crisis 5",
+    content:
+      "The Netherlands continues to face a growing shortage of workers, with recent figures published by Statistics Netherlands (CBS) revealing the extent of the national labour crisis. In the first quarter of this year, the Dutch unemployment rate reached its lowest level in almost 20 years, while the number of job vacancies continued to rise.",
+    sources: [
+      "https://www.iamexpat.nl/career/employment-news/dutch-labour-crisis-worsens-number-job-vacancies-continues-rise",
+    ],
+    category: "finance",
+  },
 ];
 
 const seedNewsCollection = async () => {

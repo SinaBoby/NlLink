@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Select from "../../components/Forms/Select";
 import Input from "../../components/Forms/Input";
+import InputFile from "../../components/Forms/InputFile";
 import Label from "../../components/Forms/Label";
 import useFetch from "../../hooks/useFetch";
 import TEST_ID from "./CreateUser.testid";
@@ -15,6 +16,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Error from "../../components/Error/Error";
 import { toast } from "react-toastify";
+import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
 
 const PasswordHint = () => {
@@ -74,6 +76,7 @@ const CreateUser = () => {
   const [isValidAge, setIsValidAge] = useState("");
   const [isEqualPass, setIsEqualPass] = useState("");
   const [equalPassError, setEqualPassError] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})"
   );
@@ -172,6 +175,9 @@ const CreateUser = () => {
     }
     return age;
   }
+  useEffect(() => {
+    logInfo(profileImage);
+  }, [profileImage]);
 
   const isFormValid = () => {
     const validationArray = [
@@ -244,23 +250,20 @@ const CreateUser = () => {
         progress: undefined,
       })
     } else */ if (isFormValid() === true) {
+      const data = new FormData();
+      data.append("profileImage", profileImage);
+      data.append("firstName", firstName);
+      data.append("lastName", lastName);
+      data.append("userName", userName);
+      data.append("password", password);
+      data.append("email", email);
+      data.append("birthDay", birthDay);
+      data.append("phoneNumber", phoneNumber);
+      data.append("userType", userType);
+
       performFetch({
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            firstName,
-            lastName,
-            userName,
-            password,
-            email,
-            birthDay,
-            phoneNumber,
-            userType,
-          },
-        }),
+        body: data,
       });
     } else {
       isFormValid().map((error) => {
@@ -540,6 +543,21 @@ const CreateUser = () => {
         />
         Show password
       </label>
+      <InputFieldContainer className="profile-image-wrapper">
+        <Label for="proFileImage">profile Image</Label>
+        <InputFile
+          name="profileImage"
+          accept="image/*"
+          //className="profile-image-input"
+          //placeholder={profileImage && profileImage.name }
+          className={"input profile-image-input"}
+          id="profileImage"
+          onChange={(e) => {
+            logInfo(e.target.value);
+            setProfileImage(e.target.files[0]);
+          }}
+        />
+      </InputFieldContainer>
       <Button
         className="btn-block"
         data-testid={TEST_ID.submitButton}

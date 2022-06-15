@@ -18,6 +18,8 @@ import RecommendedConnections from "./pages/RecommendedConnections/RecommendedCo
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Chat from "./pages/Chat/Chat";
+import NewsDetails from "./pages/News/NewsDetails";
+
 const App = () => {
   return (
     <>
@@ -42,6 +44,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/news/details/" element={<NewsDetails />} />
             <Route element={<RequireAuth />}>
               <Route path="/connect" element={<Connect />} />
               <Route

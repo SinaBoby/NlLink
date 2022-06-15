@@ -7,6 +7,14 @@ import withAuth from "./middlewares/middleware.js";
 import interestRouter from "./routes/interests.js";
 import locationRouter from "./routes/location.js";
 import searchRouter from "./routes/search.js";
+import newsRouter from "./routes/news.js";
+import activitiesRouter from "./routes/activities.js";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filename);
 // Create an express server
 const app = express();
 const allowedOrigins = [
@@ -35,6 +43,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 // Add middleware so that can express can parse cookies passed by our browser
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname));
 /****** Attach routes ******/
 /**
  * We use /api/ at the start of every route!
@@ -45,6 +56,8 @@ app.use("/api/authenticate", authenticateRouter);
 app.use("/api/interest", interestRouter);
 app.use("/api/province", locationRouter);
 app.use("/api/find_matches", searchRouter);
+app.use("/api/news", newsRouter);
+app.use("/api/activities", activitiesRouter);
 app.get("/checkToken", withAuth, function (req, res) {
   res.status(200);
   res.send("token is there");

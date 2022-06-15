@@ -5,7 +5,7 @@ import yourConnections from "../../images/your-connections-desktop.jpg";
 import useUserDetails from "../../hooks/useUserDetails";
 import ActivitySlider from "../../components/ActivitySlider/ActivitySlider";
 import useFetch from "../../hooks/useFetch";
-import News from "../../components/News";
+import DashboardNews from "../../components/DashboardNews";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
@@ -25,7 +25,7 @@ const Dashboard = () => {
     setUserRecommendedActivities(response.result.recommendedActivities);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/user/activities",
+    "/activities",
     onSuccess
   );
   useEffect(() => {
@@ -75,7 +75,7 @@ const Dashboard = () => {
         </div>
         <div className="latest-news-details-wrapper">
           <h3 className="latest-news-header">Latest News About Newcomers</h3>
-          <News />
+          <DashboardNews />
         </div>
       </div>
       <div className="connections-status-wrapper">
