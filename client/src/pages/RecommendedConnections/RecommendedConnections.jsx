@@ -6,7 +6,7 @@ import profile3 from "../../images/profile-3.jpg";
 import bashar from "../../images/bashar.jpg";
 import burak from "../../images/burak.jpg";
 import sina from "../../images/sina.jpg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserCard from "../../components/RecentConnections/UserCard";
 import Tags from "./Tags";
 import Button from "./../../components/Button";
@@ -18,6 +18,7 @@ import Error from "../../components/Error/Error";
 const mockProfileImages = [profile1, profile2, profile3, bashar, burak, sina];
 
 const RecommendedConnections = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const [users, setUsers] = useState([]);
 
@@ -85,7 +86,14 @@ const RecommendedConnections = () => {
                 <Tags tags={user.interests} />
               </UserCard>
               <div className="btn-wrapper">
-                <Button className={"btn-inline"}>Start a conversation</Button>
+                <Button
+                  className={"btn-inline"}
+                  onClick={() =>
+                    navigate("/chat", { state: { receiver: user } })
+                  }
+                >
+                  Start a conversation
+                </Button>
               </div>
             </div>
           );

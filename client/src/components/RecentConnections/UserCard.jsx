@@ -2,9 +2,9 @@ import React from "react";
 import "./UserCard.css";
 import PropTypes from "prop-types";
 
-const UserCard = ({ user, children }) => {
+const UserCard = ({ user, children, onClick }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={() => onClick(user)}>
       <div className="card-img-container">
         <img src={user.photo} />
       </div>
@@ -20,6 +20,7 @@ const UserCard = ({ user, children }) => {
 UserCard.propTypes = {
   user: PropTypes.object.isRequired,
   children: PropTypes.element,
+  onClick: PropTypes.func,
 };
 
 export default UserCard;

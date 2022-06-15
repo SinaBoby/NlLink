@@ -17,6 +17,7 @@ import Connect from "./pages/Connect/Connect";
 import RecommendedConnections from "./pages/RecommendedConnections/RecommendedConnections";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Chat from "./pages/Chat/Chat";
 import NewsDetails from "./pages/News/NewsDetails";
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
                 path="/recommended-connections"
                 element={<RecommendedConnections />}
               />
+              <Route path="/chat" element={<Chat />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
