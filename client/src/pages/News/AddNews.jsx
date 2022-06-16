@@ -15,11 +15,11 @@ import Textarea from "../../components/Forms/TextArea";
 import { logInfo } from "../../../../server/src/util/logging";
 
 const AddNews = () => {
-  const [newsTitle, setNewsTitle] = useState("");
-  const [newsContent, setNewsContent] = useState("");
-  const [newsCategory, setNewsCategory] = useState("");
-  const [newsSource, setNewsSource] = useState("");
-  const [newsImage, setNewsImage] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [sources, setSources] = useState([]);
+  const [image, setImage] = useState(null);
 
   const clearForm = () => {};
 
@@ -37,11 +37,11 @@ const AddNews = () => {
 
     const data = new FormData();
 
-    data.append("newsImage", newsImage);
-    data.append("newsTitle", newsTitle);
-    data.append("newsContent", newsContent);
-    data.append("newsCategory", newsCategory);
-    data.append("newsSource", newsSource);
+    data.append("image", image);
+    data.append("title", title);
+    data.append("content", content);
+    data.append("category", category);
+    data.append("sources", sources);
 
     performFetch({
       method: "POST",
@@ -72,12 +72,12 @@ const AddNews = () => {
           <Label>News Title</Label>
           <Input
             name="newsTitle"
-            value={newsTitle}
+            value={title}
             minLength="10"
             maxLength="200"
             title="News Title"
             onChange={(value) => {
-              setNewsTitle(value);
+              setTitle(value);
             }}
             required
           />
@@ -86,10 +86,10 @@ const AddNews = () => {
           <Label>News Content</Label>
           <Textarea
             name="newsContent"
-            value={newsContent}
+            value={content}
             title="News Content"
             onChange={(value) => {
-              setNewsContent(value);
+              setContent(value);
             }}
             required
           />
@@ -97,10 +97,11 @@ const AddNews = () => {
         <InputFieldContainer className="news-category-wrapper">
           <Label>News Category</Label>
           <Select
-            value={newsCategory}
+            value={category}
             title="News Category"
-            onChange={(value) => setNewsCategory(value)}
+            onChange={(value) => setCategory(value)}
             options={[
+              { value: "", text: "Choose news category" },
               { value: "refugees", text: "Refugees" },
               { value: "politics", text: "Politics" },
               { value: "finance", text: "Finance" },
@@ -113,10 +114,10 @@ const AddNews = () => {
           <Label>News Source</Label>
           <Input
             name="newsSource"
-            value={newsSource}
+            value={sources}
             title="News Title"
             onChange={(value) => {
-              setNewsSource(value);
+              setSources([value]);
             }}
           />
         </InputFieldContainer>
@@ -128,7 +129,7 @@ const AddNews = () => {
             id="newsImage"
             onChange={(e) => {
               logInfo(e.target.value);
-              setNewsImage(e.target.files[0]);
+              setImage(e.target.files[0]);
             }}
           />
         </InputFieldContainer>

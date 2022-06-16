@@ -1,5 +1,6 @@
 .news-page-container {
   min-height: 70vh;
+  background-color: hsl(0, 14%, 93%);
 }
 
 .news-page-container .news-content-wrapper {
