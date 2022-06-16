@@ -1,0 +1,7 @@
+.news-page-container {
+  min-height: 70vh;
+}
+
+.news-page-container .news-content-wrapper {
+  min-height: 25vh;
+}

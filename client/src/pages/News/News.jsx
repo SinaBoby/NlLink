@@ -3,6 +3,7 @@ import "./News.css";
 import newsHero from "../../images/news-hero.jpg";
 import NewsCard from "../../components/NewsCard";
 import useFetch from "../../hooks/useFetch";
+import { Link } from "react-router-dom";
 
 const News = () => {
   const [newsData, setNewsData] = useState(null);
@@ -37,6 +38,11 @@ const News = () => {
           newsData.map((news) => {
             return <NewsCard key={news.title} news={news} />;
           })}
+      </div>
+      <div className="add-news-link-wrapper">
+        <Link to="/news/add" className="navbar-link">
+          Add News
+        </Link>
       </div>
     </div>
   );

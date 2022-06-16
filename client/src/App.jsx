@@ -18,6 +18,7 @@ import RecommendedConnections from "./pages/RecommendedConnections/RecommendedCo
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewsDetails from "./pages/News/NewsDetails";
+import AddNews from "./pages/News/AddNews";
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
               />
               <Route path="/logout" element={<Logout />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/news/add" element={<AddNews />} />
             </Route>
           </Routes>
           <Footer />
