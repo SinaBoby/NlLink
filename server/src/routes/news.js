@@ -4,7 +4,7 @@ import { getNews, getNewsDetails } from "../controllers/news.js";
 
 const newsRouter = express.Router();
 
-newsRouter.get("/", withAuth, getNews);
+newsRouter.get("/:newsCategory", withAuth, getNews);
 newsRouter.get("/:newsId", withAuth, getNewsDetails);
 
 export default newsRouter;

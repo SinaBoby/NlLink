@@ -15,7 +15,7 @@ const newsData = [
     sources: [
       "https://www.iamexpat.nl/career/employment-news/dutch-labour-crisis-worsens-number-job-vacancies-continues-rise",
     ],
-    category: "finance",
+    category: "politics",
   },
   {
     title: "Dutch labour crisis 2",
@@ -51,7 +51,7 @@ const newsData = [
     sources: [
       "https://www.iamexpat.nl/career/employment-news/dutch-labour-crisis-worsens-number-job-vacancies-continues-rise",
     ],
-    category: "finance",
+    category: "society",
   },
 ];
 
