@@ -16,7 +16,7 @@ const s3 = new S3({
   secretAccessKey,
 });
 
-export const uploadFile = (file) => {
+export const s3UploadFile = (file) => {
   const fileStream = fs.createReadStream(file.path);
 
   const uploadParams = {

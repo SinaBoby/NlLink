@@ -6,3 +6,9 @@
 .news-page-container .news-content-wrapper {
   min-height: 25vh;
 }
+
+.created-news-details-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}

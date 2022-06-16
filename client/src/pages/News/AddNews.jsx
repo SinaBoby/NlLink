@@ -20,10 +20,12 @@ const AddNews = () => {
   const [category, setCategory] = useState("");
   const [sources, setSources] = useState([]);
   const [image, setImage] = useState(null);
+  const [newsData, setNewsData] = useState(null);
 
   const clearForm = () => {};
 
-  const onSuccess = () => {
+  const onSuccess = (response) => {
+    setNewsData(response.result);
     clearForm();
   };
 
@@ -42,11 +44,6 @@ const AddNews = () => {
     data.append("content", content);
     data.append("category", category);
     data.append("sources", sources);
-
-    performFetch({
-      method: "POST",
-      body: data,
-    });
 
     performFetch({
       method: "POST",
@@ -138,6 +135,16 @@ const AddNews = () => {
         </Button>
       </Form>
       {statusComponent && statusComponent}
+      {newsData && (
+        <div className="created-news-details-wrapper">
+          <h2>News Created</h2>
+          <h4>{newsData.title}</h4>
+          <p>{newsData.content}</p>
+          <p>{newsData.image}</p>
+          <p>{newsData.sources[0]}</p>
+          <p>{newsData.category}</p>
+        </div>
+      )}
     </div>
   );
 };
