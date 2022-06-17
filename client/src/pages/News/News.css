@@ -20,3 +20,9 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.add-news-link-wrapper {
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: center;
+}

@@ -43,10 +43,7 @@ const NewsDetails = () => {
         <div className="news-details-container">
           <div className="news-details-banner">
             <div className="news-details-img-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1544056113-76ec529669b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt=""
-              />
+              <img src={newsDetails.image} alt={newsDetails.title} />
             </div>
             <div className="news-details-header">
               <h2 className="news-details-title">{newsDetails.title}</h2>
