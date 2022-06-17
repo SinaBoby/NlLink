@@ -2,12 +2,14 @@
 import dotenv from "dotenv";
 import express from "express";
 dotenv.config();
-
+//import * as Message from "./models/Message";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
 import connectDB from "./db/connectDB.js";
 import testRouter from "./testRouter.js";
-
+import { Message, MessageSchema } from "./models/Message.js";
 import seedActivityCollection from "./db/seedMockActivityData.js";
 import seedNewsCollection from "./db/seedMockNews.js";
 // import Activity from "./models/Activity.js";
@@ -23,7 +25,19 @@ if (port == null) {
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(port, () => {
+    const httpServer = createServer(app);
+    const io = new Server(httpServer);
+    io.on("connection", async (socket) => {
+      logInfo("client connected...");
+      socket.on("message", async (msg) => {
+        logInfo(msg);
+        let message = await new Message(msg);
+        io.emit("message", message);
+      });
+      let latest = await MessageSchema.statics.latest(10);
+      socket.emit("latest", latest);
+    });
+    httpServer.listen(port, () => {
       logInfo(`Server started on port ${port}`);
     });
   } catch (error) {

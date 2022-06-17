@@ -21,8 +21,10 @@ export const Message = ({ author, message, align, currentUser }) => {
         alt={author.firstName}
       />
       <div className="message-info">
-        <em className="message-timestamp">{messageTimestamp}</em>
-        <p className="message-text">{message.content}</p>
+        <span>
+          <em className="message-timestamp">{messageTimestamp}</em>
+        </span>
+        <span className="message-text">{message.content}</span>
       </div>
     </div>
   );

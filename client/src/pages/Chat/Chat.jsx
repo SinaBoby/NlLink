@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import { useLocation } from "react-router-dom";
-import socketIoClient from "socket.io-client";
+import { io } from "socket.io-client";
 import Button from "../../components/Button";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
@@ -9,24 +9,44 @@ import { Message } from "./Message";
 import bashar from "../../images/bashar.jpg";
 import { logInfo } from "../../../../server/src/util/logging.js";
 import { Buffer } from "buffer";
-const socket = socketIoClient("http://localhost:8463", { autoConnect: false });
+import MessageBox from "./MessageBox";
+const socket = io("http://localhost:5000", {
+  autoConnect: false,
+  transports: ["websocket"],
+});
 const Chat = () => {
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const { state } = useLocation();
-  const receiver = JSON.parse(localStorage.getItem("receiver"));
+  //const receiver = JSON.parse(localStorage.getItem("receiver"));
   const { userDetails } = useUserDetails();
+  const [receiver, setReceiver] = useState(state.receiver);
   //let receiver;
   useEffect(() => {
     logInfo(state);
     logInfo(socket);
+    logInfo(messages);
   });
+  const addMessage = (msg) => {
+    setMessages((oldMessages) => [
+      ...oldMessages,
+      ...(Array.isArray(msg) ? msg.reverse() : [msg]),
+    ]);
+  };
+  useEffect(() => {
+    socket.connect();
+    socket.on("latest", (data) => {
+      // expect server to send us the latest messages
+      addMessage(data);
+    });
+    socket.on("message", (msg) => {
+      addMessage(msg);
+    });
+  }, []);
+  useEffect(() => {
+    setReceiver(state.receiver);
+  }, [state.receiver]);
 
-  /*   if (state !== null) {
-   // receiver = state.receiver;
-   logInfo(state.receiver)
-  } */
-
-  const messages = [
+  const messagess = [
     {
       author: { ...userDetails, photo: bashar },
       message: {
@@ -46,12 +66,12 @@ const Chat = () => {
   return (
     <div className="row-container">
       <div className="chat-page-wrapper">
-        <div className="chat-container">
+        <div className="chat-container" id="msgBox">
           <p className="chat-title">
             {userDetails?.userName} is now chatting with {receiver?.userName}
           </p>
           <div className="chat-log">
-            {messages.map((item, index) => {
+            {messagess.map((item, index) => {
               logInfo(item);
               const align =
                 userDetails && userDetails.userName === item.author.userName
@@ -69,19 +89,7 @@ const Chat = () => {
               );
             })}
           </div>
-          <div className="chat-input-container">
-            <input
-              type="text"
-              id="chat-message"
-              name="chat-message"
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-              className="chat-input"
-            />
-            <div className="btn-send-container">
-              <Button className={"btn-block"}>Send</Button>
-            </div>
-          </div>
+          <MessageBox />
         </div>
         <div className="receiver-info">
           <div className="receiver-img-container">
