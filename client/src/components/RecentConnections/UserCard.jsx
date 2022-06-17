@@ -1,12 +1,20 @@
 import React from "react";
 import "./UserCard.css";
 import PropTypes from "prop-types";
+import { Buffer } from "buffer";
 
 const UserCard = ({ user, children, onClick }) => {
   return (
     <div className="card" onClick={() => onClick(user)}>
       <div className="card-img-container">
-        <img src={user.photo} />
+        <img
+          src={
+            user.profileImage &&
+            `data:image/${user.profileImage.contentType};base64,${Buffer.from(
+              user.profileImage.data.data
+            ).toString("base64")}`
+          }
+        />
       </div>
       <div className="card-info">
         <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType} volunteer)`}</h3>
