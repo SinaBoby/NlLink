@@ -79,19 +79,17 @@ const RecommendedConnections = () => {
             Math.random() * mockProfileImages.length
           );
           user.photo = mockProfileImages[photoIndex];
-
+          const navigateToChat = () => {
+            localStorage.setItem("receiver", JSON.stringify(user));
+            navigate("/chat", { state: { receiver: user } });
+          };
           return (
             <div className="card-wrapper" key={index}>
               <UserCard user={user}>
                 <Tags tags={user.interests} />
               </UserCard>
               <div className="btn-wrapper">
-                <Button
-                  className={"btn-inline"}
-                  onClick={() =>
-                    navigate("/chat", { state: { receiver: user } })
-                  }
-                >
+                <Button className={"btn-inline"} onClick={navigateToChat}>
                   Start a conversation
                 </Button>
               </div>

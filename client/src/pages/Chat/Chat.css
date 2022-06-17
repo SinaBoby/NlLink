@@ -22,7 +22,11 @@
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-
+#msgBox span {
+  word-break: break-all;
+  display: block;
+  width: 100%;
+}
 .chat-log {
   width: 100%;
   padding: 1rem;

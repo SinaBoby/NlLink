@@ -46,6 +46,8 @@ const InterestsFilter = ({
 
   const handleDropdownItemClick = (interest) => {
     onInsertInterest(interest);
+    setInputInterest("");
+    document.getElementById("interest-input").focus();
   };
 
   const handleInterestDelete = (interest) => {
