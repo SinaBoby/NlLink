@@ -1,0 +1,92 @@
+.row-container {
+  display: flex;
+}
+
+.chat-page-wrapper {
+  width: 75%;
+  padding: 1.5rem;
+  display: flex;
+  background-color: hsl(0, 53%, 91%);
+}
+
+.receiver-info {
+  width: 30%;
+}
+
+.chat-container {
+  width: 70%;
+  margin-right: 2rem;
+}
+
+.chat-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.chat-log {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 0.5rem;
+  min-height: 30rem;
+  overflow: auto;
+  margin-bottom: 1rem;
+}
+
+.chat-input-container {
+  display: flex;
+  width: 100%;
+  padding-right: 0.5rem;
+  align-items: center;
+}
+
+.chat-input {
+  width: 80%;
+  outline: none;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-send-container {
+  width: 20%;
+}
+
+.receiver-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: max-content;
+  padding: 0 1rem 1rem 0;
+}
+
+.receiver-img-container {
+  width: 40%;
+}
+
+.receiver-img-container img {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+}
+
+.receiver-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.btn-section {
+  margin-top: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.btn-container {
+  width: 48%;
+}

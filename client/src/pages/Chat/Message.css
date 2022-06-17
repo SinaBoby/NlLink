@@ -1,0 +1,29 @@
+.message-container {
+  display: flex;
+  padding: 1rem;
+  width: 80%;
+  border-radius: 0.5rem;
+  box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.message-container img {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1.5rem;
+  border-radius: 50%;
+}
+
+.message-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.align-left {
+  align-self: flex-start;
+}
+
+.align-right {
+  align-self: flex-end;
+}

@@ -1,5 +1,4 @@
-// import News from "../models/News.js";
-// import { logInfo } from "../util/logging.js";
+
 
 const seedNewsCollection = async () => {
   // await News.deleteMany({});
