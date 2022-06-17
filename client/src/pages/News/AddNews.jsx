@@ -11,7 +11,7 @@ import Label from "../../components/Forms/Label";
 import Input from "../../components/Forms/Input";
 import InputFile from "../../components/Forms/InputFile";
 import Select from "../../components/Forms/Select";
-import Textarea from "../../components/Forms/TextArea";
+import TextArea from "../../components/Forms/TextArea";
 import { logInfo } from "../../../../server/src/util/logging";
 
 const AddNews = () => {
@@ -81,7 +81,7 @@ const AddNews = () => {
         </InputFieldContainer>
         <InputFieldContainer className="news-content-wrapper">
           <Label>News Content</Label>
-          <Textarea
+          <TextArea
             name="newsContent"
             value={content}
             title="News Content"
