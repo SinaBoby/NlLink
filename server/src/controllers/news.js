@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import News from "../models/News.js";
 import { logError } from "../util/logging.js";
-import { s3UploadFile } from "./s3upload.js";
+import { s3UploadFile } from "./s3Upload.js";
 import fs from "fs";
 import util from "util";
 
