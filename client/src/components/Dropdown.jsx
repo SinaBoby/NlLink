@@ -20,7 +20,11 @@ const Dropdown = ({ closeDropdown }) => {
 
   return (
     <div className="dropdown">
-      <DropdownLink>News</DropdownLink>
+      {isAuthenticated && (
+        <DropdownLink onClick={() => handleNavigation("/news")}>
+          News
+        </DropdownLink>
+      )}
       <DropdownLink onClick={() => handleNavigation("/about")}>
         About
       </DropdownLink>

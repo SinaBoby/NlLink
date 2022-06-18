@@ -53,8 +53,12 @@ const News = () => {
 
       <div className="news-section-wrapper">
         {newsData && newsData.length === 0 && (
-          <div>
-            <p>There is no news in this category yet</p>
+          <div className="no-news-text-wrapper">
+            {newsCategory === "all" ? (
+              <p>There is no news yet</p>
+            ) : (
+              <p>There is no news in this category yet</p>
+            )}
           </div>
         )}
         {newsData &&

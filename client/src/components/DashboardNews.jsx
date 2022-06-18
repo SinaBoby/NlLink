@@ -25,6 +25,9 @@ const DashboardNews = () => {
   return (
     <div className="news-wrapper">
       {error && <Error>{error}</Error>}
+      {newsData && newsData.length === 0 && (
+        <div className="no-news-yet-wrapper">No News Yet</div>
+      )}
       {newsData &&
         newsData.map((news) => {
           return <DashboardNewsCard key={news.title} news={news} />;
