@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TextArea.css";
+import "./TextAreaInput.css";
 
-const TextArea = ({ name, value, onChange, ...rest }) => {
+const TextAreaInput = ({ name, value, onChange, ...rest }) => {
   return (
     <textarea
       {...rest}
@@ -16,10 +16,10 @@ const TextArea = ({ name, value, onChange, ...rest }) => {
   );
 };
 
-TextArea.propTypes = {
+TextAreaInput.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default TextArea;
+export default TextAreaInput;
