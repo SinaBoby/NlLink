@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { logInfo } from "../../../../server/src/util/logging";
 import useFetch from "../../hooks/useFetch";
 import getTimeDifference from "../../util/getTimeDifference";
 import Spinner from "../../components/Spinner/Spinner";
@@ -33,7 +32,6 @@ const NewsDetails = () => {
     const currentTime = new Date();
     const publishingTime = new Date(newsDetails.createdAt);
     timeDifference = getTimeDifference(currentTime, publishingTime);
-    logInfo(newsDetails);
   }
 
   return (

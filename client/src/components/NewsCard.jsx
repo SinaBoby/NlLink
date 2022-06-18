@@ -2,9 +2,8 @@ import React from "react";
 import "./NewsCard.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { logInfo } from "../../../server/src/util/logging";
+
 const NewsCard = ({ news }) => {
-  logInfo(news);
   return (
     <>
       {news && (

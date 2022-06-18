@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import News from "../models/News.js";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import { s3UploadFile } from "./s3upload.js";
 import fs from "fs";
 import util from "util";
@@ -27,7 +27,6 @@ export const getNews = async (req, res) => {
 export const getNewsDetails = async (req, res) => {
   try {
     const { newsId } = req.params;
-    logInfo(newsId);
     const newsDetails = await News.find({
       _id: mongoose.Types.ObjectId(newsId),
     });
@@ -38,11 +37,6 @@ export const getNewsDetails = async (req, res) => {
       .status(500)
       .json({ success: false, msg: "Unable to get news, try again later" });
   }
-};
-
-export const getOneNewsDetails = async (req, res) => {
-  logInfo("server side");
-  res.status(200).json({ success: true });
 };
 
 export const addNews = async (req, res) => {

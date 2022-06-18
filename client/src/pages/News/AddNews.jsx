@@ -11,8 +11,8 @@ import Label from "../../components/Forms/Label";
 import Input from "../../components/Forms/Input";
 import InputFile from "../../components/Forms/InputFile";
 import Select from "../../components/Forms/Select";
-import { logInfo } from "../../../../server/src/util/logging";
 import TextAreaInput from "../../components/Forms/TextAreaInput";
+import Check from "../../components/Check/Check";
 
 const AddNews = () => {
   const [title, setTitle] = useState("");
@@ -126,7 +126,6 @@ const AddNews = () => {
             accept="image/*"
             id="newsImage"
             onChange={(e) => {
-              logInfo(e.target.value);
               setImage(e.target.files[0]);
             }}
           />
@@ -137,14 +136,17 @@ const AddNews = () => {
       </Form>
       {statusComponent && statusComponent}
       {newsData && (
-        <div className="created-news-details-wrapper">
-          <h2>News Created</h2>
-          <h4>{newsData.title}</h4>
-          <p>{newsData.content}</p>
-          <p>{newsData.image}</p>
-          <p>{newsData.sources[0]}</p>
-          <p>{newsData.category}</p>
-        </div>
+        <Check>
+          {" "}
+          <div className="created-news-details-wrapper">
+            <h2>News Created</h2>
+            <h4>{newsData.title}</h4>
+            <p>{newsData.content}</p>
+            <p>{newsData.image}</p>
+            <p>{newsData.sources[0]}</p>
+            <p>{newsData.category}</p>
+          </div>
+        </Check>
       )}
     </div>
   );
