@@ -3,9 +3,10 @@ import "./News.css";
 import newsHero from "../../images/news-hero.jpg";
 import NewsCard from "../../components/NewsCard";
 import useFetch from "../../hooks/useFetch";
-
 import { Link } from "react-router-dom";
 import Select from "../../components/Forms/Select";
+import Error from "../../components/Error/Error";
+import Spinner from "../../components/Spinner/Spinner";
 
 const News = () => {
   const [newsData, setNewsData] = useState(null);
@@ -15,7 +16,7 @@ const News = () => {
     setNewsData(response.result);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    `/news/${newsCategory}`,
+    `/news/category/${newsCategory}`,
     onSuccess
   );
   useEffect(() => {
@@ -26,16 +27,13 @@ const News = () => {
     return cancelFetch;
   }, [newsCategory]);
 
-  if (isLoading) {
-    return <div>is loading</div>;
-  }
-
   return (
     <div className="news-container">
       <div className="news-hero-wrapper">
         <img src={newsHero} alt="" />
       </div>
-      {error && <div>Sorry :( We can not display the news at the moment </div>}
+      {isLoading && <Spinner />}
+      {error && <Error>Sorry! We can not display the news at the moment</Error>}
       <div className="news-categeory-wrapper">
         <Select
           value={newsCategory}
@@ -60,8 +58,8 @@ const News = () => {
           </div>
         )}
         {newsData &&
-          newsData.map((news) => {
-            return <NewsCard key={news.title} news={news} />;
+          newsData.map((news, index) => {
+            return <NewsCard key={index} news={news} />;
           })}
       </div>
       <div className="add-news-link-wrapper">

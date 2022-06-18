@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import getTimeDifference from "../../util/getTimeDifference";
+import Spinner from "../../components/Spinner/Spinner";
+import Error from "../../components/Error/Error";
 
 import "./NewsDetails.css";
 
@@ -9,14 +11,14 @@ const NewsDetails = () => {
   const [newsDetails, setNewsDetails] = useState(null);
   const location = useLocation();
   const newsId = location.state?.newsId;
-
   const onSuccess = (response) => {
     setNewsDetails(response.result[0]);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    `/news/${newsId}`,
+    `/news/details/${newsId}`,
     onSuccess
   );
+
   useEffect(() => {
     performFetch({
       credentials: "include",
@@ -25,9 +27,6 @@ const NewsDetails = () => {
     return cancelFetch;
   }, []);
 
-  if (isLoading) {
-    return <div>....</div>;
-  }
   let timeDifference;
   if (newsDetails) {
     const currentTime = new Date();
@@ -37,7 +36,8 @@ const NewsDetails = () => {
 
   return (
     <>
-      {error && <div>{error}</div>}
+      {isLoading && <Spinner />}
+      {error && <Error>{error}</Error>}
 
       {newsDetails && (
         <div className="news-details-container">

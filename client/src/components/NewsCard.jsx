@@ -2,6 +2,7 @@ import React from "react";
 import "./NewsCard.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
 const NewsCard = ({ news }) => {
   return (
     <>
