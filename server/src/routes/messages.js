@@ -1,9 +1,10 @@
 import express from "express";
 import withAuth from "../middlewares/middleware.js";
-import getMessages from "../controllers/messages.js";
+import { getMessages, postMessage } from "../controllers/messages.js";
 
 const messagesRouter = express.Router();
 
-messagesRouter.get("/", withAuth, getMessages);
+messagesRouter.post("/", withAuth, getMessages);
+messagesRouter.post("/post", withAuth, postMessage);
 
 export default messagesRouter;

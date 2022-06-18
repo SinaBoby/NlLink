@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import { useLocation } from "react-router-dom";
-import { io } from "socket.io-client";
+//import { io } from "socket.io-client";
 import Button from "../../components/Button";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
 import { Message } from "./Message";
-import bashar from "../../images/bashar.jpg";
+import useFetch from "../../hooks/useFetch";
 import { logInfo } from "../../../../server/src/util/logging.js";
 import { Buffer } from "buffer";
+import Spinner from "../../components/Spinner/Spinner";
+import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
-const socket = io("http://localhost:5000", {
+/* const socket = io("http://localhost:5000", {
   autoConnect: false,
   transports: ["websocket"],
-});
+}); */
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { state } = useLocation();
@@ -22,9 +24,9 @@ const Chat = () => {
   const [receiver, setReceiver] = useState(state.receiver);
   //let receiver;
   useEffect(() => {
-    logInfo(state);
-    logInfo(socket);
-    logInfo(messages);
+    //logInfo(messages);
+    // logInfo(socket);
+    //logInfo(userDetails);
   });
   const addMessage = (msg) => {
     setMessages((oldMessages) => [
@@ -32,7 +34,7 @@ const Chat = () => {
       ...(Array.isArray(msg) ? msg.reverse() : [msg]),
     ]);
   };
-  useEffect(() => {
+  /*   useEffect(() => {
     socket.connect();
     socket.on("latest", (data) => {
       // expect server to send us the latest messages
@@ -41,27 +43,51 @@ const Chat = () => {
     socket.on("message", (msg) => {
       addMessage(msg);
     });
-  }, []);
+  }, []);*/
   useEffect(() => {
     setReceiver(state.receiver);
   }, [state.receiver]);
+  const onGetSuccess = (response) => {
+    const { message, receiverObj } = response;
+    logInfo(message);
+    logInfo(receiverObj);
+  };
+  const {
+    isLoading: isGetLoading,
+    error: getError,
+    performFetch: performGetFetch,
+    cancelFetch: cancelGetFetch,
+  } = useFetch("/messages", onGetSuccess);
+  useEffect(() => {
+    const receiverId = receiver._id;
+    performGetFetch(
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ receiverId }),
+      },
+      []
+    );
 
-  const messagess = [
-    {
-      author: { ...userDetails, photo: bashar },
-      message: {
-        date: "02-02-2022 19:18:07",
-        content: "Hello!",
-      },
-    },
-    {
-      author: { ...receiver },
-      message: {
-        date: "02-02-2022 19:19:07",
-        content: "Hello!",
-      },
-    },
-  ];
+    return cancelGetFetch;
+  }, []);
+  const onSuccess = (response) => {
+    const { messages } = response;
+    logInfo(messages);
+  };
+  const { isLoading, error, performFetch, cancelFetch } = useFetch(
+    "/messages/post",
+    onSuccess
+  );
+  useEffect(() => {
+    return () => {
+      cancelGetFetch();
+      cancelFetch();
+    };
+  }, []);
 
   return (
     <div className="row-container">
@@ -71,10 +97,14 @@ const Chat = () => {
             {userDetails?.userName} is now chatting with {receiver?.userName}
           </p>
           <div className="chat-log">
-            {messagess.map((item, index) => {
-              logInfo(item);
+            {isLoading && !error && <Spinner />}
+            {error && <Error>{error}</Error>}
+            {isGetLoading && !getError && <Spinner />}
+            {getError && <Error>{getError}</Error>}
+            {messages.map((item, index) => {
+              //logInfo(item);
               const align =
-                userDetails && userDetails.userName === item.author.userName
+                userDetails && userDetails.userName === item.sender.userName
                   ? "align-left"
                   : "align-right";
 
@@ -82,14 +112,18 @@ const Chat = () => {
                 <Message
                   key={index}
                   currentUser={userDetails}
-                  author={item.author}
-                  message={item.message}
+                  receiver={receiver}
+                  message={item}
                   align={align}
                 />
               );
             })}
           </div>
-          <MessageBox />
+          <MessageBox
+            addMessage={addMessage}
+            receiver={receiver}
+            performFetch={performFetch}
+          />
         </div>
         <div className="receiver-info">
           <div className="receiver-img-container">

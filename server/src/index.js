@@ -16,6 +16,8 @@ import seedNewsCollection from "./db/seedMockNews.js";
 
 // The environment should set the port
 const port = process.env.PORT;
+const httpServer = createServer(app);
+export const io = new Server(httpServer);
 
 if (port == null) {
   // If this fails, make sure you have created a `.env` file in the right place with the PORT set
@@ -25,17 +27,24 @@ if (port == null) {
 const startServer = async () => {
   try {
     await connectDB();
-    const httpServer = createServer(app);
-    const io = new Server(httpServer);
     io.on("connection", async (socket) => {
-      logInfo("client connected...");
-      socket.on("message", async (msg) => {
-        logInfo(msg);
-        let message = await new Message(msg);
-        io.emit("message", message);
-      });
-      let latest = await MessageSchema.statics.latest(10);
-      socket.emit("latest", latest);
+      try {
+        logInfo("client connected...");
+        socket.on("message", async (msg) => {
+          try {
+            logInfo(msg);
+            let message = await Message.create(msg);
+            logInfo(message);
+            io.emit("message", message);
+          } catch (error) {
+            logError(error);
+          }
+        });
+        let latest = await MessageSchema.statics.latest(20);
+        socket.emit("latest", latest);
+      } catch (error) {
+        logError(error);
+      }
     });
     httpServer.listen(port, () => {
       logInfo(`Server started on port ${port}`);
