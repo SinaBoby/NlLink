@@ -11,8 +11,8 @@ import Label from "../../components/Forms/Label";
 import Input from "../../components/Forms/Input";
 import InputFile from "../../components/Forms/InputFile";
 import Select from "../../components/Forms/Select";
-import Textarea from "../../components/Forms/TextArea";
 import { logInfo } from "../../../../server/src/util/logging";
+import TextAreaInput from "../../components/Forms/TextAreaInput";
 
 const AddNews = () => {
   const [title, setTitle] = useState("");
@@ -81,7 +81,7 @@ const AddNews = () => {
         </InputFieldContainer>
         <InputFieldContainer className="news-content-wrapper">
           <Label>News Content</Label>
-          <Textarea
+          <TextAreaInput
             name="newsContent"
             value={content}
             title="News Content"

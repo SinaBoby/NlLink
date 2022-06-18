@@ -5,8 +5,6 @@ import { s3UploadFile } from "./s3upload.js";
 import fs from "fs";
 import util from "util";
 
-
-
 export const getNews = async (req, res) => {
   try {
     const { newsCategory } = req.params;
