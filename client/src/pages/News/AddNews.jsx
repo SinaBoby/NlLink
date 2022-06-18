@@ -47,6 +47,7 @@ const AddNews = () => {
 
     performFetch({
       method: "POST",
+      credentials: "include",
       body: data,
     });
   };

@@ -20,8 +20,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 newsRouter.get("/", withAuth, getNews);
-newsRouter.get("/:newsCategory", withAuth, getNews);
-newsRouter.get("/:newsId", withAuth, getNewsDetails);
-newsRouter.post("/add", upload.single("image"), addNews);
+newsRouter.get("/category/:newsCategory", withAuth, getNews);
+newsRouter.get("/details/:newsId", withAuth, getNewsDetails);
+newsRouter.post("/add", withAuth, upload.single("image"), addNews);
 
 export default newsRouter;
