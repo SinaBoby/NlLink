@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DashboardNewsCard from "./DashboardNewsCard";
 import useFetch from "../hooks/useFetch";
 import "./DashboardNews.css";
+import Error from "./Error/Error";
 
 const DashboardNews = () => {
   const [newsData, setNewsData] = useState(null);
@@ -9,8 +10,8 @@ const DashboardNews = () => {
   const onSuccess = (response) => {
     setNewsData(response.result);
   };
-  const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/news/all",
+  const { error, performFetch, cancelFetch } = useFetch(
+    "/news/category/all",
     onSuccess
   );
   useEffect(() => {
@@ -21,13 +22,9 @@ const DashboardNews = () => {
     return cancelFetch;
   }, []);
 
-  if (isLoading) {
-    return <div>...</div>;
-  }
-
   return (
     <div className="news-wrapper">
-      {error && <div>{error}</div>}
+      {error && <Error>{error}</Error>}
       {newsData &&
         newsData.map((news) => {
           return <DashboardNewsCard key={news.title} news={news} />;
