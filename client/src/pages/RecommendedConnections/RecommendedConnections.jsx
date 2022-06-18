@@ -64,6 +64,11 @@ const RecommendedConnections = () => {
   if (users.length === 0) {
     return (
       <>
+        <div className="btn-wrapper">
+          <Button className={"btn-inline"} onClick={() => navigate(-1)}>
+            Back
+          </Button>
+        </div>
         <h1 className="empty-users-fallback">
           Sorry. We could not find any users that match your search preferences
         </h1>

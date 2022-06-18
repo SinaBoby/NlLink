@@ -18,6 +18,7 @@
   align-self: center;
 }
 
+.btn-wrapper,
 .empty-users-fallback {
   padding: 1rem;
 }

@@ -87,7 +87,10 @@ const CreateUser = () => {
   const phoneRegex = /^\+|00[1-9]{1,3}[0-9]{4,12}$/;
   const onSuccess = () => {
     clearForm();
-    navigate("/login");
+    navigate("/login", {
+      state:
+        "Account created successfully. You can now login using your username/password",
+    });
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/user/create",
