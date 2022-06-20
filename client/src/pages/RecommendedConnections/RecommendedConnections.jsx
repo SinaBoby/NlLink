@@ -13,6 +13,7 @@ import Button from "./../../components/Button";
 import useFetch from "./../../hooks/useFetch";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
+import useUserDetails from "../../hooks/useUserDetails";
 //import { logInfo } from "./../../../../server/src/util/logging";
 
 const mockProfileImages = [profile1, profile2, profile3, bashar, burak, sina];
@@ -21,7 +22,7 @@ const RecommendedConnections = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [users, setUsers] = useState([]);
-
+  const { userDetails } = useUserDetails();
   const onSuccess = (res) => {
     const { users } = res;
     setUsers(users);
@@ -81,7 +82,9 @@ const RecommendedConnections = () => {
           user.photo = mockProfileImages[photoIndex];
           const navigateToChat = () => {
             localStorage.setItem("receiver", JSON.stringify(user));
-            navigate("/chat", { state: { receiver: user } });
+            navigate("/chat", {
+              state: { receiver: user, userId: userDetails._id },
+            });
           };
           return (
             <div className="card-wrapper" key={index}>

@@ -23,6 +23,7 @@ const MessageBox = ({ receiver, performFetch, socket }) => {
         sender: userDetails._id,
         receiver: receiver._id,
       };
+
       performFetch({
         method: "POST",
         headers: {
@@ -32,7 +33,6 @@ const MessageBox = ({ receiver, performFetch, socket }) => {
         credentials: "include",
       });
       socket.emit("message", message);
-
       setValue("");
     }
   };

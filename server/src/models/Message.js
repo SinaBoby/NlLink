@@ -39,11 +39,14 @@ MessageSchema.statics.latest = (se, re) => {
     ],
   }).sort({ _id: "desc" }); */
   //console.log(sent, received);
-  return Message.find({
-    $and: [{ sender: { $in: [se, re] } }, { receiver: { $in: [re, se] } }],
+  /*   return Message.find({
+    $or: [
+      { $and: [{ sender: { $in: [se] } }, { receiver: { $in: [re] } }] },
+      { $and: [{ sender: { $in: [re] } }, { receiver: { $in: [se] } }] },
+    ],
   });
-};
-/*   return Message.aggregate([
+}; */
+  return Message.aggregate([
     {
       $match: {
         $or: [
@@ -114,7 +117,7 @@ MessageSchema.statics.latest = (se, re) => {
     },
   ]);
 };
- */
+
 /* module.exports = {
   Schema: MessageSchema,
   Model: MessageModel,

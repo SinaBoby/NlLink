@@ -22,6 +22,10 @@ const Chat = () => {
   const { state } = useLocation();
   const receiver = state.receiver;
   const { userDetails } = useUserDetails();
+  const userId = state.userId;
+  const receiverId = receiver._id;
+  //const userId = userDetails._id
+
   const { socket } = useContext(SocketContext);
   /* const socket = io("http://localhost:5000", {
     autoConnect: false,
@@ -40,15 +44,24 @@ const Chat = () => {
   useEffect(() => {
     socket.on("chatHistory", (data) => {
       logInfo(data);
-
-      addMessage(data);
+      logInfo(userId);
+      logInfo(receiverId);
+      data.forEach((chat) => {
+        const idArray = chat._id.split(" ");
+        logInfo(idArray);
+        if (idArray.includes(userId) && idArray.includes(receiverId)) {
+          logInfo(chat);
+          addMessage(chat.messages);
+        }
+      });
+      //addMessage(data);
     });
 
     socket.on("message", (msg) => {
       addMessage(msg);
       //io.emit("message", msg)
     });
-  }, [receiver]);
+  }, []);
 
   const onGetSuccess = (response) => {
     const { message, receiverObj } = response;
