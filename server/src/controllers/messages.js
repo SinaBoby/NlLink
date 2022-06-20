@@ -15,6 +15,7 @@ export const getMessages = async (req, res) => {
         .json({ success: false, msg: "You are not Authenticated" });
     } else {
       const user = await User.findOne({ userName });
+      const userId = user._id;
       const sentMessages = await Message.find({
         sender: user._id,
         receiver: receiverId,
@@ -34,18 +35,21 @@ export const getMessages = async (req, res) => {
               let message = await Message.create(msg);
               logInfo(message);
               socket.emit("message", message);
-              io.on("disconnect", () => {
-                logInfo("Disconnected ...");
-              });
             } catch (error) {
               logError(error);
             }
           });
-          let latest = await MessageSchema.statics.latest(
-            user._id,
-            receiverObjId
-          );
-          socket.emit("chatHistory", latest);
+          socket.on("disconnect", () => {
+            logInfo("User Disconnected...");
+            socket.removeAllListeners();
+          });
+          if (receiverObjId && userId) {
+            const chatLog = await MessageSchema.statics.latest(
+              userId,
+              receiverObjId
+            );
+            socket.emit("chatHistory", chatLog);
+          }
         } catch (error) {
           logError(error);
         }
@@ -73,7 +77,7 @@ export const postMessage = async (req, res) => {
       //const receiver = await User.findOne({ userName });
       const msg = await Message.create(message);
       const receiverObject = await User.findOne({ _id: message.receiver });
-      io.emit("message", msg);
+      io.sockets.emit("message", msg);
       res
         .status(200)
         .json({ success: true, message: msg, receiverObj: receiverObject });

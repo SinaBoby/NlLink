@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css";
 import { useLocation } from "react-router-dom";
 //import { io } from "socket.io-client";
@@ -12,8 +12,8 @@ import { Buffer } from "buffer";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
-//import { SocketContext } from "../../SocketContext";
-import { io } from "socket.io-client";
+import { SocketContext } from "../../SocketContext";
+//import { io } from "socket.io-client";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
@@ -22,38 +22,34 @@ const Chat = () => {
   const { state } = useLocation();
   const receiver = state.receiver;
   const { userDetails } = useUserDetails();
-
-  const socket = io("http://localhost:5000", {
+  const { socket } = useContext(SocketContext);
+  /* const socket = io("http://localhost:5000", {
     autoConnect: false,
     transports: ["websocket"],
     withCredentials: true,
     query: {
       token: localStorage.getItem("token"),
     },
-  });
+  }); */
 
   useEffect(() => {
     socket.connect();
 
+    return () => socket.disconnect();
+  }, []);
+  useEffect(() => {
     socket.on("chatHistory", (data) => {
-      // expect server to send us the latest messages
-
-      //console.log(newMessage,"neww")
-
       logInfo(data);
 
-      //addMessage(data);
+      addMessage(data);
     });
 
     socket.on("message", (msg) => {
       addMessage(msg);
       //io.emit("message", msg)
     });
+  }, [receiver]);
 
-    return () => socket.disconnect();
-  }, []);
-
-  //const {socket }= useContext(SocketContext)
   const onGetSuccess = (response) => {
     const { message, receiverObj } = response;
 

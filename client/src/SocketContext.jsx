@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
 
@@ -13,7 +13,13 @@ export const SocketProvider = ({ children }) => {
       token: localStorage.getItem("token"),
     },
   });
+  useEffect(() => {
+    /*   socket.connect();
 
+    
+
+  return () => socket.disconnect(); */
+  }, []);
   const [socket] = useState(socketIo);
   return (
     <SocketContext.Provider value={{ socket }}>

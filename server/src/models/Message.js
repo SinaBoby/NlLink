@@ -24,15 +24,26 @@ export const MessageSchema = new mongoose.Schema(
 export const Message = mongoose.model("Message", MessageSchema);
 MessageSchema.statics.latest = (se, re) => {
   //console.log(se, re);
-  /*  const sent = Message.find({
-    sender: { $in: [mongoose.Types.ObjectId(sender)] },
+  /*   const sent = Message.find({
+    sender: { $in: [se, re] },
+    receiver: { $in: [re, se] },
   });
 
-  const received = Message.find({ sender: receiver, receiver: sender })
-    .sort({ _id: "desc" })
-    .limit(count); */
+  const received = Message.find({ sender: receiver, receiver: sender }).sort({
+    _id: "desc",
+  }); */
+  /* Message.find({
+    $or: [
+      { sender: se, receiver: re },
+      { sender: re, receiver: se },
+    ],
+  }).sort({ _id: "desc" }); */
   //console.log(sent, received);
-  return Message.aggregate([
+  return Message.find({
+    $and: [{ sender: { $in: [se, re] } }, { receiver: { $in: [re, se] } }],
+  });
+};
+/*   return Message.aggregate([
     {
       $match: {
         $or: [
@@ -103,7 +114,7 @@ MessageSchema.statics.latest = (se, re) => {
     },
   ]);
 };
-
+ */
 /* module.exports = {
   Schema: MessageSchema,
   Model: MessageModel,
