@@ -7,7 +7,9 @@ import { Buffer } from "buffer";
 export const Message = ({ message, align, currentUser, receiver }) => {
   const messageTimestamp =
     currentUser && currentUser._id === message.sender
-      ? `You at ${new Date(message.createdAt).toLocaleString()}`
+      ? `You at ${new Date(message.createdAt).toLocaleString()} to ${
+          message.receiver
+        }`
       : `${message.sender} at ${new Date(message.createdAt).toLocaleString()}`;
 
   return (
@@ -20,7 +22,8 @@ export const Message = ({ message, align, currentUser, receiver }) => {
               };base64,${Buffer.from(
                 currentUser.profileImage.data.data
               ).toString("base64")}`
-            : receiver.profileImage &&
+            : receiver &&
+              receiver.profileImage &&
               `data:image/${
                 receiver.profileImage.contentType
               };base64,${Buffer.from(receiver.profileImage.data.data).toString(
@@ -40,7 +43,7 @@ export const Message = ({ message, align, currentUser, receiver }) => {
 };
 
 Message.propTypes = {
-  author: PropTypes.object.isRequired,
+  receiver: PropTypes.object.isRequired,
   message: PropTypes.object.isRequired,
   align: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,

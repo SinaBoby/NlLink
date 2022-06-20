@@ -12,79 +12,95 @@ import { Buffer } from "buffer";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
-/* const socket = io("http://localhost:5000", {
-  autoConnect: false,
-  transports: ["websocket"],
-}); */
+//import { SocketContext } from "../../SocketContext";
+import { io } from "socket.io-client";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  const { state } = useLocation();
-  //const receiver = JSON.parse(localStorage.getItem("receiver"));
-  const { userDetails } = useUserDetails();
-  const [receiver, setReceiver] = useState(state.receiver);
-  //let receiver;
   useEffect(() => {
-    //logInfo(messages);
-    // logInfo(socket);
-    //logInfo(userDetails);
+    //console.log(messages)
   });
-  const addMessage = (msg) => {
-    setMessages((oldMessages) => [
-      ...oldMessages,
-      ...(Array.isArray(msg) ? msg.reverse() : [msg]),
-    ]);
-  };
-  /*   useEffect(() => {
+  const { state } = useLocation();
+  const receiver = state.receiver;
+  const { userDetails } = useUserDetails();
+
+  const socket = io("http://localhost:5000", {
+    autoConnect: false,
+    transports: ["websocket"],
+    withCredentials: true,
+    query: {
+      token: localStorage.getItem("token"),
+    },
+  });
+
+  useEffect(() => {
     socket.connect();
-    socket.on("latest", (data) => {
+
+    socket.on("chatHistory", (data) => {
       // expect server to send us the latest messages
-      addMessage(data);
+
+      //console.log(newMessage,"neww")
+
+      logInfo(data);
+
+      //addMessage(data);
     });
+
     socket.on("message", (msg) => {
       addMessage(msg);
+      //io.emit("message", msg)
     });
-  }, []);*/
-  useEffect(() => {
-    setReceiver(state.receiver);
-  }, [state.receiver]);
+
+    return () => socket.disconnect();
+  }, []);
+
+  //const {socket }= useContext(SocketContext)
   const onGetSuccess = (response) => {
     const { message, receiverObj } = response;
+
     logInfo(message);
     logInfo(receiverObj);
   };
+
   const {
     isLoading: isGetLoading,
     error: getError,
     performFetch: performGetFetch,
     cancelFetch: cancelGetFetch,
   } = useFetch("/messages", onGetSuccess);
+
+  const addMessage = (msg) => {
+    setMessages((oldMessages) => [
+      ...oldMessages,
+      ...(Array.isArray(msg) ? msg.reverse() : [msg]),
+    ]);
+  };
+
   useEffect(() => {
     const receiverId = receiver._id;
-    performGetFetch(
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ receiverId }),
+    performGetFetch({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      []
-    );
+      credentials: "include",
+      body: JSON.stringify({ receiverId }),
+    });
 
     return cancelGetFetch;
   }, []);
+
   const onSuccess = (response) => {
     const { messages } = response;
     logInfo(messages);
   };
+
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/messages/post",
     onSuccess
   );
+
   useEffect(() => {
     return () => {
-      cancelGetFetch();
       cancelFetch();
     };
   }, []);
@@ -104,9 +120,9 @@ const Chat = () => {
             {messages.map((item, index) => {
               //logInfo(item);
               const align =
-                userDetails && userDetails.userName === item.sender.userName
-                  ? "align-left"
-                  : "align-right";
+                userDetails && userDetails._id === item.sender
+                  ? "align-right"
+                  : "align-left";
 
               return (
                 <Message
@@ -120,9 +136,10 @@ const Chat = () => {
             })}
           </div>
           <MessageBox
-            addMessage={addMessage}
+            socket={socket}
             receiver={receiver}
             performFetch={performFetch}
+            addMessage={addMessage}
           />
         </div>
         <div className="receiver-info">

@@ -20,7 +20,8 @@ const Login = () => {
   const { isAuthenticated, login } = useContext(AuthContext);
   const { setUserDetails } = useUserDetails();
   const onSuccess = (res) => {
-    const { user } = res;
+    const { user, token } = res;
+    localStorage.setItem("token", token);
 
     setUserDetails(user);
     login(() => navigate("/dashboard"));
