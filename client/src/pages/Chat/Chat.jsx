@@ -42,10 +42,13 @@ const Chat = () => {
     return () => socket.disconnect();
   }, []);
   useEffect(() => {
+    socket.on("id", (data) => {
+      logInfo(data);
+    });
     socket.on("chatHistory", (data) => {
       logInfo(data);
-      logInfo(userId);
-      logInfo(receiverId);
+      //logInfo(userId);
+      //logInfo(receiverId);
       data.forEach((chat) => {
         const idArray = chat._id.split(" ");
         logInfo(idArray);

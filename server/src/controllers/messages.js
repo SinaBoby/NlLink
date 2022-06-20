@@ -6,8 +6,6 @@ import { ObjectId } from "mongodb";
 export const getMessages = async (req, res) => {
   const userName = req.userName;
   const io = req.app.get("socketio");
-  const socket = req.app.get("socket");
-  logInfo(socket.id, 4567);
   try {
     const { receiverId } = req.body;
     const receiverObjId = new ObjectId(receiverId);
@@ -31,6 +29,7 @@ export const getMessages = async (req, res) => {
       io.on("connection", async (socket) => {
         try {
           logInfo("client connected...");
+          socket.emit("id", socket.id);
           //logInfo(socket.id, "hi")
           // logInfo(socket.handshake.headers.cookie.split(";")[0].split("=")[1]);
           socket_id.push(socket.id);
@@ -45,7 +44,7 @@ export const getMessages = async (req, res) => {
               logInfo(msg);
               let message = await Message.create(msg);
               //logInfo(message);
-              socket.emit("message", message);
+              io.emit("message", message);
             } catch (error) {
               logError(error);
             }
@@ -79,7 +78,7 @@ export const postMessage = async (req, res) => {
   try {
     const userName = req.userName;
     const { message } = req.body;
-    const io = req.app.get("socketio");
+    //const io = req.app.get("socketio");
     logInfo(req.body);
     if (!userName) {
       res
@@ -87,12 +86,12 @@ export const postMessage = async (req, res) => {
         .json({ success: false, msg: "You are not Authenticated" });
     } else {
       //const receiver = await User.findOne({ userName });
-      const msg = await Message.create(message);
+      //const msg = await Message.create(message);
       const receiverObject = await User.findOne({ _id: message.receiver });
-      io.emit("message", msg);
+      //io.emit("message", msg);
       res
         .status(200)
-        .json({ success: true, message: msg, receiverObj: receiverObject });
+        .json({ success: true, message: message, receiverObj: receiverObject });
     }
   } catch (error) {
     logError(error);

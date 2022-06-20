@@ -61,6 +61,7 @@ io.use(async (socket, next) => {
 
 io.on("connection", (socket) => {
   app.set("socket", socket);
+
   //logInfo(socket.id)
 });
 if (port == null) {
