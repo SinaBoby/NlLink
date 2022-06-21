@@ -8,9 +8,11 @@ export const Message = ({ message, align, currentUser, receiver }) => {
   const messageTimestamp =
     currentUser && currentUser._id === message.sender
       ? `You at ${new Date(message.createdAt).toLocaleString()} to ${
-          message.receiver
+          receiver.userName
         }`
-      : `${message.sender} at ${new Date(message.createdAt).toLocaleString()}`;
+      : `${receiver.userName} at ${new Date(
+          message.createdAt
+        ).toLocaleString()}`;
 
   return (
     <div className={`message-container ${align}`}>

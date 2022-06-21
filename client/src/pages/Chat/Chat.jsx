@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css";
 import { useLocation } from "react-router-dom";
 //import { io } from "socket.io-client";
-import Button from "../../components/Button";
+//import Button from "../../components/Button";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
 import { Message } from "./Message";
@@ -161,14 +161,6 @@ const Chat = () => {
             />
           </div>
           <p className="receiver-name">{`${receiver.firstName} ${receiver.lastName}`}</p>
-          <div className="btn-section">
-            <div className="btn-container">
-              <Button className={"btn btn-block"}>Report</Button>
-            </div>
-            <div className="btn-container">
-              <Button className={"btn-block"}>Block</Button>
-            </div>
-          </div>
         </div>
       </div>
       <RecentConnections />
