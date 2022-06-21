@@ -16,19 +16,21 @@ export const Message = ({ message, align, currentUser, receiver }) => {
     <div className={`message-container ${align}`}>
       <img
         src={
-          currentUser && currentUser._id === message.sender
+          currentUser &&
+          currentUser.profileImage &&
+          currentUser._id === message.sender
             ? `data:image/${
                 currentUser.profileImage.contentType
               };base64,${Buffer.from(
                 currentUser.profileImage.data.data
               ).toString("base64")}`
-            : receiver &&
-              receiver.profileImage &&
-              `data:image/${
+            : receiver && receiver.profileImage
+            ? `data:image/${
                 receiver.profileImage.contentType
               };base64,${Buffer.from(receiver.profileImage.data.data).toString(
                 "base64"
               )}`
+            : "https://picsum.photos/200"
         }
         alt={message.sender.firstName}
       />

@@ -79,7 +79,7 @@ export const postMessage = async (req, res) => {
     const userName = req.userName;
     const { message } = req.body;
     //const io = req.app.get("socketio");
-    logInfo(req.body);
+    //logInfo(req.body);
     if (!userName) {
       res
         .status(401)

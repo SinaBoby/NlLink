@@ -16,9 +16,6 @@ import { SocketContext } from "../../SocketContext";
 //import { io } from "socket.io-client";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    //console.log(messages)
-  });
   const { state } = useLocation();
   const receiver = state.receiver;
   const { userDetails } = useUserDetails();
@@ -27,20 +24,41 @@ const Chat = () => {
   //const userId = userDetails._id
 
   const { socket } = useContext(SocketContext);
-  /* const socket = io("http://localhost:5000", {
-    autoConnect: false,
-    transports: ["websocket"],
-    withCredentials: true,
-    query: {
-      token: localStorage.getItem("token"),
-    },
-  }); */
+
+  const onGetSuccess = (response) => {
+    const { message, receiverObj } = response;
+    connectSocket();
+    logInfo(message);
+    logInfo(receiverObj);
+  };
+
+  const {
+    isLoading: isGetLoading,
+    error: getError,
+    performFetch: performGetFetch,
+    cancelFetch: cancelGetFetch,
+  } = useFetch("/messages", onGetSuccess);
 
   useEffect(() => {
-    socket.connect();
+    const receiverId = receiver._id;
+    performGetFetch({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ receiverId }),
+    });
 
-    return () => socket.disconnect();
+    return cancelGetFetch;
   }, []);
+
+  const connectSocket = () => socket.connect();
+  /*  useEffect(() => {
+    window.addEventListener("load", connectSocket);
+    return () => window.removeEventListener("load", connectSocket);
+  }, []); */
+
   useEffect(() => {
     socket.on("id", (data) => {
       logInfo(data);
@@ -64,21 +82,8 @@ const Chat = () => {
       addMessage(msg);
       //io.emit("message", msg)
     });
+    return () => socket.disconnect();
   }, []);
-
-  const onGetSuccess = (response) => {
-    const { message, receiverObj } = response;
-
-    logInfo(message);
-    logInfo(receiverObj);
-  };
-
-  const {
-    isLoading: isGetLoading,
-    error: getError,
-    performFetch: performGetFetch,
-    cancelFetch: cancelGetFetch,
-  } = useFetch("/messages", onGetSuccess);
 
   const addMessage = (msg) => {
     setMessages((oldMessages) => [
@@ -86,20 +91,6 @@ const Chat = () => {
       ...(Array.isArray(msg) ? msg.reverse() : [msg]),
     ]);
   };
-
-  useEffect(() => {
-    const receiverId = receiver._id;
-    performGetFetch({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ receiverId }),
-    });
-
-    return cancelGetFetch;
-  }, []);
 
   const onSuccess = (response) => {
     const { messages } = response;
@@ -158,12 +149,13 @@ const Chat = () => {
           <div className="receiver-img-container">
             <img
               src={
-                receiver &&
-                `data:image/${
-                  receiver.profileImage.contentType
-                };base64,${Buffer.from(
-                  receiver.profileImage.data.data
-                ).toString("base64")}`
+                receiver && receiver.profileImage
+                  ? `data:image/${
+                      receiver.profileImage.contentType
+                    };base64,${Buffer.from(
+                      receiver.profileImage.data.data
+                    ).toString("base64")}`
+                  : "https://picsum.photos/200"
               }
               alt={receiver.firstName}
             />
