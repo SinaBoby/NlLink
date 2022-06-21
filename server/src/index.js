@@ -9,12 +9,57 @@ import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
 import connectDB from "./db/connectDB.js";
 import testRouter from "./testRouter.js";
-import { Message, MessageSchema } from "./models/Message.js";
-import seedActivityCollection from "./db/seedMockActivityData.js";
+//import { Message /* , MessageSchema */ } from "./models/Message.js";
+//import seedActivityCollection from "./db/seedMockActivityData.js";
+//import seedNewsCollection from "./db/seedMockNews.js";
+import jwt from "jsonwebtoken";
+// import Activity from "./models/Activity.js";
+
 // The environment should set the port
 // import News from "./models/News.js";
 
 const port = process.env.PORT;
+const httpServer = createServer(app);
+const allowedOrigins = [
+  "http://localhost:8080",
+  "https://c35-newcomers-develop.herokuapp.com",
+];
+export const io = new Server(httpServer, {
+  cors: {
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var msg =
+          "The CORS policy for this site does not " +
+          "allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  },
+});
+app.set("socketio", io);
+io.use(async (socket, next) => {
+  try {
+    const token = socket.handshake.auth.token;
+    jwt.verify(token, process.env.SECRET, function (err, decoded) {
+      if (err) {
+        logError(err);
+      } else {
+        const userName = decoded.userName;
+        socket.userName = userName;
+        next();
+      }
+    });
+  } catch (err) {
+    logInfo(err);
+    next(err);
+  }
+});
 
 if (port == null) {
   // If this fails, make sure you have created a `.env` file in the right place with the PORT set
@@ -24,18 +69,6 @@ if (port == null) {
 const startServer = async () => {
   try {
     await connectDB();
-    const httpServer = createServer(app);
-    const io = new Server(httpServer);
-    io.on("connection", async (socket) => {
-      logInfo("client connected...");
-      socket.on("message", async (msg) => {
-        logInfo(msg);
-        let message = await new Message(msg);
-        io.emit("message", message);
-      });
-      let latest = await MessageSchema.statics.latest(10);
-      socket.emit("latest", latest);
-    });
     httpServer.listen(port, () => {
       logInfo(`Server started on port ${port}`);
     });
@@ -46,10 +79,9 @@ const startServer = async () => {
 
 // seed mock Data to DB
 
-Promise.all([seedActivityCollection]).catch((error) => logError(error));
-// const seedNewsCollection = async () => {
-//   await News.deleteMany({});
-// };
+/* Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
+  logError(error)
+); */
 
 // seedNewsCollection();
 

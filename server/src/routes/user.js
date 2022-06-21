@@ -22,6 +22,6 @@ const upload = multer({ storage });
 userRouter.post("/logout", withAuth, logout);
 userRouter.get("/me", withAuth, getLoggedInUser);
 userRouter.post("/create", upload.single("profileImage"), createUser);
-userRouter.get("/recent-chat", withAuth, getUserRecentChat);
+userRouter.get("/contacts", withAuth, getUserRecentChat);
 
 export default userRouter;

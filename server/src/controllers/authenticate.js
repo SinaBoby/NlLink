@@ -41,6 +41,7 @@ const authenticate = function (req, res) {
             "Access-Control-Expose-Headers",
             "date, etag, access-control-allow-origin, access-control-allow-credentials"
           );
+
           res.cookie("token", token, {
             httpOnly: true,
             origin: req.headers.origin,
@@ -54,6 +55,7 @@ const authenticate = function (req, res) {
           res.json({
             success: true,
             user,
+            token: token,
           });
           res.end();
         }

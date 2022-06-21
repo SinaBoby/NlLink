@@ -9,6 +9,8 @@ import locationRouter from "./routes/location.js";
 import searchRouter from "./routes/search.js";
 import newsRouter from "./routes/news.js";
 import activitiesRouter from "./routes/activities.js";
+import messagesRouter from "./routes/messages.js";
+import contactsRouter from "./routes/contacts.js";
 import bodyParser from "body-parser";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -58,6 +60,8 @@ app.use("/api/province", locationRouter);
 app.use("/api/find_matches", searchRouter);
 app.use("/api/news", newsRouter);
 app.use("/api/activities", activitiesRouter);
+app.use("/api/messages", messagesRouter);
+app.use("/api/contacts", contactsRouter);
 app.get("/checkToken", withAuth, function (req, res) {
   res.status(200);
   res.send("token is there");

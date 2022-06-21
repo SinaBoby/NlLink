@@ -10,7 +10,9 @@ import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
+//import { SocketProvider } from "./SocketContext";
 import { UserDetailsProvider } from "./context/UserDetailsContext";
+
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
 import Connect from "./pages/Connect/Connect";

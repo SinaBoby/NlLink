@@ -7,7 +7,7 @@ mongoose.connection.on("reconnected", () => {
   logInfo("Connection Reestablished");
 });
 mongoose.connection.on("disconnected", () => {
-  logInfo("Connection disconnected");
+  logInfo("Connection disconnected, Burak");
 });
 mongoose.connection.on("close", () => {
   logInfo("Connection Closed");
