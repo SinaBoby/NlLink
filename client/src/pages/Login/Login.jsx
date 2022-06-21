@@ -5,18 +5,20 @@ import Form from "../../components/Forms/Form";
 import Button from "../../components/Button";
 import Error from "../../components/Error/Error";
 import useFetch from "../../hooks/useFetch";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import TEST_ID from "../User/CreateUser.testid";
 import "./Login.css";
 import { AuthContext } from "../../AuthContext";
 import InputFieldContainer from "./../../components/Forms/InputFieldContainer";
 import Spinner from "./../../components/Spinner/Spinner";
 import useUserDetails from "../../hooks/useUserDetails";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { isAuthenticated, login } = useContext(AuthContext);
   const { setUserDetails } = useUserDetails();
   const onSuccess = (res) => {
@@ -33,6 +35,10 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
+    }
+
+    if (state !== null) {
+      toast.success(state);
     }
 
     return cancelFetch;
@@ -73,7 +79,7 @@ const Login = () => {
           title="Required field. Should follow the pattern"
           minLength="3"
           maxLength="64"
-          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{3,64}$"
+          pattern="^[a-zA-Z][a-zA-Z0-9-_@.]{2,64}$"
           onChange={(value) => setUserName(value)}
           className="login-input"
           data-testid={TEST_ID.userNameInput}

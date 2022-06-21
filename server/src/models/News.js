@@ -5,15 +5,14 @@ const newsSchema = new mongoose.Schema(
     title: { type: String, required: true, maxLength: 200 },
     content: { type: String, required: true },
     sources: [String],
-    images: [
-      {
-        alt: String,
-        img: {
-          data: Buffer,
-          contentType: String,
-        },
-      },
-    ],
+    // images: {
+    //   alt: String,
+    //   img: {
+    //     data: Buffer,
+    //     contentType: String,
+    //   },
+    // },
+    image: { type: String, required: true },
     category: {
       type: String,
       enum: ["refugees", "politics", "finance", "society"],

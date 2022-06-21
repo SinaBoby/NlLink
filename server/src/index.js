@@ -16,6 +16,8 @@ import jwt from "jsonwebtoken";
 // import Activity from "./models/Activity.js";
 
 // The environment should set the port
+// import News from "./models/News.js";
+
 const port = process.env.PORT;
 const httpServer = createServer(app);
 const allowedOrigins = [
@@ -81,15 +83,7 @@ const startServer = async () => {
   logError(error)
 ); */
 
-// Promise.all([seedNewsCollection]).catch((error) => logError(error));
-// seedActivityCollection()
-//   .then(() => {
-//     return Activity.find();
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   })
-//   .catch((e) => logError(e));
+// seedNewsCollection();
 
 /****** Host our client code for Heroku *****/
 /**

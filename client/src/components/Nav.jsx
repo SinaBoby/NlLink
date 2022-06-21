@@ -24,9 +24,11 @@ const Nav = () => {
         </Link>
         <div className="navbar-right">
           <div className="collapse">
-            <Link to="/news" className="navbar-link">
-              News
-            </Link>
+            {isAuthenticated && (
+              <Link to="/news" className="navbar-link">
+                News
+              </Link>
+            )}
             {isAuthenticated && (
               <Link to="/activities" className="navbar-link">
                 Activities
@@ -39,11 +41,11 @@ const Nav = () => {
                   : "Connect to New Comers"}
               </Link>
             )}
-            <Link to="/contact" className="navbar-link">
-              Contact us
-            </Link>
             <Link to="/about" className="navbar-link">
               About
+            </Link>
+            <Link to="/contact" className="navbar-link">
+              Contact us
             </Link>
             {isAuthenticated ? (
               <>

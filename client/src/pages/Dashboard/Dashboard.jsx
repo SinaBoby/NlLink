@@ -36,11 +36,6 @@ const Dashboard = () => {
     return cancelFetch;
   }, []);
 
-  // let userType;
-  // if (userDetails) {
-  //   userType = userDetails.userType;
-  // }
-
   return (
     <div className="dashboard-container">
       {isMeLoading && !meError && <Spinner />}
@@ -54,13 +49,13 @@ const Dashboard = () => {
 
         <div className="upcoming-activities-wrapper activity-wrapper">
           <h3 className="activity-wrapper-header">Upcoming Activities</h3>
-          {isLoading && <div>...</div>}
-          {error && <div>{error.message}</div>}
+          {isLoading && <Spinner />}
+          {error && <Error>{error}</Error>}
           {userActivities && <ActivitySlider activitiesData={userActivities} />}
         </div>
         <div className="recommended-activities-wrapper activity-wrapper">
-          {isLoading && <div>...</div>}
-          {error && <div>{error.message}</div>}
+          {isLoading && <Spinner />}
+          {error && <Error>{error}</Error>}
           {userDetails && (
             <h3 className="activity-wrapper-header"> Recommended Activities</h3>
           )}
@@ -87,7 +82,6 @@ const Dashboard = () => {
           />
         </div>
         <div className="connections-status-details-wrapper">
-          {/* <h3 className="connections-status-header">Your Connections</h3> */}
           <RecentConnections />
         </div>
       </div>
