@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
 
@@ -9,11 +9,14 @@ export const SocketProvider = ({ children }) => {
     autoConnect: false,
     transports: ["websocket"],
     withCredentials: true,
-    query: {
+    auth: {
       token: localStorage.getItem("token"),
     },
   });
   const [socket] = useState(socketIo);
+  useEffect(() => {
+    //socket.connect()
+  }, []);
   return (
     <SocketContext.Provider value={{ socket }}>
       {children}

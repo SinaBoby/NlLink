@@ -30,8 +30,6 @@ export const getMessages = async (req, res) => {
         try {
           logInfo("client connected...");
           socket.emit("id", socket.id);
-          //logInfo(socket.id, "hi")
-          // logInfo(socket.handshake.headers.cookie.split(";")[0].split("=")[1]);
           socket_id.push(socket.id);
           if (socket_id[0] === socket.id) {
             // remove the connection listener for any subsequent

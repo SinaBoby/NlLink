@@ -10,8 +10,8 @@ import { logInfo, logError } from "./util/logging.js";
 import connectDB from "./db/connectDB.js";
 import testRouter from "./testRouter.js";
 //import { Message /* , MessageSchema */ } from "./models/Message.js";
-import seedActivityCollection from "./db/seedMockActivityData.js";
-import seedNewsCollection from "./db/seedMockNews.js";
+//import seedActivityCollection from "./db/seedMockActivityData.js";
+//import seedNewsCollection from "./db/seedMockNews.js";
 import jwt from "jsonwebtoken";
 // import Activity from "./models/Activity.js";
 
@@ -43,7 +43,7 @@ export const io = new Server(httpServer, {
 app.set("socketio", io);
 io.use(async (socket, next) => {
   try {
-    const token = socket.handshake.query.token;
+    const token = socket.handshake.auth.token;
     jwt.verify(token, process.env.SECRET, function (err, decoded) {
       if (err) {
         logError(err);
@@ -77,9 +77,9 @@ const startServer = async () => {
 
 // seed mock Data to DB
 
-Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
+/* Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
   logError(error)
-);
+); */
 
 // Promise.all([seedNewsCollection]).catch((error) => logError(error));
 // seedActivityCollection()

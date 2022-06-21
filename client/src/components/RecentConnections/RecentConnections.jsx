@@ -1,6 +1,6 @@
 import React, { /* useState, */ useEffect } from "react";
-/*// import useUserDetails from "../../hooks/useUserDetails";
-import useFetch from "../../hooks/useFetch"; */
+//import useUserDetails from "../../hooks/useUserDetails";
+//import useFetch from "../../hooks/useFetch";
 /* import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error"; */
 import burak from "../../images/burak.jpg";
@@ -47,10 +47,10 @@ const recentConnections = [
 ];
 
 const RecentConnections = () => {
-  /* const [contacts, setContact] = useState()
-  const {userDetails} = useUserDetails()
-
-  const onSuccess = (response) => {
+  // const [contacts, setContact] = useState()
+  //  const {userDetails} = useUserDetails()
+  //
+  /*   const onSuccess = (response) => {
     const { messages } = response;
     logInfo(messages);
   };
