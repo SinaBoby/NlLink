@@ -25,6 +25,7 @@ const allowedOrigins = [
   "https://c35-newcomers-develop.herokuapp.com",
 ];
 export const io = new Server(httpServer, {
+  path: "/chat/",
   cors: {
     origin: function (origin, callback) {
       // allow requests with no origin
@@ -52,6 +53,8 @@ io.use(async (socket, next) => {
       } else {
         const userName = decoded.userName;
         socket.userName = userName;
+        logInfo(socket.handshake.query.queryName);
+        socket.query = socket.handshake.query.queryName;
         next();
       }
     });

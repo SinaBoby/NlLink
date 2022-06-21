@@ -13,7 +13,7 @@ export const SocketProvider = ({ children }) => {
       token: localStorage.getItem("token"),
     },
   }); */
-  const socketIo = useSocketClient();
+  const socketIo = useSocketClient("/chat/", 345);
   const [socket] = useState(socketIo);
   useEffect(() => {
     //socket.connect()
