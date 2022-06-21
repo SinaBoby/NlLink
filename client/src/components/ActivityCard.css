@@ -1,0 +1,8 @@
+.activity-card-wrapper {
+}
+
+@media screen and (min-width: 1024px) {
+  .activity-card-wrapper {
+    width: calc(25%-1rem);
+  }
+}

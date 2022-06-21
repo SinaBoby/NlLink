@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 // import { logInfo } from "../util/logging.js";
 
-const getActivities = async (req, res) => {
+export const getUserActivities = async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const userName = req.userName;
@@ -26,4 +26,19 @@ const getActivities = async (req, res) => {
   }
 };
 
-export default getActivities;
+export const getActivities = async (req, res) => {
+  try {
+    const { activityCategory } = req.params;
+    if (activityCategory === "All") {
+      const allActivities = await Activity.find();
+      res.status(200).json({
+        success: true,
+        result: allActivities,
+      });
+    }
+  } catch (error) {
+    {
+      res.send({ msg: "Error in Fetching Selected Activities" });
+    }
+  }
+};
