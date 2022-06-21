@@ -18,15 +18,13 @@ const Chat = () => {
   const { userDetails } = useUserDetails();
   const userId = state.userId;
   const receiverId = receiver._id;
-  //const userId = userDetails._id
 
   const { socket } = useContext(SocketContext);
 
   const onGetSuccess = (response) => {
-    const { message, receiverObj } = response;
+    const { success } = response;
     connectSocket();
-    logInfo(message);
-    logInfo(receiverObj);
+    logInfo(success);
   };
 
   const {
@@ -51,10 +49,6 @@ const Chat = () => {
   }, []);
 
   const connectSocket = () => socket.connect();
-  /*  useEffect(() => {
-    window.addEventListener("load", connectSocket);
-    return () => window.removeEventListener("load", connectSocket);
-  }, []); */
 
   useEffect(() => {
     socket.on("id", (data) => {
@@ -62,8 +56,6 @@ const Chat = () => {
     });
     socket.on("chatHistory", (data) => {
       logInfo(data);
-      //logInfo(userId);
-      //logInfo(receiverId);
       data.forEach((chat) => {
         const idArray = chat._id.split(" ");
         logInfo(idArray);
@@ -72,12 +64,10 @@ const Chat = () => {
           addMessage(chat.messages);
         }
       });
-      //addMessage(data);
     });
 
     socket.on("message", (msg) => {
       addMessage(msg);
-      //io.emit("message", msg)
     });
     return () => socket.disconnect();
   }, []);

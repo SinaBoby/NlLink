@@ -9,7 +9,6 @@ export const getMessages = async (req, res) => {
   try {
     const { receiverId } = req.body;
     const receiverObjId = new ObjectId(receiverId);
-    //console.log(receiverObjId);
     if (!userName) {
       res
         .status(401)
@@ -17,18 +16,10 @@ export const getMessages = async (req, res) => {
     } else {
       const user = await User.findOne({ userName });
       const userId = user._id;
-      const sentMessages = await Message.find({
-        sender: user._id,
-        receiver: receiverId,
-      });
-      const receivedMessages = await Message.find({
-        receiver: user._id,
-        sender: receiverId,
-      });
       let socket_id = [];
       io.on("connection", async (socket) => {
         try {
-          logInfo("client connected...");
+          logInfo("Client connected...");
           socket.emit("id", socket.id);
           socket_id.push(socket.id);
           if (socket_id[0] === socket.id) {
@@ -36,20 +27,17 @@ export const getMessages = async (req, res) => {
             // connections with the same ID
             io.removeAllListeners("connection");
           }
-          // logInfo(socket.id);
           socket.on("message", async (msg) => {
             try {
-              logInfo(msg);
               let message = await Message.create(msg);
-              //logInfo(message);
               io.emit("message", message);
             } catch (error) {
               logError(error);
             }
           });
           socket.on("disconnect", () => {
-            logInfo("User Disconnected...");
-            socket.removeAllListeners();
+            logInfo("Client disconnected...");
+            //socket.removeAllListeners();
           });
           if (receiverObjId && userId) {
             const chatLog = await MessageSchema.statics.latest(
@@ -65,7 +53,6 @@ export const getMessages = async (req, res) => {
 
       res.status(200).json({
         success: true,
-        messages: { ...sentMessages, ...receivedMessages },
       });
     }
   } catch (error) {
@@ -76,17 +63,12 @@ export const postMessage = async (req, res) => {
   try {
     const userName = req.userName;
     const { message } = req.body;
-    //const io = req.app.get("socketio");
-    //logInfo(req.body);
     if (!userName) {
       res
         .status(401)
         .json({ success: false, msg: "You are not Authenticated" });
     } else {
-      //const receiver = await User.findOne({ userName });
-      //const msg = await Message.create(message);
       const receiverObject = await User.findOne({ _id: message.receiver });
-      //io.emit("message", msg);
       res
         .status(200)
         .json({ success: true, message: message, receiverObj: receiverObject });
