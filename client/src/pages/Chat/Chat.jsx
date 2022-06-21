@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css";
 import { useLocation } from "react-router-dom";
-//import { io } from "socket.io-client";
-//import Button from "../../components/Button";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
 import { Message } from "./Message";
@@ -13,7 +11,6 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
 import { SocketContext } from "../../SocketContext";
-//import { io } from "socket.io-client";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { state } = useLocation();
