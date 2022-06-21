@@ -22,7 +22,7 @@ export const MessageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 export const Message = mongoose.model("Message", MessageSchema);
-MessageSchema.statics.latest = (se, re) => {
+MessageSchema.statics.latest = (se) => {
   //console.log(se, re);
   /*   const sent = Message.find({
     sender: { $in: [se, re] },
@@ -69,7 +69,7 @@ MessageSchema.statics.latest = (se, re) => {
         _id: {
           $cond: [
             {
-              $eq: ["$receiver", mongoose.Types.ObjectId(re)],
+              $eq: ["$receiver", mongoose.Types.ObjectId(se)],
             },
             {
               $concat: [

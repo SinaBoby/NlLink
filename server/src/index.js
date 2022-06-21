@@ -2,21 +2,17 @@
 import dotenv from "dotenv";
 import express from "express";
 dotenv.config();
-//import * as Message from "./models/Message";
+import app from "./app.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import app from "./app.js";
-import { logInfo, logError } from "./util/logging.js";
 import connectDB from "./db/connectDB.js";
-import testRouter from "./testRouter.js";
-//import { Message /* , MessageSchema */ } from "./models/Message.js";
-//import seedActivityCollection from "./db/seedMockActivityData.js";
-//import seedNewsCollection from "./db/seedMockNews.js";
+import { logInfo, logError } from "./util/logging.js";
 import jwt from "jsonwebtoken";
-// import Activity from "./models/Activity.js";
+import User from "./models/User.js";
+import { Message, MessageSchema } from "./models/Message.js";
+import testRouter from "./testRouter.js";
 
 // The environment should set the port
-// import News from "./models/News.js";
 
 const port = process.env.PORT;
 const httpServer = createServer(app);
@@ -53,7 +49,7 @@ io.use(async (socket, next) => {
       } else {
         const userName = decoded.userName;
         socket.userName = userName;
-        logInfo(socket.handshake.query.queryName);
+        logInfo("clicked");
         socket.query = socket.handshake.query.queryName;
         next();
       }
@@ -63,7 +59,42 @@ io.use(async (socket, next) => {
     next(err);
   }
 });
-
+let socket_id = [];
+io.on("connection", async (socket) => {
+  try {
+    logInfo("Client connected...");
+    socket.emit("id", socket.id);
+    logInfo(socket.userName);
+    socket_id.push(socket.id);
+    /*  if (socket_id[0] === socket.id) {
+            // remove the connection listener for any subsequent
+            // connections with the same ID
+            io.removeAllListeners("connection");
+          } */
+    socket.on("message", async (msg) => {
+      try {
+        let message = await Message.create(msg);
+        io.emit("message", message);
+        logInfo(message);
+      } catch (error) {
+        logError(error);
+      }
+    });
+    socket.on("disconnect", () => {
+      logInfo("Client disconnected...");
+      //socket.removeAllListeners();
+    });
+    const userName = socket.userName;
+    const user = await User.findOne({ userName });
+    const userId = user._id;
+    if (userId) {
+      const chatLog = await MessageSchema.statics.latest(userId);
+      socket.emit("chatHistory", chatLog);
+    }
+  } catch (error) {
+    logError(error);
+  }
+});
 if (port == null) {
   // If this fails, make sure you have created a `.env` file in the right place with the PORT set
   logError(new Error("Cannot find a PORT number, did you create a .env file?"));
@@ -79,14 +110,6 @@ const startServer = async () => {
     logError(error);
   }
 };
-
-// seed mock Data to DB
-
-/* Promise.all([seedActivityCollection, seedNewsCollection]).catch((error) =>
-  logError(error)
-); */
-
-// seedNewsCollection();
 
 /****** Host our client code for Heroku *****/
 /**

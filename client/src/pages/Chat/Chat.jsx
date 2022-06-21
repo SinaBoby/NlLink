@@ -11,6 +11,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
 import { SocketContext } from "../../SocketContext";
+//import useSocketClient from "../../hooks/useSocketClient.js"
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { state } = useLocation();
@@ -20,7 +21,7 @@ const Chat = () => {
   const receiverId = receiver._id;
 
   const { socket } = useContext(SocketContext);
-
+  //const socket = useSocketClient("/chat/", receiverId)
   const onGetSuccess = (response) => {
     const { success } = response;
     connectSocket();

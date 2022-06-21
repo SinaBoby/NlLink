@@ -5,14 +5,14 @@ import useSocketClient from "./hooks/useSocketClient.js";
 export const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
   // const [messages, setMessages] = useState([]);
-  /*   const socketIo = io("http://localhost:5000", {
+  /* const socketIo = io("http://localhost:5000", {
     autoConnect: false,
     transports: ["websocket"],
     withCredentials: true,
     auth: {
       token: localStorage.getItem("token"),
     },
-  }); */
+  });  */
   const socketIo = useSocketClient("/chat/", 345);
   const [socket] = useState(socketIo);
   useEffect(() => {
