@@ -61,7 +61,6 @@ const Chat = () => {
         const idArray = chat._id.split(" ");
         logInfo(idArray);
         if (idArray.includes(userId) && idArray.includes(receiverId)) {
-          logInfo(chat);
           addMessage(chat.messages);
         }
       });
@@ -151,7 +150,7 @@ const Chat = () => {
           <p className="receiver-name">{`${receiver.firstName} ${receiver.lastName}`}</p>
         </div>
       </div>
-      <RecentConnections />
+      <RecentConnections userId={userId} />
     </div>
   );
 };
