@@ -80,7 +80,7 @@
   position: relative;
   width: 100%;
   background-color: #f0ebeb;
-  height: 500px;
+  min-height: 450px;
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
@@ -102,7 +102,6 @@
   width: 60%;
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
   overflow-y: auto;
   background-color: hsl(0, 0%, 100%);
 }
@@ -127,6 +126,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-content: flex-start;
   overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
@@ -156,6 +156,7 @@
   transition-property: width;
   transition-duration: 300ms;
   padding: 10px;
+  cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
@@ -202,6 +203,10 @@
   .latest-news-details-wrapper {
     width: 100%;
     height: 60%;
+  }
+
+  .connections-status-wrapper {
+    min-height: 250px;
   }
 
   .connections-status-details-wrapper {

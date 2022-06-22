@@ -1,5 +1,6 @@
 .row-container {
   display: flex;
+  height: 100vh;
 }
 
 .chat-page-wrapper {
@@ -7,6 +8,7 @@
   padding: 1.5rem;
   display: flex;
   background-color: hsl(0, 53%, 91%);
+  height: 100%;
 }
 
 .receiver-info {
@@ -16,7 +18,12 @@
 .chat-container {
   width: 70%;
   margin-right: 2rem;
+  overflow-y: auto;
 }
+
+/* .chat-container::-webkit-scrollbar {
+  display: none;
+} */
 
 .chat-title {
   font-size: 2rem;
@@ -28,20 +35,30 @@
   width: 100%;
 }
 .chat-log {
-  width: 100%;
+  width: 96%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   background-color: hsl(0, 0%, 100%);
   border-radius: 0.5rem;
-  min-height: 30rem;
+  /* min-height: 30rem; */
+  height: 80%;
   overflow: auto;
   margin-bottom: 1rem;
 }
 
+.chat-log::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.chat-log {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 .chat-input-container {
   display: flex;
-  width: 100%;
+  width: 96%;
   padding-right: 0.5rem;
   align-items: center;
 }
@@ -93,4 +110,88 @@
 
 .btn-container {
   width: 48%;
+}
+
+.row-container .recent-connections {
+  height: 100%;
+  width: 25%;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.row-container .recent-connections::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .row-container {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .chat-page-wrapper {
+    height: 50%;
+    width: 100%;
+    flex-direction: column-reverse;
+    padding: 0.5rem;
+  }
+
+  .row-container .recent-connections {
+    height: 50%;
+    width: 100%;
+  }
+
+  .chat-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .receiver-info {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 15%;
+  }
+
+  .receiver-img-container {
+    height: 100%;
+    width: auto;
+  }
+
+  .receiver-img-container img {
+    height: 100%;
+    width: auto;
+  }
+
+  .chat-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .message-container {
+    font-size: 1.1rem;
+  }
+
+  .chat-log {
+    height: 70%;
+    width: 100%;
+  }
+  .chat-input-container {
+    height: 20%;
+  }
+  .chat-input {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .btn-send-container {
+    padding: 0.5rem;
+  }
+
+  .btn-send-container .btn-block {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
 }
