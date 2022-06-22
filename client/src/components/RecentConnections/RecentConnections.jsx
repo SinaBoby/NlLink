@@ -25,7 +25,7 @@ const RecentConnections = ({ userId }) => {
         if (!idArray.includes(msg.receiver)) {
           idArray.push(msg.receiver);
         }
-      } else {
+      } else if (msg.receiver === userId) {
         if (!idArray.includes(msg.sender)) {
           idArray.push(msg.sender);
         }
@@ -34,7 +34,7 @@ const RecentConnections = ({ userId }) => {
     idArray.forEach((id) => {
       if (id !== userId) {
         logInfo(id);
-        if (!contactsIds.includes(id)) {
+        if (contactsIds.indexOf(id) === -1) {
           logInfo(id);
           setContactsIds((prevIds) => [...prevIds, id]);
         }
