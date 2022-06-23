@@ -5,7 +5,11 @@ import { Buffer } from "buffer";
 
 const UserCard = ({ user, children, onClick }) => {
   return (
-    <div className="card" onClick={() => onClick(user)}>
+    <div
+      className="card"
+      onClick={() => onClick(user)}
+      style={{ cursor: "pointer" }}
+    >
       <div className="card-img-container">
         <img
           src={
@@ -20,7 +24,7 @@ const UserCard = ({ user, children, onClick }) => {
         />
       </div>
       <div className="card-info">
-        <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType} volunteer)`}</h3>
+        <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType})`}</h3>
         <h5 className="card-subtitle">{user.province}</h5>
         {children}
       </div>

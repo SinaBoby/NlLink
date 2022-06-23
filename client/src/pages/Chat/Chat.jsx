@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
 import { Message } from "./Message";
@@ -11,22 +11,22 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
 import { SocketContext } from "../../SocketContext";
+//import useSocketClient from "../../hooks/useSocketClient.js"
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { state } = useLocation();
   const receiver = state.receiver;
   const { userDetails } = useUserDetails();
   const userId = state.userId;
-  const receiverId = receiver._id;
-  //const userId = userDetails._id
+  const { refId } = useParams();
+  const receiverId = refId;
 
   const { socket } = useContext(SocketContext);
-
+  //const socket = useSocketClient("/chat/", receiverId)
   const onGetSuccess = (response) => {
-    const { message, receiverObj } = response;
-    connectSocket();
-    logInfo(message);
-    logInfo(receiverObj);
+    const { success } = response;
+    //connectSocket();
+    logInfo(success);
   };
 
   const {
@@ -37,7 +37,7 @@ const Chat = () => {
   } = useFetch("/messages", onGetSuccess);
 
   useEffect(() => {
-    const receiverId = receiver._id;
+    //const receiverId = receiver._id;
     performGetFetch({
       method: "POST",
       headers: {
@@ -51,42 +51,57 @@ const Chat = () => {
   }, []);
 
   const connectSocket = () => socket.connect();
-  /*  useEffect(() => {
-    window.addEventListener("load", connectSocket);
-    return () => window.removeEventListener("load", connectSocket);
-  }, []); */
 
   useEffect(() => {
+    socket.on("message", (msg) => {
+      addMessage(msg);
+    });
+    //connectSocket();
+    /*  socket.on("id", (data) => {
+      logInfo(data);
+    });
+    socket.on("chatHistory", (data) => {
+      logInfo(data);
+      data.forEach((chat) => {
+        const idArray = chat._id.split(" ");
+        logInfo(idArray);
+        if (idArray.includes(userId) && idArray.includes(receiverId)) {
+          addMessage(chat.messages);
+        }
+      });
+    });
+
+    socket.on("message", (msg) => {
+      addMessage(msg);
+    }); */
+  }, []);
+  useEffect(() => {
+    connectSocket();
+
     socket.on("id", (data) => {
       logInfo(data);
     });
     socket.on("chatHistory", (data) => {
       logInfo(data);
-      //logInfo(userId);
-      //logInfo(receiverId);
       data.forEach((chat) => {
         const idArray = chat._id.split(" ");
         logInfo(idArray);
         if (idArray.includes(userId) && idArray.includes(receiverId)) {
-          logInfo(chat);
-          addMessage(chat.messages);
+          addHistory(chat.messages);
         }
       });
-      //addMessage(data);
     });
 
-    socket.on("message", (msg) => {
-      addMessage(msg);
-      //io.emit("message", msg)
-    });
     return () => socket.disconnect();
-  }, []);
-
+  }, [receiverId]);
   const addMessage = (msg) => {
     setMessages((oldMessages) => [
       ...oldMessages,
       ...(Array.isArray(msg) ? msg.reverse() : [msg]),
     ]);
+  };
+  const addHistory = (msg) => {
+    setMessages(() => [...(Array.isArray(msg) ? msg : [msg])]);
   };
 
   const onSuccess = (response) => {
@@ -117,23 +132,24 @@ const Chat = () => {
             {error && <Error>{error}</Error>}
             {isGetLoading && !getError && <Spinner />}
             {getError && <Error>{getError}</Error>}
-            {messages.map((item, index) => {
-              //logInfo(item);
-              const align =
-                userDetails && userDetails._id === item.sender
-                  ? "align-right"
-                  : "align-left";
+            {messages &&
+              messages.map((item, index) => {
+                //logInfo(item);
+                const align =
+                  userDetails && userDetails._id === item.sender
+                    ? "align-right"
+                    : "align-left";
 
-              return (
-                <Message
-                  key={index}
-                  currentUser={userDetails}
-                  receiver={receiver}
-                  message={item}
-                  align={align}
-                />
-              );
-            })}
+                return (
+                  <Message
+                    key={index}
+                    currentUser={userDetails}
+                    receiver={receiver}
+                    message={item}
+                    align={align}
+                  />
+                );
+              })}
           </div>
           <MessageBox
             socket={socket}
@@ -160,7 +176,7 @@ const Chat = () => {
           <p className="receiver-name">{`${receiver.firstName} ${receiver.lastName}`}</p>
         </div>
       </div>
-      <RecentConnections />
+      <RecentConnections userId={userId} />
     </div>
   );
 };

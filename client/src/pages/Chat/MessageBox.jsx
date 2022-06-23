@@ -1,18 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import useUserDetails from "../../hooks/useUserDetails";
 import Button from "../../components/Button";
-//import { logInfo } from "../../../../server/src/util/logging";
 
 const MessageBox = ({ receiver, performFetch, socket }) => {
   const [value, setValue] = useState("");
   const { userDetails } = useUserDetails();
-  useEffect(() => {
-    /*  receiver && logInfo(receiver);
-    userDetails && logInfo(userDetails._id); */
-  }, []);
-
   const postMessage = (e) => {
     e.preventDefault();
 
@@ -23,7 +16,7 @@ const MessageBox = ({ receiver, performFetch, socket }) => {
         sender: userDetails._id,
         receiver: receiver._id,
       };
-
+      socket.emit("message", message);
       performFetch({
         method: "POST",
         headers: {
@@ -32,7 +25,7 @@ const MessageBox = ({ receiver, performFetch, socket }) => {
         body: JSON.stringify({ message }),
         credentials: "include",
       });
-      socket.emit("message", message);
+
       setValue("");
     }
   };

@@ -54,7 +54,7 @@ const App = () => {
                 path="/recommended-connections"
                 element={<RecommendedConnections />}
               />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:refId" element={<Chat />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/news/add" element={<AddNews />} />

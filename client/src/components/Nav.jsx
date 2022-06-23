@@ -54,7 +54,7 @@ const Nav = () => {
                   className="navbar-link"
                   data-testid={TEST_ID.linkToUsers}
                 >
-                  My Profile
+                  Dashboard
                 </Link>
                 <Link to="/logout" className="navbar-link  btn-link">
                   Sign out
