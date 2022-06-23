@@ -5,26 +5,6 @@ import * as fs from "node:fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-/* export const getUserDetails = async (req, res) => {
-  try {
-    const userName = req.userName;
-    if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
-    }
-    const user = await User.findOne({ userName });
-    if (!user) {
-      res.status(404).json({ success: false, msg: "User not found" });
-    }
-    res.status(200).json({ success: true, result: user });
-  } catch (error) {
-    logError(error);
-    res
-      .status(500)
-      .json({ success: false, msg: "Server Error, try again later" });
-  }
-}; */
 // Step 5 - set up multer for storing uploaded files
 
 export const getLoggedInUser = async (req, res) => {

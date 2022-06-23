@@ -139,23 +139,6 @@ const CreateUser = () => {
 
     return cancelFetch;
   }, []);
-  /*  useEffect(() => {
-    if (passError) {
-      setTimeout(() => setPassError(null), 3000);
-    }
-    if (userError) {
-      setTimeout(() => setUserError(null), 3000);
-    }
-    if (emailError) {
-      setTimeout(() => setEmailError(null), 3000);
-    }
-    if (phoneError) {
-      setTimeout(() => setPhoneError(""), 3000);
-    }
-    if (ageError) {
-      setTimeout(() => setAgeError(""), 3000);
-    }
-  }, [passError, userError, emailError, phoneError, ageError]); */
 
   const clearForm = () => {
     setFirstName("");

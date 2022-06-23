@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../../SocketContext";
 import useUserDetails from "../../hooks/useUserDetails";
 import { logInfo } from "../../../../server/src/util/logging.js";
-//import useUserDetails from "../../hooks/useUserDetails";
 import useFetch from "../../hooks/useFetch";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
