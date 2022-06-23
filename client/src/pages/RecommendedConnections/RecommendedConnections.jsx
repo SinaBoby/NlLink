@@ -87,7 +87,7 @@ const RecommendedConnections = () => {
           user.photo = mockProfileImages[photoIndex];
           const navigateToChat = () => {
             localStorage.setItem("receiver", JSON.stringify(user));
-            navigate("/chat", {
+            navigate(`/chat/${user._id}`, {
               state: { receiver: user, userId: userDetails._id },
             });
           };

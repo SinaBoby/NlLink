@@ -15,12 +15,12 @@ const RecentConnections = ({ userId }) => {
   const [contacts, setContacts] = useState([]);
   const [contactsIds, setContactsIds] = useState([]);
   const { userDetails, isMeLoading, meError, cancelMeFetch } = useUserDetails();
-  const [messages, setMessages] = useState([]);
+  const [messagesFull, setMessagesFull] = useState([]);
   const navigate = useNavigate();
   logInfo(contactsIds);
   useEffect(() => {
     const idArray = [];
-    messages.forEach((msg) => {
+    messagesFull.forEach((msg) => {
       if (msg.sender === userId) {
         if (!idArray.includes(msg.receiver)) {
           idArray.push(msg.receiver);
@@ -40,10 +40,10 @@ const RecentConnections = ({ userId }) => {
         }
       }
     });
-  }, [messages]);
+  }, [messagesFull]);
   const { socket } = useContext(SocketContext);
   const addMessage = (msg) => {
-    setMessages((oldMessages) => [
+    setMessagesFull((oldMessages) => [
       ...oldMessages,
       ...(Array.isArray(msg) ? msg.reverse() : [msg]),
     ]);
@@ -105,7 +105,8 @@ const RecentConnections = ({ userId }) => {
                 user={user}
                 onClick={() => {
                   localStorage.setItem("receiver", JSON.stringify(user));
-                  navigate("/chat", {
+                  //socket.emit("refresh", "messagesList")
+                  navigate(`/chat/${user._id}`, {
                     state: { receiver: user, userId: userDetails._id },
                   });
                 }}

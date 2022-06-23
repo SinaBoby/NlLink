@@ -87,10 +87,14 @@ io.on("connection", async (socket) => {
     const userName = socket.userName;
     const user = await User.findOne({ userName });
     const userId = user._id;
+    const chatLog = await MessageSchema.statics.latest(userId);
     if (userId) {
-      const chatLog = await MessageSchema.statics.latest(userId);
       socket.emit("chatHistory", chatLog);
     }
+    socket.on("refresh", (data) => {
+      logInfo(data);
+      socket.emit("chatHistory", chatLog);
+    });
   } catch (error) {
     logError(error);
   }

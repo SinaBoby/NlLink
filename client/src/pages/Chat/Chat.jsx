@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Chat.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useUserDetails from "../../hooks/useUserDetails";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
 import { Message } from "./Message";
@@ -18,13 +18,14 @@ const Chat = () => {
   const receiver = state.receiver;
   const { userDetails } = useUserDetails();
   const userId = state.userId;
-  const receiverId = receiver._id;
+  const { refId } = useParams();
+  const receiverId = refId;
 
   const { socket } = useContext(SocketContext);
   //const socket = useSocketClient("/chat/", receiverId)
   const onGetSuccess = (response) => {
     const { success } = response;
-    connectSocket();
+    //connectSocket();
     logInfo(success);
   };
 
@@ -36,7 +37,7 @@ const Chat = () => {
   } = useFetch("/messages", onGetSuccess);
 
   useEffect(() => {
-    const receiverId = receiver._id;
+    //const receiverId = receiver._id;
     performGetFetch({
       method: "POST",
       headers: {
@@ -52,7 +53,11 @@ const Chat = () => {
   const connectSocket = () => socket.connect();
 
   useEffect(() => {
-    socket.on("id", (data) => {
+    socket.on("message", (msg) => {
+      addMessage(msg);
+    });
+    //connectSocket();
+    /*  socket.on("id", (data) => {
       logInfo(data);
     });
     socket.on("chatHistory", (data) => {
@@ -68,15 +73,35 @@ const Chat = () => {
 
     socket.on("message", (msg) => {
       addMessage(msg);
-    });
-    return () => socket.disconnect();
+    }); */
   }, []);
+  useEffect(() => {
+    connectSocket();
 
+    socket.on("id", (data) => {
+      logInfo(data);
+    });
+    socket.on("chatHistory", (data) => {
+      logInfo(data);
+      data.forEach((chat) => {
+        const idArray = chat._id.split(" ");
+        logInfo(idArray);
+        if (idArray.includes(userId) && idArray.includes(receiverId)) {
+          addHistory(chat.messages);
+        }
+      });
+    });
+
+    return () => socket.disconnect();
+  }, [receiverId]);
   const addMessage = (msg) => {
     setMessages((oldMessages) => [
       ...oldMessages,
       ...(Array.isArray(msg) ? msg.reverse() : [msg]),
     ]);
+  };
+  const addHistory = (msg) => {
+    setMessages(() => [...(Array.isArray(msg) ? msg : [msg])]);
   };
 
   const onSuccess = (response) => {
