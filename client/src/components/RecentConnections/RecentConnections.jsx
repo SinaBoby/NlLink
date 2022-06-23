@@ -103,7 +103,6 @@ const RecentConnections = ({ userId }) => {
               <UserCard
                 key={index}
                 user={user}
-                style={{ cursor: "pointer" }}
                 onClick={() => {
                   localStorage.setItem("receiver", JSON.stringify(user));
                   navigate("/chat", {

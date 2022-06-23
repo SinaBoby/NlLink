@@ -5,7 +5,11 @@ import { Buffer } from "buffer";
 
 const UserCard = ({ user, children, onClick }) => {
   return (
-    <div className="card" onClick={() => onClick(user)}>
+    <div
+      className="card"
+      onClick={() => onClick(user)}
+      style={{ cursor: "pointer" }}
+    >
       <div className="card-img-container">
         <img
           src={
