@@ -30,19 +30,23 @@ export const getUserActivities = async (req, res) => {
 export const getActivities = async (req, res) => {
   try {
     const { activityCategory } = req.params;
-    if (activityCategory === "All") {
-      const allActivities = await Activity.find();
+    console.log(activityCategory, "/category activitiy");
+    if (activityCategory == "all") {
+      const activities = await Activity.find();
+      console.log(activities, "founded activities");
       res.status(200).json({
         success: true,
-        result: allActivities,
+        result: activities,
       });
     } else {
-      const selectedActivities = await Activity.find({
-        category: { $in: [activityCategory] },
+      const activities = await Activity.find({
+        category: { $regex: new RegExp(activityCategory, "i") },
       });
+
+      console.log(activities, "founded activities");
       res.status(200).json({
         success: true,
-        result: selectedActivities,
+        result: activities,
       });
     }
   } catch (error) {
