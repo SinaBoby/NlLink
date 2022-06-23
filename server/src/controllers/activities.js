@@ -30,10 +30,9 @@ export const getUserActivities = async (req, res) => {
 export const getActivities = async (req, res) => {
   try {
     const { activityCategory } = req.params;
-    console.log(activityCategory, "/category activitiy");
     if (activityCategory == "all") {
       const activities = await Activity.find();
-      console.log(activities, "founded activities");
+
       res.status(200).json({
         success: true,
         result: activities,
@@ -43,7 +42,6 @@ export const getActivities = async (req, res) => {
         category: { $regex: new RegExp(activityCategory, "i") },
       });
 
-      console.log(activities, "founded activities");
       res.status(200).json({
         success: true,
         result: activities,
@@ -97,6 +95,72 @@ export const deleteActivity = async (req, res) => {
   try {
     const userName = req.userName;
     logInfo(userName);
+  } catch (error) {
+    const errors = [];
+    if (error.errors) {
+      Object.keys(error.errors).forEach((key) => {
+        errors.push(`${key} : ${error.errors[key].message}`);
+      });
+      logError(error);
+      return res
+        .status(400)
+        .json({ success: false, msg: `Bad Request: ${errors}` });
+    } else {
+      logError(error);
+      return res.status(500).json({
+        success: false,
+        msg: `Server Error: ${error.message}`,
+      });
+    }
+  }
+};
+
+export const joinToActivity = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log(`"${req.body.activityId}"`, userId, "request");
+
+    // const isUserJoined = await User.find({
+    //   _id: mongoose.Types.ObjectId(userId),
+    //   activities: [mongoose.Types.ObjectId(req.body.activityId)],
+    // });
+    const isUserJoining = await User.find({
+      $and: [
+        { _id: mongoose.Types.ObjectId(userId) },
+        { activities: { $in: [mongoose.Types.ObjectId(req.body.activityId)] } },
+      ],
+    });
+
+    if (isUserJoining.length === 0) {
+      const updatedUserActivities = await User.updateOne(
+        { _id: mongoose.Types.ObjectId(userId) },
+        { $push: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
+      );
+
+      console.log(updatedUserActivities, "deleted user activity");
+    } else {
+      const updatedUserActivities = await User.updateOne(
+        { _id: mongoose.Types.ObjectId(userId) },
+        { $pull: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
+      );
+      console.log(updatedUserActivities, "added user activity");
+    }
+    // const user = await User.findOne(
+    //   {
+    //     _id: mongoose.Types.ObjectId(userId),
+    //   },
+    //   {
+    //     $push: mongoose.Types.ObjectId(userId),
+    //   }
+    // );
+    const userDetails = await User.find({
+      _id: mongoose.Types.ObjectId(userId),
+    });
+
+    console.log(userDetails, userId, "check user has the activity or not");
+    res.status(200).json({
+      success: true,
+    });
   } catch (error) {
     const errors = [];
     if (error.errors) {

@@ -6,8 +6,10 @@ import useFetch from "../../hooks/useFetch";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
+import useUserDetails from "../../hooks/useUserDetails";
 
 const Activity = () => {
+  const { userDetails } = useUserDetails();
   const [activityCategory, setActivityCategory] = useState("all");
   const [activities, setActivities] = useState(null);
 
@@ -55,8 +57,15 @@ const Activity = () => {
         {isLoading && <Spinner />}
         {error && <Error>{error}</Error>}
         {activities &&
+          userDetails &&
           activities.map((activity) => {
-            return <ActivityCard key={activity._id} activity={activity} />;
+            return (
+              <ActivityCard
+                key={activity._id}
+                activity={activity}
+                userId={userDetails._id}
+              />
+            );
           })}
       </div>
     </div>
