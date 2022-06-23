@@ -95,7 +95,7 @@ const RecentConnections = ({ userId }) => {
       {meError && <Error>{meError}</Error>}
       {isLoading && !error && <Spinner />}
       {error && <Error>{error}</Error>}
-      <h2 className="recent-connections-title">Recent Connections</h2>
+      <h2 className="recent-connections-title">Connections</h2>
       <div className="recent-connections-list">
         <>
           {contacts.map((user, index) => {

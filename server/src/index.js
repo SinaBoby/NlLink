@@ -21,7 +21,7 @@ const allowedOrigins = [
   "https://c35-newcomers-develop.herokuapp.com",
 ];
 export const io = new Server(httpServer, {
-  path: "/chat/",
+  path: "",
   cors: {
     origin: function (origin, callback) {
       // allow requests with no origin

@@ -132,23 +132,24 @@ const Chat = () => {
             {error && <Error>{error}</Error>}
             {isGetLoading && !getError && <Spinner />}
             {getError && <Error>{getError}</Error>}
-            {messages.map((item, index) => {
-              //logInfo(item);
-              const align =
-                userDetails && userDetails._id === item.sender
-                  ? "align-right"
-                  : "align-left";
+            {messages &&
+              messages.map((item, index) => {
+                //logInfo(item);
+                const align =
+                  userDetails && userDetails._id === item.sender
+                    ? "align-right"
+                    : "align-left";
 
-              return (
-                <Message
-                  key={index}
-                  currentUser={userDetails}
-                  receiver={receiver}
-                  message={item}
-                  align={align}
-                />
-              );
-            })}
+                return (
+                  <Message
+                    key={index}
+                    currentUser={userDetails}
+                    receiver={receiver}
+                    message={item}
+                    align={align}
+                  />
+                );
+              })}
           </div>
           <MessageBox
             socket={socket}

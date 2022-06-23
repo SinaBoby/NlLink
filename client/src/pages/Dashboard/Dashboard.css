@@ -101,6 +101,7 @@
 .connections-status-details-wrapper {
   width: 60%;
   display: flex;
+  height: 350px;
   flex-wrap: wrap;
   overflow-y: auto;
   background-color: hsl(0, 0%, 100%);
