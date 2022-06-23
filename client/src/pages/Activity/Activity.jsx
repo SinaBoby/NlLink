@@ -3,7 +3,7 @@ import "./Activity.css";
 import activityHero from "../../images/activity-hero.jpg";
 import Select from "../../components/Forms/Select";
 import useFetch from "../../hooks/useFetch";
-import ActivityCard from "../../components/ActivityCard";
+import ActivityCard from "../../components/ActivityCard/ActivityCard";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 
