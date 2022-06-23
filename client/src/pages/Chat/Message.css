@@ -27,3 +27,21 @@
 .align-right {
   align-self: flex-end;
 }
+
+.message-timestamp {
+  opacity: 0.4;
+}
+
+@media screen and (max-width: 767px) {
+  .message-container {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+
+  .message-container img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1.5rem;
+    border-radius: 50%;
+  }
+}

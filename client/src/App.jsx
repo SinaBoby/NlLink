@@ -10,7 +10,9 @@ import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
+//import { SocketProvider } from "./SocketContext";
 import { UserDetailsProvider } from "./context/UserDetailsContext";
+
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
 import Connect from "./pages/Connect/Connect";
@@ -53,7 +55,7 @@ const App = () => {
                 path="/recommended-connections"
                 element={<RecommendedConnections />}
               />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:refId" element={<Chat />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/news/add" element={<AddNews />} />
