@@ -56,6 +56,7 @@ const Activity = () => {
       <div className="activities-wrapper">
         {isLoading && <Spinner />}
         {error && <Error>{error}</Error>}
+        {}
         {activities &&
           userDetails &&
           activities.map((activity) => {

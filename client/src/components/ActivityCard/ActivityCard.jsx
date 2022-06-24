@@ -5,18 +5,17 @@ import getCategoryImageUrl from "../../util/getCategoryImageUrl";
 import JoinSvg from "./icons/JoinSvg";
 import useFetch from "../../hooks/useFetch";
 // import Spinner from "../Spinner/Spinner";
-// import Error from "../Error/Error"; // toastify
+import Error from "../Error/Error"; // toastify
 import CheckMarkSvg from "./icons/CheckMarkSvg";
 // import { logInfo } from "../../../../server/src/util/logging";
 
 const ActivityCard = ({ activity, userId }) => {
-  const [isJoined, setIsJoined] = useState(false);
+  const [userIsJoining, setUserIsJoining] = useState(null);
 
-  // const onSuccess = (res) => {
-  //   setIsJoined(true);
-  // };
-  const onSuccess = () => {
-    setIsJoined(true);
+  const onSuccess = (response) => {
+    if (response) {
+      setUserIsJoining(response.userIsJoining);
+    }
   };
 
   const { error, performFetch, cancelFetch } = useFetch(
@@ -43,6 +42,27 @@ const ActivityCard = ({ activity, userId }) => {
     return cancelFetch;
   }, []);
 
+  const onGetUserActivitiesSuccess = (response) => {
+    setUserIsJoining(response.getUserActivitiesList.includes(activity._id));
+  };
+  const {
+    // isLoading: isUserActivitiesLoading,
+    // error: userActivitiesError,
+    performFetch: performActivitiesFetch,
+    cancelFetch: cancelActivitiesFetch,
+  } = useFetch(
+    `/activities/user-activities-list/${userId}`,
+    onGetUserActivitiesSuccess
+  );
+
+  useEffect(() => {
+    performActivitiesFetch({
+      credentials: "include",
+    });
+
+    return cancelActivitiesFetch;
+  }, [userIsJoining]);
+
   return (
     <div className="activity-card-wrapper">
       <div className="activity-card-image-wrapper">
@@ -67,16 +87,9 @@ const ActivityCard = ({ activity, userId }) => {
           handleJoin();
         }}
       >
-        {isJoined ? <CheckMarkSvg /> : <JoinSvg />}
-        {/* */}
+        {<div>{userIsJoining ? <CheckMarkSvg /> : <JoinSvg />}</div>}
       </div>
-      <div>{error && <p>Error</p>}</div>
-
-      {/* {isLoading && (
-        <div className="activity-card-status-wrapper">
-          {isLoading && <Spinner />}
-        </div>
-      )} */}
+      <div>{error && <Error>{error}</Error>}</div>
     </div>
   );
 };

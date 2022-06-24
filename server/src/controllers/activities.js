@@ -120,10 +120,6 @@ export const joinToActivity = async (req, res) => {
     const { userId } = req.params;
     console.log(`"${req.body.activityId}"`, userId, "request");
 
-    // const isUserJoined = await User.find({
-    //   _id: mongoose.Types.ObjectId(userId),
-    //   activities: [mongoose.Types.ObjectId(req.body.activityId)],
-    // });
     const isUserJoining = await User.find({
       $and: [
         { _id: mongoose.Types.ObjectId(userId) },
@@ -134,9 +130,12 @@ export const joinToActivity = async (req, res) => {
     if (isUserJoining.length === 0) {
       const updatedUserActivities = await User.updateOne(
         { _id: mongoose.Types.ObjectId(userId) },
-        { $push: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
+        {
+          $addToSet: {
+            activities: mongoose.Types.ObjectId(req.body.activityId),
+          },
+        }
       );
-
       console.log(updatedUserActivities, "deleted user activity");
     } else {
       const updatedUserActivities = await User.updateOne(
@@ -145,21 +144,54 @@ export const joinToActivity = async (req, res) => {
       );
       console.log(updatedUserActivities, "added user activity");
     }
-    // const user = await User.findOne(
-    //   {
-    //     _id: mongoose.Types.ObjectId(userId),
-    //   },
-    //   {
-    //     $push: mongoose.Types.ObjectId(userId),
-    //   }
-    // );
+
     const userDetails = await User.find({
       _id: mongoose.Types.ObjectId(userId),
     });
 
-    console.log(userDetails, userId, "check user has the activity or not");
+    const userJoiningStatus = userDetails[0].activities.includes(
+      req.body.activityId
+    );
+
+    console.log(userDetails, "server");
+    console.log(userJoiningStatus, "server-userJoiningStatus");
+
     res.status(200).json({
       success: true,
+      userJoiningStatus,
+    });
+  } catch (error) {
+    const errors = [];
+    if (error.errors) {
+      Object.keys(error.errors).forEach((key) => {
+        errors.push(`${key} : ${error.errors[key].message}`);
+      });
+      logError(error);
+      return res
+        .status(400)
+        .json({ success: false, msg: `Bad Request: ${errors}` });
+    } else {
+      logError(error);
+      return res.status(500).json({
+        success: false,
+        msg: `Server Error: ${error.message}`,
+      });
+    }
+  }
+};
+
+export const getUserActivitiesList = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const userDetails = await User.find({
+      _id: mongoose.Types.ObjectId(userId),
+    });
+
+    const getUserActivitiesList = userDetails[0].activities;
+    res.status(200).json({
+      success: true,
+      getUserActivitiesList,
     });
   } catch (error) {
     const errors = [];
