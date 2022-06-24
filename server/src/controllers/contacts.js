@@ -3,16 +3,17 @@ import User from "../models/User.js";
 //import { Message } from "../models/Message.js";
 //import { io } from "../index.js";
 export const getContacts = async (req, res) => {
-  const userName = req.userName;
   try {
+    const userName = req.userName;
+    const { contactsIds } = req.body;
+    const contactsUsers = await User.find({ _id: { $in: [...contactsIds] } });
     if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
+      throw new Error("You are not authenticated.");
+    } else if (!contactsIds) {
+      throw new Error("BAD REQUEST: Contacts ids are not defined.");
+    } else if (!contactsUsers) {
+      throw new Error("Internal Server Error: Contacts users not found.");
     } else {
-      const { contactsIds } = req.body;
-      const contactsUsers = await User.find({ _id: { $in: [...contactsIds] } });
-
       res.status(200).json({
         success: true,
         contacts: contactsUsers,
@@ -20,5 +21,8 @@ export const getContacts = async (req, res) => {
     }
   } catch (error) {
     logError(error);
+    return res.status(500).json({
+      msg: `Error: ${error.message}`,
+    });
   }
 };

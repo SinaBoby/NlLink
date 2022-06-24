@@ -5,9 +5,7 @@ export const getMessages = async (req, res) => {
   const userName = req.userName;
   try {
     if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
+      throw new Error("You are not authenticated.");
     } else {
       res.status(200).json({
         success: true,
@@ -15,6 +13,10 @@ export const getMessages = async (req, res) => {
     }
   } catch (error) {
     logError(error);
+    return res.status(500).json({
+      success: false,
+      msg: `Server Error: ${error.message}`,
+    });
   }
 };
 export const postMessage = async (req, res) => {
@@ -22,16 +24,24 @@ export const postMessage = async (req, res) => {
     const userName = req.userName;
     const { message } = req.body;
     if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
+      throw new Error("You are not authenticated.");
     } else {
       const receiverObject = await User.findOne({ _id: message.receiver });
-      res
-        .status(200)
-        .json({ success: true, message: message, receiverObj: receiverObject });
+      if (!receiverObject) {
+        throw new Error("Receiver user not found in the data base");
+      } else {
+        return res.status(200).json({
+          success: true,
+          message: message,
+          receiverObj: receiverObject,
+        });
+      }
     }
   } catch (error) {
     logError(error);
+    return res.status(500).json({
+      success: false,
+      msg: `Server Error: ${error.message}`,
+    });
   }
 };
