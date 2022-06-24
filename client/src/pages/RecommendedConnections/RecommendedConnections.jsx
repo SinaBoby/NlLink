@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./RecommendedConnections.css";
-import profile1 from "../../images/profile-1.jpg";
-import profile2 from "../../images/profile-2.jpg";
-import profile3 from "../../images/profile-3.jpg";
-import bashar from "../../images/bashar.jpg";
-import burak from "../../images/burak.jpg";
-import sina from "../../images/sina.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserCard from "../../components/RecentConnections/UserCard";
 import Tags from "./Tags";
@@ -14,9 +8,6 @@ import useFetch from "./../../hooks/useFetch";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import useUserDetails from "../../hooks/useUserDetails";
-//import { logInfo } from "./../../../../server/src/util/logging";
-
-const mockProfileImages = [profile1, profile2, profile3, bashar, burak, sina];
 
 const RecommendedConnections = () => {
   const navigate = useNavigate();
@@ -81,10 +72,6 @@ const RecommendedConnections = () => {
     <div className="recommended-connections">
       {users.length > 0 &&
         users.map((user, index) => {
-          const photoIndex = Math.floor(
-            Math.random() * mockProfileImages.length
-          );
-          user.photo = mockProfileImages[photoIndex];
           const navigateToChat = () => {
             localStorage.setItem("receiver", JSON.stringify(user));
             navigate(`/chat/${user._id}`, {

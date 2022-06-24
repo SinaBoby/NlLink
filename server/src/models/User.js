@@ -115,6 +115,7 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a dutch province`,
       },
     },
+    isAdmin: Boolean,
     isActive: Boolean,
     createdActivities: [
       { type: mongoose.SchemaTypes.ObjectId, ref: "Activity" },
@@ -188,6 +189,7 @@ export const validateUser = (userObject) => {
     "profileImage",
     "createdActivities",
     "activities",
+    "isAdmin",
   ];
 
   const validatedKeysMessage = validateAllowedFields(userObject, allowedKeys);

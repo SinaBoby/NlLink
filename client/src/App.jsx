@@ -10,9 +10,7 @@ import About from "./pages/About/About";
 import Login from "./pages/Login/Login";
 import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
-//import { SocketProvider } from "./SocketContext";
 import { UserDetailsProvider } from "./context/UserDetailsContext";
-
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
 import Connect from "./pages/Connect/Connect";
@@ -42,13 +40,13 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/news/details/" element={<NewsDetails />} />
             <Route element={<RequireAuth />}>
+              <Route path="/news" element={<News />} />
+              <Route path="/news/details/" element={<NewsDetails />} />
               <Route path="/connect" element={<Connect />} />
               <Route
                 path="/recommended-connections"

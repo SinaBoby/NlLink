@@ -8,22 +8,13 @@ const authenticate = function (req, res) {
       const { userName, password } = req.body;
       const user = await User.findOne({ userName });
       if (!userName || !password) {
-        res.status(400).json({
-          success: false,
-          msg: "BAD REQUEST: Please enter your username and password",
-        });
+        throw new Error("BAD REQUEST: Please enter your username and password");
       } else if (!user) {
-        res.status(404).json({
-          success: false,
-          msg: "NOT FOUND: Incorrect userName or password",
-        });
+        throw new Error("NOT FOUND: Incorrect userName or password");
       } else {
         const same = await user.isCorrectPassword(password);
         if (!same) {
-          res.status(404).json({
-            success: false,
-            msg: "NOT FOUND: Incorrect password",
-          });
+          throw new Error("NOT FOUND: Incorrect password");
         } else {
           // Issue token
           const cookieExpIn = new Date();

@@ -5,24 +5,11 @@ import { getCookie } from "./util/getCookie";
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const logout = (cb) => {
-    /* document.cookie =
-      "userStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
     setIsAuthenticated(isUserAuthenticated());
-    //localStorage.removeItem("user");
     cb();
   };
 
   const login = (cb) => {
-    /*
-      Token expires in 1 hour. We create a cookie and set the expiration date
-      1 hour from now
-    */
-
-    /* const now = new Date();
-
-    now.setTime(now.getTime() + 60 * 60 * 1000);
-    const expirationDate = `expires=${now.toUTCString()}`;
-    document.cookie = `userStatus=authenticated;${expirationDate};path=/`; */
     setIsAuthenticated(isUserAuthenticated());
     cb();
   };

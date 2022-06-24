@@ -5,9 +5,7 @@ import mongoose from "mongoose";
 
 const getActivities = async (req, res) => {
   try {
-    // request.user is getting fetched from Middleware after token authentication
     const userName = req.userName;
-    // logInfo(userName);
     const user = await User.findOne({ userName });
     const upcomingActivities = await Activity.find({
       joinedBy: { $in: [mongoose.Types.ObjectId(user._id)] },
@@ -16,13 +14,22 @@ const getActivities = async (req, res) => {
     const recommendedActivities = await Activity.find({
       joinedBy: { $ne: mongoose.Types.ObjectId(user._id) },
     });
-
-    res.status(200).json({
-      success: true,
-      result: { upcomingActivities, recommendedActivities },
-    });
+    if (!userName) {
+      throw new Error("You are not authenticated.");
+    } else if (!user) {
+      throw new Error("Internal Server Error: User not found");
+    } else if (!upcomingActivities && !recommendedActivities) {
+      throw new Error("There is no upcoming or recommended activities");
+    } else {
+      res.status(200).json({
+        success: true,
+        result: { upcomingActivities, recommendedActivities },
+      });
+    }
   } catch (e) {
-    res.send({ msg: "Error in Fetching User Activities" });
+    return res.status(500).json({
+      msg: `Error in Fetching User Activities: ${e.message}`,
+    });
   }
 };
 

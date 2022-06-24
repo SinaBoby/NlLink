@@ -45,7 +45,6 @@ const Login = () => {
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    //logInfo(email, password);
     performFetch({
       method: "POST",
       headers: {

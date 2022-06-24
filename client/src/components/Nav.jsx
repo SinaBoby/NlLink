@@ -24,8 +24,8 @@ const Nav = () => {
         </Link>
         <div className="navbar-right">
           <div className="collapse">
-            {isAuthenticated && (
-              <Link to="/news" className="navbar-link">
+            {isAuthenticated && userDetails && (
+              <Link to={"/news"} className="navbar-link">
                 News
               </Link>
             )}

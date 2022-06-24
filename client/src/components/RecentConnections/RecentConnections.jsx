@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../../SocketContext";
 import useUserDetails from "../../hooks/useUserDetails";
 import { logInfo } from "../../../../server/src/util/logging.js";
-//import useUserDetails from "../../hooks/useUserDetails";
 import useFetch from "../../hooks/useFetch";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
@@ -64,11 +63,10 @@ const RecentConnections = ({ userId }) => {
     return () => {
       socket.disconnect();
       cancelMeFetch();
+      cancelFetch();
     };
   }, []);
   const onSuccess = (response) => {
-    //setContacts(response.users);
-    //logInfo(response.contacts)
     setContacts(response.contacts);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -86,7 +84,7 @@ const RecentConnections = ({ userId }) => {
         body: JSON.stringify({ contactsIds }),
       });
 
-    return cancelFetch;
+    //return cancelFetch;
   }, [contactsIds]);
 
   return (
@@ -98,21 +96,24 @@ const RecentConnections = ({ userId }) => {
       <h2 className="recent-connections-title">Connections</h2>
       <div className="recent-connections-list">
         <>
-          {contacts.map((user, index) => {
-            return (
-              <UserCard
-                key={index}
-                user={user}
-                onClick={() => {
-                  localStorage.setItem("receiver", JSON.stringify(user));
-                  //socket.emit("refresh", "messagesList")
-                  navigate(`/chat/${user._id}`, {
-                    state: { receiver: user, userId: userDetails._id },
-                  });
-                }}
-              />
-            );
-          })}
+          {contacts &&
+            contacts.map((user, index) => {
+              return (
+                user && (
+                  <UserCard
+                    key={index}
+                    user={user}
+                    onClick={() => {
+                      //localStorage.setItem("receiver", JSON.stringify(user));
+                      //socket.emit("refresh", "messagesList")
+                      navigate(`/chat/${user._id}`, {
+                        state: { receiver: user, userId: userDetails._id },
+                      });
+                    }}
+                  />
+                )
+              );
+            })}
         </>
       </div>
     </div>

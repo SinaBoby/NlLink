@@ -5,46 +5,22 @@ import * as fs from "node:fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-/* export const getUserDetails = async (req, res) => {
-  try {
-    const userName = req.userName;
-    if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
-    }
-    const user = await User.findOne({ userName });
-    if (!user) {
-      res.status(404).json({ success: false, msg: "User not found" });
-    }
-    res.status(200).json({ success: true, result: user });
-  } catch (error) {
-    logError(error);
-    res
-      .status(500)
-      .json({ success: false, msg: "Server Error, try again later" });
-  }
-}; */
-// Step 5 - set up multer for storing uploaded files
-
 export const getLoggedInUser = async (req, res) => {
   try {
     const userName = req.userName;
-    if (!userName) {
-      res
-        .status(401)
-        .json({ success: false, msg: "You are not Authenticated" });
-    }
     const user = await User.findOne({ userName });
-    if (!user) {
-      res.status(404).json({ success: false, msg: "User not found" });
+    if (!userName) {
+      throw new Error("You are not Authenticated");
+    } else if (!user) {
+      throw new Error("User not found");
+    } else {
+      res.status(200).json({ success: true, user });
     }
-    res.status(200).json({ success: true, user });
   } catch (error) {
     logError(error);
-    res
+    return res
       .status(500)
-      .json({ success: false, msg: "Server Error, try again later" });
+      .json({ success: false, msg: `Error: ${error.message}` });
   }
 };
 
@@ -59,23 +35,19 @@ export const logout = async (req, res) => {
           success: true,
         });
     } else {
-      return res.status(401).json({
-        success: false,
-        msg: "You are not Authenticated",
-      });
+      throw new Error("You are not Authenticated");
     }
   } catch (error) {
     logError(error);
-    return res.status(500).json({
-      msg: error.message,
-    });
+    return res
+      .status(500)
+      .json({ success: false, msg: `Error: ${error.message}` });
   }
 };
 
 export const createUser = async (req, res) => {
   try {
-    //console.log(__filename);
-
+    // Step 5 - set up multer for storing uploaded files
     const filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(filename);
     const {
@@ -88,35 +60,46 @@ export const createUser = async (req, res) => {
       phoneNumber,
       birthDay,
     } = req.body;
-    const profileImage = {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: req.file.mimetype,
-    };
-    let user = {
-      firstName,
-      lastName,
-      userName,
-      userType,
-      email,
-      password,
-      phoneNumber,
-      birthDay,
-      profileImage,
-    };
+    let user;
+    if (req.file) {
+      const profileImage = {
+        data: fs.readFileSync(
+          path.join(__dirname + "/uploads/" + req.file.filename)
+        ),
+        contentType: req.file.mimetype,
+      };
+      user = {
+        firstName,
+        lastName,
+        userName,
+        userType,
+        email,
+        password,
+        phoneNumber,
+        birthDay,
+        profileImage,
+      };
+    } else {
+      user = {
+        firstName,
+        lastName,
+        userName,
+        userType,
+        email,
+        password,
+        phoneNumber,
+        birthDay,
+      };
+    }
 
     const errorList = validateUser(user);
     if (typeof user !== "object") {
-      return res.status(400).json({
-        success: false,
-        msg: `BAD REQUEST: You need to provide a 'user' object. Received: ${typeof user}`,
-      });
+      throw new Error(
+        `BAD REQUEST: You need to provide a 'user' object. Received: ${typeof user}`
+      );
     } else if (errorList.length > 0) {
       logError(errorList);
-      return res
-        .status(400)
-        .json({ success: false, msg: validationErrorMessage(errorList) });
+      throw new Error(validationErrorMessage(errorList));
     } else {
       const newUser = await User.create(user);
       return res.status(201).json({ success: true, user: newUser });
@@ -136,7 +119,7 @@ export const createUser = async (req, res) => {
       logError(error);
       return res
         .status(500)
-        .json({ success: false, msg: `Server Error: ${error.message}` });
+        .json({ success: false, msg: `Error: ${error.message}` });
     }
   }
 };

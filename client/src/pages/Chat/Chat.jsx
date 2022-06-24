@@ -11,7 +11,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
 import { SocketContext } from "../../SocketContext";
-//import useSocketClient from "../../hooks/useSocketClient.js"
+
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { state } = useLocation();
@@ -22,10 +22,8 @@ const Chat = () => {
   const receiverId = refId;
 
   const { socket } = useContext(SocketContext);
-  //const socket = useSocketClient("/chat/", receiverId)
   const onGetSuccess = (response) => {
     const { success } = response;
-    //connectSocket();
     logInfo(success);
   };
 
@@ -37,7 +35,6 @@ const Chat = () => {
   } = useFetch("/messages", onGetSuccess);
 
   useEffect(() => {
-    //const receiverId = receiver._id;
     performGetFetch({
       method: "POST",
       headers: {
@@ -54,26 +51,9 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (msg) => {
+      logInfo("You have a new message");
       addMessage(msg);
     });
-    //connectSocket();
-    /*  socket.on("id", (data) => {
-      logInfo(data);
-    });
-    socket.on("chatHistory", (data) => {
-      logInfo(data);
-      data.forEach((chat) => {
-        const idArray = chat._id.split(" ");
-        logInfo(idArray);
-        if (idArray.includes(userId) && idArray.includes(receiverId)) {
-          addMessage(chat.messages);
-        }
-      });
-    });
-
-    socket.on("message", (msg) => {
-      addMessage(msg);
-    }); */
   }, []);
   useEffect(() => {
     connectSocket();
@@ -134,20 +114,22 @@ const Chat = () => {
             {getError && <Error>{getError}</Error>}
             {messages &&
               messages.map((item, index) => {
-                //logInfo(item);
                 const align =
                   userDetails && userDetails._id === item.sender
                     ? "align-right"
                     : "align-left";
 
                 return (
-                  <Message
-                    key={index}
-                    currentUser={userDetails}
-                    receiver={receiver}
-                    message={item}
-                    align={align}
-                  />
+                  userDetails &&
+                  receiver && (
+                    <Message
+                      key={index}
+                      currentUser={userDetails}
+                      receiver={receiver}
+                      message={item}
+                      align={align}
+                    />
+                  )
                 );
               })}
           </div>

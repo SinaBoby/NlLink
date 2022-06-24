@@ -1,4 +1,3 @@
-//import {useState} from "react";
 import io from "socket.io-client";
 const useSocketClient = (pathName = "", queryData) => {
   let socket;
