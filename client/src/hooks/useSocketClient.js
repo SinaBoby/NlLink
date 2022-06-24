@@ -2,7 +2,7 @@ import io from "socket.io-client";
 const useSocketClient = (pathName = "", queryData) => {
   let socket;
   if (queryData) {
-    socket = io("http://localhost:5000/", {
+    socket = io("https://c35-newcomers-develop.herokuapp.com/", {
       path: pathName,
       autoConnect: false,
       transports: ["websocket"],
@@ -15,7 +15,7 @@ const useSocketClient = (pathName = "", queryData) => {
       },
     });
   } else if (!queryData) {
-    socket = io("http://localhost:5000/", {
+    socket = io("https://c35-newcomers-develop.herokuapp.com/", {
       path: pathName,
       autoConnect: false,
       transports: ["websocket"],
