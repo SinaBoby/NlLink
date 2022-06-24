@@ -145,20 +145,20 @@ export const joinToActivity = async (req, res) => {
       console.log(updatedUserActivities, "added user activity");
     }
 
-    const userDetails = await User.find({
-      _id: mongoose.Types.ObjectId(userId),
-    });
+    // const userDetails = await User.find({
+    //   _id: mongoose.Types.ObjectId(userId),
+    // });
 
-    const userJoiningStatus = userDetails[0].activities.includes(
-      req.body.activityId
-    );
+    // const userJoiningStatus = userDetails[0].activities.includes(
+    //   req.body.activityId
+    // );
 
-    console.log(userDetails, "server");
-    console.log(userJoiningStatus, "server-userJoiningStatus");
+    // console.log(userDetails, "server");
+    // console.log(userJoiningStatus, "server-userJoiningStatus");
 
     res.status(200).json({
       success: true,
-      userJoiningStatus,
+      // userJoiningStatus,
     });
   } catch (error) {
     const errors = [];

@@ -23,6 +23,7 @@ import Chat from "./pages/Chat/Chat";
 import NewsDetails from "./pages/News/NewsDetails";
 import AddNews from "./pages/News/AddNews";
 import Activity from "./pages/Activity/Activity";
+import CreateActivity from "./pages/Activity/CreateActivity";
 
 const App = () => {
   return (
@@ -60,6 +61,7 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/news/add" element={<AddNews />} />
               <Route path="/activities" element={<Activity />} />
+              <Route path="/activities/create" element={<CreateActivity />} />
             </Route>
           </Routes>
           <Footer />

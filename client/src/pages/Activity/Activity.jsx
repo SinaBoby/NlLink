@@ -7,6 +7,7 @@ import ActivityCard from "../../components/ActivityCard/ActivityCard";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import useUserDetails from "../../hooks/useUserDetails";
+import { Link } from "react-router-dom";
 
 const Activity = () => {
   const { userDetails } = useUserDetails();
@@ -35,7 +36,16 @@ const Activity = () => {
         style={{
           backgroundImage: `url(${activityHero})`,
         }}
-      ></div>
+      >
+        {" "}
+        <Link
+          to="/activities/create"
+          state={{ userId: userDetails._id }}
+          className="dashboard-news-card-link"
+        >
+          Create Activity
+        </Link>{" "}
+      </div>
       <div className="activity-category-select-wrapper">
         <Select
           value={activityCategory}
