@@ -40,13 +40,13 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/news/details/" element={<NewsDetails />} />
             <Route element={<RequireAuth />}>
+              <Route path="/news" element={<News />} />
+              <Route path="/news/details/" element={<NewsDetails />} />
               <Route path="/connect" element={<Connect />} />
               <Route
                 path="/recommended-connections"

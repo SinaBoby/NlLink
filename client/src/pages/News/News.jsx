@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./News.css";
 import newsHero from "../../images/news-hero.jpg";
 import NewsCard from "../../components/NewsCard";
@@ -7,10 +7,14 @@ import { Link } from "react-router-dom";
 import Select from "../../components/Forms/Select";
 import Error from "../../components/Error/Error";
 import Spinner from "../../components/Spinner/Spinner";
+import useUserDetails from "../../hooks/useUserDetails";
+import { AuthContext } from "../../AuthContext";
 
 const News = () => {
   const [newsData, setNewsData] = useState(null);
   const [newsCategory, setNewsCategory] = useState("all");
+  const { isAuthenticated } = useContext(AuthContext);
+  const { userDetails } = useUserDetails();
 
   const onSuccess = (response) => {
     setNewsData(response.result);
@@ -66,11 +70,13 @@ const News = () => {
             return <NewsCard key={index} news={news} />;
           })}
       </div>
-      <div className="add-news-link-wrapper">
-        <Link to="/news/add" className="navbar-link">
-          Add News
-        </Link>
-      </div>
+      {isAuthenticated && userDetails && userDetails.isAdmin === true && (
+        <div className="add-news-link-wrapper">
+          <Link to="/news/add" className="navbar-link">
+            Add News
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

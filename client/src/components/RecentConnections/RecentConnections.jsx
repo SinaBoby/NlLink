@@ -67,8 +67,6 @@ const RecentConnections = ({ userId }) => {
     };
   }, []);
   const onSuccess = (response) => {
-    //setContacts(response.users);
-    //logInfo(response.contacts)
     setContacts(response.contacts);
   };
   const { isLoading, error, performFetch, cancelFetch } = useFetch(

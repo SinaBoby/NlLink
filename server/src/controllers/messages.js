@@ -2,8 +2,8 @@ import { logError } from "../util/logging.js";
 import User from "../models/User.js";
 
 export const getMessages = async (req, res) => {
-  const userName = req.userName;
   try {
+    const userName = req.userName;
     if (!userName) {
       throw new Error("You are not authenticated.");
     } else {
