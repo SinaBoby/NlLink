@@ -21,7 +21,6 @@ const Connect = () => {
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [interestsErr, setInterestsErr] = useState(null);
   const [provinceErr, setProvinceErr] = useState(null);
-
   const onAddInterestSuccess = (res) => {
     const { interest } = res;
 
@@ -211,7 +210,7 @@ const Connect = () => {
           isDeleteInterestLoading ||
           isMeLoading ||
           isAddProvinceLoading) && <Spinner />}
-        <RecentConnections />
+        {userDetails && <RecentConnections userId={userDetails._id} />}
       </div>
     </>
   );

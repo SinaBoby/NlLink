@@ -63,6 +63,7 @@ const RecentConnections = ({ userId }) => {
     return () => {
       socket.disconnect();
       cancelMeFetch();
+      cancelFetch();
     };
   }, []);
   const onSuccess = (response) => {
@@ -85,7 +86,7 @@ const RecentConnections = ({ userId }) => {
         body: JSON.stringify({ contactsIds }),
       });
 
-    return cancelFetch;
+    //return cancelFetch;
   }, [contactsIds]);
 
   return (
@@ -97,21 +98,24 @@ const RecentConnections = ({ userId }) => {
       <h2 className="recent-connections-title">Connections</h2>
       <div className="recent-connections-list">
         <>
-          {contacts.map((user, index) => {
-            return (
-              <UserCard
-                key={index}
-                user={user}
-                onClick={() => {
-                  localStorage.setItem("receiver", JSON.stringify(user));
-                  //socket.emit("refresh", "messagesList")
-                  navigate(`/chat/${user._id}`, {
-                    state: { receiver: user, userId: userDetails._id },
-                  });
-                }}
-              />
-            );
-          })}
+          {contacts &&
+            contacts.map((user, index) => {
+              return (
+                user && (
+                  <UserCard
+                    key={index}
+                    user={user}
+                    onClick={() => {
+                      //localStorage.setItem("receiver", JSON.stringify(user));
+                      //socket.emit("refresh", "messagesList")
+                      navigate(`/chat/${user._id}`, {
+                        state: { receiver: user, userId: userDetails._id },
+                      });
+                    }}
+                  />
+                )
+              );
+            })}
         </>
       </div>
     </div>

@@ -51,6 +51,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (msg) => {
+      logInfo("You have a new message");
       addMessage(msg);
     });
   }, []);
@@ -119,13 +120,16 @@ const Chat = () => {
                     : "align-left";
 
                 return (
-                  <Message
-                    key={index}
-                    currentUser={userDetails}
-                    receiver={receiver}
-                    message={item}
-                    align={align}
-                  />
+                  userDetails &&
+                  receiver && (
+                    <Message
+                      key={index}
+                      currentUser={userDetails}
+                      receiver={receiver}
+                      message={item}
+                      align={align}
+                    />
+                  )
                 );
               })}
           </div>

@@ -38,7 +38,7 @@ export const Message = ({ message, align, currentUser, receiver }) => {
       />
       <div className="message-info">
         <span>
-          <em className="message-timestamp">{messageTimestamp}</em>
+          {message && <em className="message-timestamp">{messageTimestamp}</em>}
         </span>
         <span className="message-text">{message.body}</span>
       </div>
