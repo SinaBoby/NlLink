@@ -42,6 +42,7 @@ export const getNewsDetails = async (req, res) => {
 export const addNews = async (req, res) => {
   try {
     const { title, content, category, sources } = req.body;
+    console.log(req.body, "addNews");
     const file = req.file;
     const uploadedImage = await s3UploadFile(file);
     const news = {

@@ -9,7 +9,7 @@ const DateTime = ({ name, value, onChange, ...rest }) => {
       name={name}
       value={value}
       className={"datetime"}
-      onChange={(e) => onChange(e)}
+      onChange={(e) => onChange(e.target.value)}
       {...rest}
     />
   );

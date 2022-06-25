@@ -7,36 +7,44 @@ import Error from "../../components/Error/Error";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Label from "../../components/Forms/Label";
 import Input from "../../components/Forms/Input";
-import InputFile from "../../components/Forms/InputFile";
 import Select from "../../components/Forms/Select";
 import TextAreaInput from "../../components/Forms/TextAreaInput";
 import DateTime from "../../components/Forms/DateTime";
 import Check from "../../components/Check/Check";
-import { useLocation } from "react-router-dom";
 import "./CreateActivity.css";
+import useUserDetails from "../../hooks/useUserDetails";
 
 const CreateActivity = () => {
-  const [title, setTitle] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [startAt, setStartAt] = useState(null);
-  const [endAt, setEndAt] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [maxPeople, setMaxPeople] = useState(null);
-  const [image, setImage] = useState(null);
-  const [activityData, setActivityData] = useState(null);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [startAt, setStartAt] = useState("");
+  const [endAt, setEndAt] = useState("");
+  const [description, setDescription] = useState("");
+  const [maxPeople, setMaxPeople] = useState("");
+  const [activityData, setActivityData] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [postCode, setPostCode] = useState("");
 
-  const location = useLocation();
-  const userId = location.state?.userId;
+  const { userDetails } = useUserDetails();
+
+  const location = {
+    city,
+    street,
+    postCode,
+  };
 
   const clearForm = () => {
-    setTitle(null);
-    setCategory(null);
-    setStartAt(null);
-    setEndAt(null);
-    setDescription(null);
-    setMaxPeople(null);
-    setImage(null);
-    setActivityData(null);
+    setTitle("");
+    setCategory("");
+    setStartAt("");
+    setEndAt("");
+    setDescription("");
+    setMaxPeople("");
+    setActivityData("");
+    setCity("");
+    setStreet("");
+    setPostCode("");
   };
 
   const onSuccess = (response) => {
@@ -45,28 +53,35 @@ const CreateActivity = () => {
   };
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
-    "/activitiyes/create",
+    "/activities/create",
     onSuccess
   );
+
+  let userId;
+
+  if (userDetails) {
+    userId = userDetails._id;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-
-    data.append("image", image);
-    data.append("title", title);
-    data.append("category", category);
-    data.append("createdBy", userId);
-    data.append("startAt", startAt);
-    data.append("endAt", endAt);
-    data.append("description", description);
-    data.append("maxPeople", maxPeople);
-
     performFetch({
       method: "POST",
       credentials: "include",
-      body: data,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        category,
+        createdBy: userId,
+        startAt,
+        endAt,
+        description,
+        location,
+        maxPeople: maxPeople[0],
+      }),
     });
   };
 
@@ -76,7 +91,9 @@ const CreateActivity = () => {
 
   let statusComponent = null;
   if (error != null) {
-    statusComponent = <Error>Error while trying to create user: {error}</Error>;
+    statusComponent = (
+      <Error>Error while trying to create activity: {error}</Error>
+    );
   } else if (isLoading) {
     statusComponent = <Spinner />;
   }
@@ -123,7 +140,7 @@ const CreateActivity = () => {
             value={startAt}
             title="Activity Start"
             onChange={(value) => {
-              setStartAt([value]);
+              setStartAt(value);
             }}
           />
         </InputFieldContainer>
@@ -134,7 +151,7 @@ const CreateActivity = () => {
             value={endAt}
             title="Activity End"
             onChange={(value) => {
-              setEndAt([value]);
+              setEndAt(value);
             }}
           />
         </InputFieldContainer>
@@ -146,6 +163,42 @@ const CreateActivity = () => {
             title="Activity Description"
             onChange={(value) => {
               setDescription(value);
+            }}
+            required
+          />
+        </InputFieldContainer>
+        <InputFieldContainer className="activity-city-wrapper">
+          <Label>Activity City</Label>
+          <Input
+            name="activityCity"
+            value={city}
+            title="Activity City"
+            onChange={(value) => {
+              setCity(value);
+            }}
+            required
+          />
+        </InputFieldContainer>
+        <InputFieldContainer className="activity-street-wrapper">
+          <Label>Activity Street</Label>
+          <Input
+            name="activityStreet"
+            value={street}
+            title="Activity Street"
+            onChange={(value) => {
+              setStreet(value);
+            }}
+            required
+          />
+        </InputFieldContainer>
+        <InputFieldContainer className="activity-post-code-wrapper">
+          <Label>Activity Postcode</Label>
+          <Input
+            name="activityPostCode"
+            value={postCode}
+            title="Activity Postcode"
+            onChange={(value) => {
+              setPostCode(value);
             }}
             required
           />
@@ -163,7 +216,7 @@ const CreateActivity = () => {
             type="number"
           />
         </InputFieldContainer>
-
+        {/* 
         <InputFieldContainer className="news-image-wrapper">
           <Label for="newsImage">News Image</Label>
           <InputFile
@@ -174,7 +227,7 @@ const CreateActivity = () => {
               setImage(e.target.files[0]);
             }}
           />
-        </InputFieldContainer>
+        </InputFieldContainer> */}
         <Button className="btn-block" type="submit">
           Create Activity
         </Button>

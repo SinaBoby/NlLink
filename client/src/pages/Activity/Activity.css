@@ -9,8 +9,17 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
+.create-activity-wrapper h2 {
+  backdrop-filter: blur(2px);
+  color: #f0eff4;
+  padding: 1rem;
+}
 .activity-category-select-wrapper {
   width: 100%;
   display: flex;
@@ -28,4 +37,15 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+}
+
+.create-activity-link.navbar-link {
+  background-color: #f0eff4;
+  color: #000000;
+}
+
+.create-activity-link.navbar-link:hover {
+  color: #f0eff4;
+  background-color: #9e4770;
+  transition: all 0.4s ease-out;
 }

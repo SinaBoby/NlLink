@@ -1,14 +1,12 @@
 import Activity from "../models/Activity.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
-// import { logInfo } from "../util/logging.js";
 import { logError, logInfo } from "../util/logging.js";
 
 export const getUserActivities = async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const userName = req.userName;
-    // logInfo(userName);
     const user = await User.findOne({ userName });
     const upcomingActivities = await Activity.find({
       joinedBy: { $in: [mongoose.Types.ObjectId(user._id)] },
@@ -69,8 +67,31 @@ export const getActivities = async (req, res) => {
 
 export const createActivity = async (req, res) => {
   try {
-    const activityId = req.activityId;
-    logInfo(activityId);
+    const {
+      title,
+      category,
+      createdBy,
+      startAt,
+      endAt,
+      description,
+      location,
+      maxPeople,
+    } = req.body;
+
+    const activity = {
+      title,
+      category,
+      createdBy,
+      startAt,
+      endAt,
+      description,
+      location,
+      maxPeople,
+    };
+
+    const createdActivity = await Activity.create(activity);
+
+    return res.status(201).json({ success: true, result: createdActivity });
   } catch (error) {
     const errors = [];
     if (error.errors) {
@@ -85,7 +106,7 @@ export const createActivity = async (req, res) => {
       logError(error);
       return res.status(500).json({
         success: false,
-        msg: `Server Error: ${error.message}`,
+        msg: `Server Error: ${error.message} not uploaded`,
       });
     }
   }
@@ -118,8 +139,6 @@ export const deleteActivity = async (req, res) => {
 export const joinToActivity = async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log(`"${req.body.activityId}"`, userId, "request");
-
     const isUserJoining = await User.find({
       $and: [
         { _id: mongoose.Types.ObjectId(userId) },
@@ -136,25 +155,12 @@ export const joinToActivity = async (req, res) => {
           },
         }
       );
-      console.log(updatedUserActivities, "deleted user activity");
     } else {
       const updatedUserActivities = await User.updateOne(
         { _id: mongoose.Types.ObjectId(userId) },
         { $pull: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
       );
-      console.log(updatedUserActivities, "added user activity");
     }
-
-    // const userDetails = await User.find({
-    //   _id: mongoose.Types.ObjectId(userId),
-    // });
-
-    // const userJoiningStatus = userDetails[0].activities.includes(
-    //   req.body.activityId
-    // );
-
-    // console.log(userDetails, "server");
-    // console.log(userJoiningStatus, "server-userJoiningStatus");
 
     res.status(200).json({
       success: true,

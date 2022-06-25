@@ -8,6 +8,7 @@ import {
   joinToActivity,
   getUserActivitiesList,
 } from "../controllers/activities.js";
+// import multerUpload from "../controllers/multerUpload.js";
 
 const activitiesRouter = express.Router();
 

@@ -38,10 +38,10 @@ const Activity = () => {
         }}
       >
         {" "}
+        <h2>Lets Enjoy Together</h2>
         <Link
           to="/activities/create"
-          state={{ userId: userDetails._id }}
-          className="dashboard-news-card-link"
+          className="create-activity-link navbar-link"
         >
           Create Activity
         </Link>{" "}
