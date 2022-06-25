@@ -42,7 +42,7 @@ const News = () => {
         <Select
           value={newsCategory}
           title=""
-          placeholder="First select the country."
+          placeholder="Choose a news category"
           onChange={(value) => setNewsCategory(value)}
           options={[
             { value: "all", text: "Choose a news category" },

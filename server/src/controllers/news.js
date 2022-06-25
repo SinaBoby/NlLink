@@ -62,6 +62,7 @@ export const addNews = async (req, res) => {
   try {
     const userName = req.userName;
     const { title, content, category, sources } = req.body;
+    console.log(req.body, "addNews");
     const file = req.file;
     const user = await User.findOne({ userName });
     const uploadedImage = await s3UploadFile(file);
