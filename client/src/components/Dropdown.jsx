@@ -56,7 +56,7 @@ const Dropdown = ({ closeDropdown }) => {
       ) : (
         <>
           <DropdownLink onClick={() => handleNavigation("/dashboard")}>
-            Profile
+            Dashboard
           </DropdownLink>
           <DropdownLink onClick={() => handleNavigation("/logout")}>
             Logout

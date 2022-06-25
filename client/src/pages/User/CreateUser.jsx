@@ -189,53 +189,7 @@ const CreateUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     isFormValid();
-    /*    if (
-      password !== confirmPassword &&
-      !strongRegex.test(password) &&
-      !isValidUsername &&
-      getAge(birthDay) >= 18
-    ) {
-      setPassError(
-        "Passwords you entered are not same & outside the pattern please try again"
-      );
-      toast.error(passError, {
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-      setUserError("Please check the userName pattern again");
-      toast.error(userError, {
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-    } else if (password !== confirmPassword) {
-      setPassError("Password you entered are not same please try again");
-      toast.error(passError, {
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-    } else if (!strongRegex.test(password)) {
-      setPassError("Please check the password pattern again");
-      toast.error(passError, {
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-    } else if (getAge(birthDay) < 18) {
-      setAgeError("You need to be above 18 in order to sign up");
-      toast.error(ageError, {
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-    } else */ if (isFormValid() === true) {
+    if (isFormValid() === true) {
       const data = new FormData();
       data.append("profileImage", profileImage);
       data.append("firstName", firstName);

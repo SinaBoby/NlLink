@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import hero from "../../images/about-us-hero-desktop.jpg";
+import hero from "../../images/aboutmainphoto.jpeg";
 import bashar from "../../images/bashar.jpg";
-import sina from "../../images/sina.jpg";
+import sina from "../../images/sinaboby.jpeg";
 import burak from "../../images/burak.jpg";
 import MemberInfo from "../../components/MemberInfo";
 import "./About.css";
