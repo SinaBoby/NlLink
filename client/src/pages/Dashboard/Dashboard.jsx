@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
-import latestNews from "../../images/latest-news-desktop.jpg";
-import yourConnections from "../../images/your-connections-desktop.jpg";
+import latestNews from "../../images/refugeesnews.jpeg";
+import yourConnections from "../../images/dashboardConnections.jpeg";
 import useUserDetails from "../../hooks/useUserDetails";
 import ActivitySlider from "../../components/ActivitySlider/ActivitySlider";
 import useFetch from "../../hooks/useFetch";
@@ -9,6 +9,7 @@ import DashboardNews from "../../components/DashboardNews";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
+import { Buffer } from "buffer";
 
 const Dashboard = () => {
   const [userActivities, setUserActivities] = useState(null);
@@ -40,13 +41,28 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {isMeLoading && !meError && <Spinner />}
       {meError && <Error>{meError}</Error>}
-      <div className="user-activity-wrapper">
+      <div className="user-info-wrapper">
         <h2 className="user-header">
           {userDetails && (
             <div>{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</div>
           )}
         </h2>
-
+        <div className="user-img-container">
+          <img
+            src={
+              userDetails && userDetails.profileImage
+                ? `data:image/${
+                    userDetails.profileImage.contentType
+                  };base64,${Buffer.from(
+                    userDetails.profileImage.data.data
+                  ).toString("base64")}`
+                : "https://picsum.photos/200"
+            }
+            alt={userDetails && userDetails.firstName}
+          />
+        </div>
+      </div>
+      <div className="user-activity-wrapper">
         <div className="upcoming-activities-wrapper activity-wrapper">
           <h3 className="activity-wrapper-header">Upcoming Activities</h3>
           {isLoading && <Spinner />}
