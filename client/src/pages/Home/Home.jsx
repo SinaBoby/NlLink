@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import TEST_ID from "./Home.testid";
 import "./Home.css";
 import heroDesktop from "../../images/hero-desktop.jpg";
@@ -9,6 +10,7 @@ import party from "../../images/party-desktop.jpg";
 import Testimonials from "../../components/Testimonials/Testimonials";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
       <header className="header" data-testid={TEST_ID.container}>
@@ -16,11 +18,19 @@ const Home = () => {
           <img src={heroDesktop} className="hero" alt="hero" />
         </div>
         <div className="header-btn-col">
-          <h1 className="title mobile-mt">Welkom in Nederland</h1>
-          <Button className={"btn-inline"} type="button">
+          <h1 className="title mobile-mt">Welkom bij NlLink®</h1>
+          <Button
+            className={"btn-inline"}
+            type="button"
+            onClick={() => navigate("/localIntro")}
+          >
             I&apos;m a local
           </Button>
-          <Button className={"btn-inline"} type="button">
+          <Button
+            className={"btn-inline"}
+            type="button"
+            onClick={() => navigate("/newcomerIntro")}
+          >
             I&apos;m a new comer
           </Button>
         </div>

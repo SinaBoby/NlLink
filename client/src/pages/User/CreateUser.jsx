@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Select from "../../components/Forms/Select";
 import Input from "../../components/Forms/Input";
@@ -11,7 +11,7 @@ import Button from "./../../components/Button";
 import Form from "../../components/Forms/Form";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./../../components/Spinner/Spinner";
-import { AuthContext } from "../../AuthContext";
+//import { AuthContext } from "../../AuthContext";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Error from "../../components/Error/Error";
@@ -51,7 +51,7 @@ const UserHint = () => {
 const CreateUser = () => {
   const navigate = useNavigate();
 
-  const { isAuthenticated } = useContext(AuthContext);
+  //const { isAuthenticated } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -133,9 +133,9 @@ const CreateUser = () => {
     return isEqualPass ? true : equalPassError;
   };
   useEffect(() => {
-    if (isAuthenticated) {
+    /*   if (isAuthenticated) {
       navigate("/dashboard");
-    }
+    } */
 
     return cancelFetch;
   }, []);

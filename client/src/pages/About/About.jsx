@@ -1,33 +1,24 @@
 import React, { useState } from "react";
 import hero from "../../images/aboutmainphoto.jpeg";
-import bashar from "../../images/bashar.jpg";
 import sina from "../../images/sinaboby.jpeg";
 import burak from "../../images/burak.jpg";
 import MemberInfo from "../../components/MemberInfo";
 import "./About.css";
 
 const team_info = {
-  bashar: {
-    name: "Bashar Khdr",
-    occupation: "Full Stack Developer",
-    description:
-      "I am Bashar from Syria. I hold a Master Degree in Data science. After jumping back and forth among different fields in IT. I landed on Frontend development",
-    github: "https://github.com/BasharKhdr1992",
-    linkedin: "https://www.linkedin.com/in/bashar-khdr-a07087193/",
-  },
   burak: {
     name: "Burak Özmen",
-    occupation: "Full Stack Developer",
+    occupation: "Full Stack Web Developer",
     description:
-      "Full-Stack Web Development student at HackYourFuture, from Turkey and living in the Netherlands",
+      "Web Development student at HackYourFuture, from Turkey and living in the Netherlands",
     github: "https://github.com/brkzmn",
     linkedin: "https://www.linkedin.com/in/burak-%C3%B6zmen/",
   },
   sina: {
     name: "Sina Gholipour",
-    occupation: "Full Stack Developer",
+    occupation: "Full Stack Web Developer",
     description:
-      "Web Development Student in Hack You Future Coding School, working with and learning: JavasCript, NodeJs, MySQL, MongoDB, React.",
+      "Web Development Student at Hack Your Future, Junior Software engineer at Booking.com. from Iran and living in the Netherlands",
     github: "https://github.com/SinaBoby",
     linkedin: "https://www.linkedin.com/in/sinagholipour/",
   },
@@ -76,14 +67,6 @@ const About = () => {
           onClick={() => setMemberSelected("burak")}
         >
           <img src={burak} alt="burak" />
-        </div>
-        <div
-          className={`member-card ${
-            memberSelected === "bashar" ? "member-selected" : undefined
-          }`}
-          onClick={() => setMemberSelected("bashar")}
-        >
-          <img src={bashar} alt="bashar" />
         </div>
       </section>
       <MemberInfo member={team_info[memberSelected]} />
