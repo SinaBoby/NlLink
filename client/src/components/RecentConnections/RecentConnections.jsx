@@ -16,21 +16,26 @@ const RecentConnections = () => {
   const navigate = useNavigate();
   // logInfo(contactsIds);
   const { socket } = useContext(SocketContext);
+  function provideContactsIds(data, userId, cb) {
+    let contactsIdsArray = [];
+    data.forEach((chat) => {
+      const idArray = chat._id.split(" ").filter((elem) => elem !== "and");
+      if (idArray.includes(userId)) {
+        const contact = idArray.filter((id) => id !== userId);
+        logInfo(contact);
+        contactsIdsArray.push(contact[0]);
+      }
+    });
+    cb(contactsIdsArray);
+  }
   useEffect(() => {
     socket.connect();
 
     userDetails &&
       socket.on("chatHistory", (data) => {
-        //logInfo(data);
-        data.forEach((chat) => {
-          const idArray = chat._id.split(" ").filter((elem) => elem !== "and");
-          //logInfo(idArray);
-          if (idArray.includes(userDetails._id)) {
-            const contact = idArray.filter((id) => id !== userDetails._id);
-            logInfo(contact);
-            setContactsIds((prevIds) => [...prevIds, ...contact]);
-          }
-        });
+        provideContactsIds(data, userDetails._id, (providedIds) =>
+          setContactsIds(providedIds)
+        );
       });
     socket.on("sendContacts", (newContacts) => {
       setContacts(newContacts);
