@@ -13,6 +13,7 @@ import DateTime from "../../components/Forms/DateTime";
 import Check from "../../components/Check/Check";
 import "./CreateActivity.css";
 import useUserDetails from "../../hooks/useUserDetails";
+import Modal from "../../components/Modal/Modal";
 
 const CreateActivity = () => {
   const [title, setTitle] = useState("");
@@ -25,6 +26,7 @@ const CreateActivity = () => {
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
   const [postCode, setPostCode] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const { userDetails } = useUserDetails();
 
@@ -50,13 +52,16 @@ const CreateActivity = () => {
   const onSuccess = (response) => {
     setActivityData(response.result);
     clearForm();
+    setOpenModal(true);
   };
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
     "/activities/create",
     onSuccess
   );
-
+  if (error) {
+    setOpenModal(true);
+  }
   let userId;
 
   if (userDetails) {
@@ -246,6 +251,7 @@ const CreateActivity = () => {
           </div>
         </Check>
       )}
+      {openModal && <Modal setOpenModal={setOpenModal}></Modal>}
     </div>
   );
 };
