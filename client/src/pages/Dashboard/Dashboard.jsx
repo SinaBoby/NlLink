@@ -17,10 +17,6 @@ const Dashboard = () => {
   const [userRecommendedActivities, setUserRecommendedActivities] =
     useState(null);
 
-  useEffect(() => {
-    return cancelMeFetch;
-  }, []);
-
   const onSuccess = (response) => {
     setUserActivities(response.result.upcomingActivities);
     setUserRecommendedActivities(response.result.recommendedActivities);
@@ -33,8 +29,12 @@ const Dashboard = () => {
     performFetch({
       credentials: "include",
     });
-
-    return cancelFetch;
+  }, []);
+  useEffect(() => {
+    return () => {
+      cancelMeFetch();
+      cancelFetch();
+    };
   }, []);
 
   return (

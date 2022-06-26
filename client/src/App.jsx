@@ -7,6 +7,8 @@ import News from "./pages/News/News";
 import CreateUser from "./pages/User/CreateUser";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
+import Local from "./pages/Intro/Local";
+import NewComer from "./pages/Intro/NewComer";
 import Login from "./pages/Login/Login";
 import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
@@ -43,6 +45,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/localIntro" element={<Local />} />
+            <Route path="/newcomerIntro" element={<NewComer />} />
             <Route path="/about" element={<About />} />
             <Route path="/user/create" element={<CreateUser />} />
             <Route path="/login" element={<Login />} />

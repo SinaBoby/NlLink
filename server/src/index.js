@@ -91,9 +91,17 @@ io.on("connection", async (socket) => {
     if (userId) {
       socket.emit("chatHistory", chatLog);
     }
-    socket.on("refresh", (data) => {
-      logInfo(data);
-      socket.emit("chatHistory", chatLog);
+    socket.on("contacts", async (contactsIds) => {
+      try {
+        logInfo(contactsIds);
+        const contactsUsers = await User.find({
+          _id: { $in: [...contactsIds] },
+        });
+        logInfo(contactsUsers.length);
+        socket.emit("sendContacts", contactsUsers);
+      } catch (err) {
+        logError(err);
+      }
     });
   } catch (error) {
     logError(error);
