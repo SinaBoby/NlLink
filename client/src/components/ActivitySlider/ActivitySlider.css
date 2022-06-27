@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+.slider-container-link {
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .slider-container {
   background-color: hsl(220, 23%, 23%);
   color: hsl(0, 0%, 98%);
@@ -30,10 +39,12 @@
   background-position: center;
   padding-left: 30px;
   padding-right: 30px;
+  display: none;
 }
 
 .active-anim {
   opacity: 1;
+  display: flex;
 }
 
 .activity-title,
@@ -46,6 +57,21 @@
 
 .activity-title {
   font-size: 1.6rem;
+  margin-top: 2rem;
+}
+.activities-link-wrapper {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.activities-link {
+  color: hsl(0, 0%, 98%);
+  font-size: 1rem;
+  backdrop-filter: blur(60px);
+  background-color: orange;
+  padding: 0.2rem;
 }
 
 .activity-category {
