@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 const activitySchema = new mongoose.Schema(
   {
-    title: String,
+    title: { type: String, required: true },
     category: {
       type: String,
       enum: {
@@ -12,9 +12,10 @@ const activitySchema = new mongoose.Schema(
           "city tour",
           "museum",
           "food",
-          "training",
+          "education",
           "music",
           "volunteer work",
+          "countryside tour",
         ],
         message: (props) => `${props.value} is not a valid category`,
       },

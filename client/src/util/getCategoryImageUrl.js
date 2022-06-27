@@ -1,10 +1,11 @@
 import cityTour from "../images/city-tour.jpg";
+import countrysideTour from "../images/countryside-tour.jpg";
 import museum from "../images/museum.jpg";
 import food from "../images/food.jpg";
 import language from "../images/language.jpg";
 import music from "../images/music.jpg";
 import sport from "../images/sport.jpg";
-import training from "../images/training.jpg";
+import education from "../images/training.jpg";
 import volunteerWork from "../images/volunteer-work.jpg";
 
 const getCategoryImageUrl = (category) => {
@@ -13,6 +14,8 @@ const getCategoryImageUrl = (category) => {
   switch (categoryName) {
     case "city-tour":
       return cityTour;
+    case "countryside-tour":
+      return countrysideTour;
     case "museum":
       return museum;
     case "food":
@@ -23,8 +26,8 @@ const getCategoryImageUrl = (category) => {
       return music;
     case "sport":
       return sport;
-    case "training":
-      return training;
+    case "education":
+      return education;
     case "volunteer-work":
       return volunteerWork;
   }

@@ -63,6 +63,9 @@ const ActivityCard = ({ activity, userId }) => {
     return cancelActivitiesFetch;
   }, [userIsJoining]);
 
+  const startDate = new Date(activity.startAt).toLocaleString("nl-NL");
+  const endDate = new Date(activity.endAt).toLocaleString("nl-NL");
+
   return (
     <div className="activity-card-wrapper">
       <div className="activity-card-image-wrapper">
@@ -71,13 +74,14 @@ const ActivityCard = ({ activity, userId }) => {
       <div className="activity-card-details"> </div>
       <h4 className="activity-card-content-padding">{activity.title}</h4>
       <span className="activity-card-content-padding">{activity.category}</span>
-      <span className="activity-card-content-padding">
+      {/* <span className="activity-card-content-padding">
         {activity.createdBy}
-      </span>
+      </span> */}
+
       <time className="activity-card-content-padding">
-        {activity.startedAt}
+        Start at: {startDate}
       </time>
-      <time className="activity-card-content-padding">{activity.endAt}</time>
+      <time className="activity-card-content-padding">End at: {endDate}</time>
       <p className="activity-card-content-padding">{activity.description}</p>
       <span className="activity-card-content-padding">{`Attendees: ${activity.joinedBy.length}/${activity.maxPeople}`}</span>
       <p className="activity-card-content-padding">{activity.location.city}</p>
@@ -87,7 +91,22 @@ const ActivityCard = ({ activity, userId }) => {
           handleJoin();
         }}
       >
-        {<div>{userIsJoining ? <CheckMarkSvg /> : <JoinSvg />}</div>}
+        {
+          <div>
+            {userIsJoining ? (
+              <div className="join-icon-wrapper">
+                {" "}
+                <span> Cancel Activity</span>
+                <CheckMarkSvg />
+              </div>
+            ) : (
+              <div className="join-icon-wrapper">
+                <span>Join Activity</span>
+                <JoinSvg />
+              </div>
+            )}
+          </div>
+        }
       </div>
       <div>{error && <Error>{error}</Error>}</div>
     </div>
