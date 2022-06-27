@@ -12,6 +12,7 @@ import Logout from "./pages/Logout/Logout";
 import { AuthProvider } from "./AuthContext";
 //import { SocketProvider } from "./SocketContext";
 import { UserDetailsProvider } from "./context/UserDetailsContext";
+// import { CreateActivityModalContextProvider } from "./context/CreateActivityModalContext";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RequireAuth from "./components/RequireAuth";
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/news/add" element={<AddNews />} />
               <Route path="/activities" element={<Activity />} />
+
               <Route path="/activities/create" element={<CreateActivity />} />
             </Route>
           </Routes>

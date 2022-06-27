@@ -10,10 +10,11 @@ import Input from "../../components/Forms/Input";
 import Select from "../../components/Forms/Select";
 import TextAreaInput from "../../components/Forms/TextAreaInput";
 import DateTime from "../../components/Forms/DateTime";
-import Check from "../../components/Check/Check";
+// import Check from "../../components/Check/Check";
 import "./CreateActivity.css";
 import useUserDetails from "../../hooks/useUserDetails";
 import Modal from "../../components/Modal/Modal";
+// import useCreateActivityModalData from "../../hooks/useCreateActivityModalData";
 
 const CreateActivity = () => {
   const [title, setTitle] = useState("");
@@ -22,7 +23,7 @@ const CreateActivity = () => {
   const [endAt, setEndAt] = useState("");
   const [description, setDescription] = useState("");
   const [maxPeople, setMaxPeople] = useState("");
-  const [activityData, setActivityData] = useState("");
+  // const [activityData, setActivityData] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
   const [postCode, setPostCode] = useState("");
@@ -30,6 +31,8 @@ const CreateActivity = () => {
 
   const { userDetails } = useUserDetails();
 
+  // const { createActivityModalData, setCreateActivityModalData } =
+  //   useCreateActivityModalData;
   const location = {
     city,
     street,
@@ -43,14 +46,15 @@ const CreateActivity = () => {
     setEndAt("");
     setDescription("");
     setMaxPeople("");
-    setActivityData("");
+    // setActivityData("");
     setCity("");
     setStreet("");
     setPostCode("");
   };
 
-  const onSuccess = (response) => {
-    setActivityData(response.result);
+  const onSuccess = () => {
+    // setActivityData(response.result);
+    // setCreateActivityModalData(response.result);
     clearForm();
     setOpenModal(true);
   };
@@ -238,20 +242,20 @@ const CreateActivity = () => {
         </Button>
       </Form>
       {statusComponent && statusComponent}
-      {activityData && (
-        <Check>
+
+      {openModal && statusComponent == null && (
+        <Modal setOpenModal={setOpenModal}>
           {" "}
           <div className="created-news-details-wrapper">
             <h2>Activity Created</h2>
-            <h4>{activityData.title}</h4>
+            {/* <h4></h4> */}
             {/* <p>{newsData.content}</p>
             <p>{newsData.image}</p>
             <p>{newsData.sources[0]}</p>
             <p>{newsData.category}</p> */}
           </div>
-        </Check>
+        </Modal>
       )}
-      {openModal && <Modal setOpenModal={setOpenModal}></Modal>}
     </div>
   );
 };

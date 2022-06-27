@@ -5,18 +5,30 @@ import PropTypes from "prop-types";
 
 const Modal = ({ children, setOpenModal }) => {
   return (
-    <div className="modal-container">
-      <Button
-        className="btn-link navbar-link"
-        onClick={() => {
-          setOpenModal(false);
-        }}
-      >
-        X
-      </Button>
-      <div className="modal-content">{children}</div>
-      <div className="modal-footer">
-        <Button className="btn-link navbar-link">Continue</Button>
+    <div className="modal-background">
+      <div className="modal-container">
+        <div className="modal-close-btn">
+          <Button
+            className="btn-link navbar-link"
+            onClick={() => {
+              setOpenModal(false);
+            }}
+          >
+            X
+          </Button>
+        </div>
+
+        <div className="modal-content">{children}</div>
+        <div className="modal-footer">
+          <Button
+            className="btn-link navbar-link"
+            onClick={() => {
+              setOpenModal(false);
+            }}
+          >
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );
