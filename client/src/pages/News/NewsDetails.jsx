@@ -54,7 +54,11 @@ const NewsDetails = () => {
             </div>
           </div>
 
-          <p className="news-details-content">{newsDetails.content}</p>
+          {/* <p className="news-details-content">{newsDetails.content}</p> */}
+          <div
+            className="news-details-content"
+            dangerouslySetInnerHTML={{ __html: newsDetails.content }}
+          />
           <cite className="news-details-source">{newsDetails.sources[0]}</cite>
         </div>
       )}

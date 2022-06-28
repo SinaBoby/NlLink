@@ -14,7 +14,11 @@ const NewsCard = ({ news }) => {
           <div className="news-card-details-wrapper">
             <h2 className="news-card-title">{news.title}</h2>
             <div className="news-card-content-wrapper">
-              <p className="news-card-content">{news.content}</p>
+              {/* <p className="news-card-content">{news.content}</p> */}
+              <div
+                className="news-card-content"
+                dangerouslySetInnerHTML={{ __html: news.content }}
+              />
             </div>
             <div className="news-card-link-wrapper">
               <Link
