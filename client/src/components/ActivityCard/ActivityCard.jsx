@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import getCategoryImageUrl from "../../util/getCategoryImageUrl";
 import JoinSvg from "./icons/JoinSvg";
 import useFetch from "../../hooks/useFetch";
-// import Spinner from "../Spinner/Spinner";
-import Error from "../Error/Error"; // toastify
+import Error from "../Error/Error";
 import CheckMarkSvg from "./icons/CheckMarkSvg";
-// import { logInfo } from "../../../../server/src/util/logging";
 
 const ActivityCard = ({ activity, userId }) => {
   const [userIsJoining, setUserIsJoining] = useState(null);
@@ -71,19 +69,22 @@ const ActivityCard = ({ activity, userId }) => {
       <div className="activity-card-image-wrapper">
         <img src={getCategoryImageUrl(activity.category)} alt="" />
       </div>
-      <div className="activity-card-details"> </div>
-      <h4 className="activity-card-content-padding">{activity.title}</h4>
-      <span className="activity-card-content-padding">{activity.category}</span>
-      {/* <span className="activity-card-content-padding">
-        {activity.createdBy}
-      </span> */}
 
-      <time className="activity-card-content-padding">
+      <h4 className="activity-card-content-padding">{activity.title}</h4>
+      <span className="activity-card-content-padding activity-card-category">
+        {activity.category}
+      </span>
+
+      <time className="activity-card-content-padding activity-card-time">
         Start at: {startDate}
       </time>
-      <time className="activity-card-content-padding">End at: {endDate}</time>
-      <p className="activity-card-content-padding">{activity.description}</p>
-      <span className="activity-card-content-padding">{`Attendees: ${activity.joinedBy.length}/${activity.maxPeople}`}</span>
+      <time className="activity-card-content-padding activity-card-time">
+        End at: {endDate}
+      </time>
+      <p className="activity-card-content-padding activity-card-description">
+        {activity.description}
+      </p>
+      <span className="activity-card-content-padding activity-card-attendees">{`Attendees: ${activity.joinedBy.length}/${activity.maxPeople}`}</span>
       <p className="activity-card-content-padding">{activity.location.city}</p>
       <div
         title="Join"

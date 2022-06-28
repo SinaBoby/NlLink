@@ -3,18 +3,21 @@
   flex-wrap: wrap;
   flex-direction: column;
   height: auto;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 1rem;
   width: calc(100% - 2rem);
   font-size: 1rem;
-  /* background-color: #d7fcd4; */
-  background-color: #c7e8f3;
+  background-color: #e2f0f4;
   position: relative;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border-radius: 3%;
 }
 
 .activity-card-content-padding {
   padding-left: 1rem;
   padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
 .activity-card-image-wrapper {
@@ -38,8 +41,6 @@
 }
 
 .activity-card-wrapper .join-icon-wrapper {
-  /* width: 2rem;
-  height: 2rem; */
   position: absolute;
   top: 5%;
   right: 5%;
@@ -63,6 +64,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 3%;
 }
 
 .activity-card-status-wrapper {
@@ -75,6 +78,25 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.activity-card-category {
+  font-size: 1.1rem;
+  text-decoration: underline;
+  margin-bottom: 0.2rem;
+}
+
+.activity-card-time {
+  color: #6a6c74;
+}
+
+.activity-card-description {
+  font-style: italic;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.activity-card-attendees {
+  margin-bottom: auto;
 }
 
 @media screen and (min-width: 480px) {

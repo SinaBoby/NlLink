@@ -154,22 +154,6 @@ export const joinToActivity = async (req, res) => {
       ],
     });
 
-    // if (isUserJoining.length === 0) {
-    //   const updatedUserActivities = await User.updateOne(
-    //     { _id: mongoose.Types.ObjectId(userId) },
-    //     {
-    //       $addToSet: {
-    //         activities: mongoose.Types.ObjectId(req.body.activityId),
-    //       },
-    //     }
-    //   );
-    // } else {
-    //   const updatedUserActivities = await User.updateOne(
-    //     { _id: mongoose.Types.ObjectId(userId) },
-    //     { $pull: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
-    //   );
-    // }
-
     if (isUserJoining.length === 0) {
       await User.updateOne(
         { _id: mongoose.Types.ObjectId(userId) },
@@ -179,10 +163,22 @@ export const joinToActivity = async (req, res) => {
           },
         }
       );
+      await Activity.updateOne(
+        { _id: mongoose.Types.ObjectId(req.body.activityId) },
+        {
+          $addToSet: {
+            joinedBy: mongoose.Types.ObjectId(userId),
+          },
+        }
+      );
     } else {
       await User.updateOne(
         { _id: mongoose.Types.ObjectId(userId) },
         { $pull: { activities: mongoose.Types.ObjectId(req.body.activityId) } }
+      );
+      await Activity.updateOne(
+        { _id: mongoose.Types.ObjectId(req.body.activityId) },
+        { $pull: { joinedBy: mongoose.Types.ObjectId(userId) } }
       );
     }
 
