@@ -46,7 +46,7 @@ const Dashboard = () => {
       <div className="user-info-wrapper">
         <h2 className="user-header">
           {userDetails && (
-            <div>{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</div>
+            <h3 className="dashboard-header-title">{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</h3>
           )}
         </h2>
         <div className="dashboard-header-btn-wrapper">
@@ -55,7 +55,7 @@ const Dashboard = () => {
           </Button>
           <Button
             onClick={() => navigate("changepassword")}
-            className="btn-guide"
+            className="btn-guide dashboard-header-btn"
           >
             Change my password
           </Button>
