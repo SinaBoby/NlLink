@@ -170,7 +170,13 @@ const NewComer = () => {
               duration={500}
               delay={500}
             >
-              {<FcUp className="react-icons" size="3rem" color="white" />}
+              {
+                <FcUp
+                  className="react-icons up-intro"
+                  size="3rem"
+                  color="white"
+                />
+              }
             </ScrollLink>
           </div>
         </section>

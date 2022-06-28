@@ -176,7 +176,12 @@ const Local = () => {
               duration={500}
               delay={500}
             >
-              {<FcUp className="react-icons" size="3rem" color="white" />}
+              {
+                <FcUp
+                  className="react-icons up-intro"
+                  size={window.innerWidth > 900 ? "3rem" : "1rem"}
+                />
+              }
             </ScrollLink>
           </div>
         </section>
