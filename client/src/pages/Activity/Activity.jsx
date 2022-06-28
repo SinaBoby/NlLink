@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Activity.css";
 import activityHero from "../../images/activity-hero.jpg";
 import Select from "../../components/Forms/Select";
@@ -8,11 +8,13 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import useUserDetails from "../../hooks/useUserDetails";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../../ThemeContext";
 
 const Activity = () => {
   const { userDetails } = useUserDetails();
   const [activityCategory, setActivityCategory] = useState("all");
   const [activities, setActivities] = useState(null);
+  const { isDarkMode } = useContext(ThemeContext);
 
   const onSuccess = (response) => {
     setActivities(response.result);
@@ -30,7 +32,13 @@ const Activity = () => {
   }, [activityCategory]);
 
   return (
-    <div className="activity-page-container">
+    <div
+      className={
+        isDarkMode
+          ? "activity-page-container activity-page-container-dark"
+          : "activity-page-container"
+      }
+    >
       <div
         className="create-activity-wrapper"
         style={{

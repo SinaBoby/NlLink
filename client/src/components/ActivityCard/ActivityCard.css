@@ -14,6 +14,13 @@
   border-radius: 3%;
 }
 
+.activity-card-wrapper.activity-card-wrapper-dark {
+  background-color: #6b7376;
+  color: #fdfcfa;
+  box-shadow: rgba(224, 224, 230, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
 .activity-card-content-padding {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -26,9 +33,12 @@
   margin-bottom: 1rem;
 }
 
-.activity-card-wrapper h4 {
+.activity-card-wrapper .activity-card-title {
   font-size: 1.5rem;
   color: #8e4162;
+}
+.activity-card-wrapper.activity-card-wrapper-dark .activity-card-title {
+  color: #ffcf00;
 }
 
 .activity-card-wrapper svg {
@@ -87,6 +97,11 @@
 
 .activity-card-time {
   color: #6a6c74;
+}
+
+.activity-card-wrapper.activity-card-wrapper-dark .activity-card-time {
+  color: #fdfcfa;
+  opacity: 0.8;
 }
 
 .activity-card-description {
