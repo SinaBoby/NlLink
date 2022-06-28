@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
+import { useNavigate, Outlet } from "react-router-dom";
 import latestNews from "../../images/refugeesnews.jpeg";
 import yourConnections from "../../images/dashboardConnections.jpeg";
 import useUserDetails from "../../hooks/useUserDetails";
 import ActivitySlider from "../../components/ActivitySlider/ActivitySlider";
 import useFetch from "../../hooks/useFetch";
 import DashboardNews from "../../components/DashboardNews";
+import Button from "../../components/Button";
 import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import RecentConnections from "../../components/RecentConnections/RecentConnections";
@@ -16,7 +18,7 @@ const Dashboard = () => {
   const { userDetails, isMeLoading, meError, cancelMeFetch } = useUserDetails();
   const [userRecommendedActivities, setUserRecommendedActivities] =
     useState(null);
-
+  const navigate = useNavigate();
   const onSuccess = (response) => {
     setUserActivities(response.result.upcomingActivities);
     setUserRecommendedActivities(response.result.recommendedActivities);
@@ -47,6 +49,17 @@ const Dashboard = () => {
             <div>{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</div>
           )}
         </h2>
+        <div className="dashboard-header-btn-wrapper">
+          <Button onClick={() => navigate("changephoto")} className="btn-guide">
+            Change my profile image
+          </Button>
+          <Button
+            onClick={() => navigate("changepassword")}
+            className="btn-guide"
+          >
+            Change my password
+          </Button>
+        </div>
         <div className="user-img-container">
           <img
             src={
@@ -62,6 +75,7 @@ const Dashboard = () => {
           />
         </div>
       </div>
+      <Outlet />
       <div className="user-activity-wrapper">
         <div className="upcoming-activities-wrapper activity-wrapper">
           <h3 className="activity-wrapper-header">Upcoming Activities</h3>
