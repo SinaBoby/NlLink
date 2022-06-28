@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
@@ -24,10 +24,23 @@ import NewsDetails from "./pages/News/NewsDetails";
 import AddNews from "./pages/News/AddNews";
 import Activity from "./pages/Activity/Activity";
 import CreateActivity from "./pages/Activity/CreateActivity";
+import ChangePhoto from "./pages/Dashboard/ChangePhoto";
+import ChangePassword from "./pages/Dashboard/ChangePassword";
+import { ThemeContext } from "./ThemeContext";
 
 const App = () => {
+  const { theme } = useContext(ThemeContext);
+  useEffect(() => {
+    document.getElementsByTagName("body")[0].style.backgroundColor =
+      theme.background;
+    document.getElementsByTagName("body")[0].style.color = theme.foreground;
+  }, [theme]);
+
   return (
-    <>
+    <div
+      id={theme.background === "#222222" ? "dark" : "light"}
+      style={{ background: theme.background }}
+    >
       <AuthProvider>
         <UserDetailsProvider>
           <Nav />
@@ -60,7 +73,10 @@ const App = () => {
               />
               <Route path="/chat/:refId" element={<Chat />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route path="changephoto" element={<ChangePhoto />} />
+                <Route path="changepassword" element={<ChangePassword />} />
+              </Route>
               <Route path="/news/add" element={<AddNews />} />
               <Route path="/activities" element={<Activity />} />
               <Route path="/activities/create" element={<CreateActivity />} />
@@ -69,7 +85,7 @@ const App = () => {
           <Footer />
         </UserDetailsProvider>
       </AuthProvider>
-    </>
+    </div>
   );
 };
 

@@ -8,6 +8,8 @@ import TEST_ID from "./Nav.testid";
 import Dropdown from "./Dropdown";
 import useUserDetails from "./../hooks/useUserDetails";
 import { useWindowSize } from "./../hooks/useWindowSize";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { ThemeContext } from "../ThemeContext";
 
 const Nav = () => {
   const [isDropdown, setDropdown] = useState();
@@ -15,10 +17,10 @@ const Nav = () => {
   const { userDetails } = useUserDetails();
   const [width] = useWindowSize();
   const toggleDropdown = () => setDropdown((prev) => !prev);
-
+  const { isDarkMode } = useContext(ThemeContext);
   return (
     <>
-      <div className="navbar">
+      <div className={isDarkMode ? "navbar bg-dark" : "navbar"}>
         <Link to={"/"} className="logo" data-testid={TEST_ID.linkToHome}>
           <img src={logo} />
         </Link>
@@ -69,6 +71,7 @@ const Nav = () => {
           <button onClick={toggleDropdown} className="btn-menu mobile">
             <img src={burgerIcon} alt={"burger menu icon"} />
           </button>
+          <ThemeToggleButton className="theme-btn" />
         </div>
         {isDropdown && width < 1080 && (
           <Dropdown closeDropdown={() => setDropdown(false)} />

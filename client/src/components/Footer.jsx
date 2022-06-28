@@ -17,7 +17,6 @@ const Footer = () => {
       <div className="footer-stack">
         <p className="copyright">Copyright &copy; 2022 NlLink® </p>
         <div className="footer-links">
-          <button className="footer-link">Privacy Policy</button>
           <button
             className="footer-link"
             onClick={

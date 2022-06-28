@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import TEST_ID from "./Home.testid";
 import "./Home.css";
-import heroDesktop from "../../images/hero-desktop.jpg";
+import welcometonl from "../../images/welcometonl.png";
 import Button from "../../components/Button";
-import newBegin from "../../images/new-begin-desktop.jpg";
-import chatting from "../../images/chatting-desktop.jpg";
-import party from "../../images/party-desktop.jpg";
+import newBegin from "../../images/connectionshome.jpeg";
+import chatting from "../../images/sharing.jpg";
+import party from "../../images/homeactivities.jpg";
 import Testimonials from "../../components/Testimonials/Testimonials";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
     <>
       <header className="header" data-testid={TEST_ID.container}>
         <div className="header-hero-container">
-          <img src={heroDesktop} className="hero" alt="hero" />
+          <img src={welcometonl} className="hero" alt="hero" />
         </div>
         <div className="header-btn-col">
           <h1 className="title mobile-mt">Welkom bij NlLink®</h1>
@@ -41,26 +41,30 @@ const Home = () => {
             <img src={newBegin} alt="new begin" />
           </div>
           <div className="feature-description">
-            <h2 className="title">Are you new in the Netherlands</h2>
+            <h2 className="title">
+              Newcomers are welcome in the Dutch society
+            </h2>
             <p className="feature-para">
-              Our App provides an easy way to connect to a wide group of people
-              who are facing the same situation as an expat or local volunteers
-              that are willing to help you set yourself on the right path
+              The Netherlands is a multi cultural country where had always open
+              arms for the people who were looking for a safer place to live and
+              grow. We do our best in order to make the connection between
+              locals & newcomers in the Netherlands as stronger as possible.
+              NlLink is best place to make your new circle of friends.
             </p>
           </div>
         </section>
         <section className="feature flip">
           <div className="feature-description">
-            <h2 className="title">
-              Still lost and do not know where to pick up ?
-            </h2>
+            <h2 className="title">Sharing is caring!</h2>
             <p className="feature-para">
-              Customize your search based on what are interested in. Choose a
-              connection and start chatting together.
+              Here you can share your ideas and information about any interested
+              issue with other users who have same concerns. Ask a local about
+              the rules in the Netherlands or talk about your favorite foreign
+              food recipe with a newcomer.
             </p>
           </div>
           <div className="feature-img-container">
-            <img src={chatting} alt="new begin" />
+            <img src={chatting} alt="match with other users" />
           </div>
         </section>
         <section className="feature">
@@ -68,10 +72,14 @@ const Home = () => {
             <img src={party} alt="new begin" />
           </div>
           <div className="feature-description">
-            <h2 className="title">Being lonely is not an option here</h2>
+            <h2 className="title">
+              A platform for who wants to socialize more
+            </h2>
             <p className="feature-para">
-              Host your own event or party, or simply go thourgh other events
-              other users have created, and register your presence there.
+              Host your own event or party, or join other events which other
+              users have created. Invite people to practice speaking in Dutch or
+              ask people to join you for a football match in the upcoming
+              weekend. All are possible at NlLink®.
             </p>
           </div>
         </section>

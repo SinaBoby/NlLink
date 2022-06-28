@@ -5,14 +5,15 @@ import TEST_ID from "../Home/Home.testid";
 import "./Intro.css";
 import newComerHeader from "../../images/newcomerIntro.jpg";
 import Button from "../../components/Button";
-import newBegin from "../../images/new-begin-desktop.jpg";
-import chatting from "../../images/chatting-desktop.jpg";
-import party from "../../images/party-desktop.jpg";
+import newBegin from "../../images/groupchat.png";
+import chatting from "../../images/events.png";
+import party from "../../images/news.png";
+import { FcHome, FcUp } from "react-icons/fc";
 
 //import * as Scroll from "react-scroll";
 import {
   Link as ScrollLink,
-  Button as ScrollButton,
+  /* Button as ScrollButton, */
   Events,
   animateScroll as scroll,
   scrollSpy /* , scroller */,
@@ -40,15 +41,29 @@ const NewComer = () => {
 
   return (
     <>
-      <header className="header" data-testid={TEST_ID.container}>
-        <div className="header-hero-container">
+      <header
+        className="header-intro"
+        data-testid={TEST_ID.container}
+        style={{ backgroundImage: `url(${newComerHeader})` }}
+      >
+        {/* <div className="header-hero-container">
           <img src={newComerHeader} className="hero" alt="newcomerHeader" />
+        </div> */}
+        <h1 className="title-intro mobile-mt intro-header-title">
+          Introduction for newcomers
+        </h1>
+        <div className="header-nav-col">
+          <Button onClick={() => navigate("/localIntro")} className="btn-guide">
+            Guide for local users
+          </Button>
+          <Link className="btn-guide btn-home" to="/">
+            <FcHome size="2rem" />
+          </Link>
         </div>
-        <div className="header-btn-col">
-          <h1 className="title mobile-mt">Introduction for newcomers</h1>
+        <div className="header-btn-col-intro">
           <ScrollLink
             activeClass="active"
-            className="btn"
+            className="btn-guide"
             to="connections"
             spy={true}
             smooth={true}
@@ -60,7 +75,7 @@ const NewComer = () => {
           </ScrollLink>
           <ScrollLink
             activeClass="active"
-            className="btn"
+            className="btn-guide"
             to="activities"
             spy={true}
             smooth={true}
@@ -72,7 +87,7 @@ const NewComer = () => {
           </ScrollLink>
           <ScrollLink
             activeClass="active"
-            className="btn"
+            className="btn-guide"
             to="news"
             spy={true}
             smooth={true}
@@ -82,12 +97,6 @@ const NewComer = () => {
           >
             News
           </ScrollLink>
-          <Button onClick={() => navigate("/localIntro")} className="btn">
-            Guide for local users
-          </Button>
-          <Link className="btn" to="/">
-            Back to Home
-          </Link>
         </div>
       </header>
       <main>
@@ -106,7 +115,7 @@ const NewComer = () => {
               from other locals who are interested to start a conversation with
               them.
             </p>
-            <Link className="btn btn-intro" to="/connect">
+            <Link className="btn-guide btn-intro" to="/connect">
               Sign in & make your connections
             </Link>
           </div>
@@ -125,7 +134,7 @@ const NewComer = () => {
               the best way to learn about different cultures and socialize with
               new people.
             </p>
-            <Link className="btn btn-intro" to="/activities">
+            <Link className="btn-guide btn-intro" to="/activities">
               Sign in & make your activities
             </Link>
           </div>
@@ -137,7 +146,7 @@ const NewComer = () => {
           <div className="feature-img-container">
             <img src={party} alt="News-Intro" />
           </div>
-          <div className="feature-description">
+          <div className="feature-description news-desc">
             <h2 className="title">Being on top of the News</h2>
             <p className="feature-para">
               In the <em>News</em> section, you get the latest News related to
@@ -145,13 +154,13 @@ const NewComer = () => {
               changes in the Dutch immigration & integration rules, governmental
               announcements, or new opportunities for refugees.
             </p>
-            <Link className="btn btn-intro" to="/news">
+            <Link className="btn-guide btn-intro" to="/news">
               Sign in & get latest news
             </Link>
-            <ScrollButton
+            <ScrollLink
               activeClass="active"
-              className="btn"
-              value="Back to top"
+              className="btn-top"
+              value={() => <FcUp />}
               to="/newcomerIntro"
               readOnly
               onClick={() => scroll.scrollToTop()}
@@ -160,7 +169,9 @@ const NewComer = () => {
               offset={50}
               duration={500}
               delay={500}
-            />
+            >
+              {<FcUp className="react-icons" size="3rem" color="white" />}
+            </ScrollLink>
           </div>
         </section>
       </main>

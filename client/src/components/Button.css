@@ -6,7 +6,7 @@
 
 .btn {
   color: hsl(0, 0%, 98%);
-  background-color: hsl(220, 23%, 23%);
+  background-color: hsla(35, 78%, 49%, 0.9);
   cursor: pointer;
   margin-bottom: 2rem;
   border: none;
@@ -43,7 +43,7 @@
 
 .btn:hover {
   color: hsl(220, 23%, 23%);
-  background-color: hsl(0, 14%, 93%);
+  background-color: hsl(0, 42%, 81%);
 }
 
 @media screen and (max-width: 900px) {
