@@ -38,7 +38,7 @@ const News = () => {
       </div>
       {isLoading && <Spinner />}
       {error && <Error>Sorry! We can not display the news at the moment</Error>}
-      <div className="news-categeory-wrapper">
+      <div className="news-category-wrapper">
         <Select
           value={newsCategory}
           title=""
