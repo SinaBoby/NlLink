@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./ActivityCard.css";
 import PropTypes from "prop-types";
 import getCategoryImageUrl from "../../util/getCategoryImageUrl";
@@ -6,9 +6,11 @@ import JoinSvg from "./icons/JoinSvg";
 import useFetch from "../../hooks/useFetch";
 import Error from "../Error/Error";
 import CheckMarkSvg from "./icons/CheckMarkSvg";
+import { ThemeContext } from "../../ThemeContext";
 
 const ActivityCard = ({ activity, userId }) => {
   const [userIsJoining, setUserIsJoining] = useState(null);
+  const { isDarkMode } = useContext(ThemeContext);
 
   const onSuccess = (response) => {
     if (response) {
@@ -65,12 +67,20 @@ const ActivityCard = ({ activity, userId }) => {
   const endDate = new Date(activity.endAt).toLocaleString("nl-NL");
 
   return (
-    <div className="activity-card-wrapper">
+    <div
+      className={
+        isDarkMode
+          ? "activity-card-wrapper activity-card-wrapper-dark"
+          : "activity-card-wrapper"
+      }
+    >
       <div className="activity-card-image-wrapper">
         <img src={getCategoryImageUrl(activity.category)} alt="" />
       </div>
 
-      <h4 className="activity-card-content-padding">{activity.title}</h4>
+      <h4 className="activity-card-content-padding activity-card-title">
+        {activity.title}
+      </h4>
       <span className="activity-card-content-padding activity-card-category">
         {activity.category}
       </span>
