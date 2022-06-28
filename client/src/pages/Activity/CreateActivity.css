@@ -1,6 +1,7 @@
 .create-activity-page-container {
   min-height: 90vh;
   background-color: #aabd8c;
+  position: relative;
 }
 
 .create-activity-page-container .form-container {

@@ -10,9 +10,9 @@ import Input from "../../components/Forms/Input";
 import Select from "../../components/Forms/Select";
 import TextAreaInput from "../../components/Forms/TextAreaInput";
 import DateTime from "../../components/Forms/DateTime";
-import Check from "../../components/Check/Check";
 import "./CreateActivity.css";
 import useUserDetails from "../../hooks/useUserDetails";
+import Modal from "../../components/Modal/Modal";
 
 const CreateActivity = () => {
   const [title, setTitle] = useState("");
@@ -25,6 +25,7 @@ const CreateActivity = () => {
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
   const [postCode, setPostCode] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const { userDetails } = useUserDetails();
 
@@ -41,7 +42,7 @@ const CreateActivity = () => {
     setEndAt("");
     setDescription("");
     setMaxPeople("");
-    setActivityData("");
+    // setActivityData("");
     setCity("");
     setStreet("");
     setPostCode("");
@@ -50,6 +51,7 @@ const CreateActivity = () => {
   const onSuccess = (response) => {
     setActivityData(response.result);
     clearForm();
+    setOpenModal(true);
   };
 
   const { isLoading, error, performFetch, cancelFetch } = useFetch(
@@ -126,9 +128,10 @@ const CreateActivity = () => {
               { value: "city tour", text: "City Tour" },
               { value: "museum", text: "Museum" },
               { value: "food", text: "Food" },
-              { value: "training", text: "Training" },
+              { value: "education", text: "Education" },
               { value: "music", text: "Music" },
               { value: "volunteer work", text: "Volunteer Work" },
+              { value: "countryside tour", text: "CountrySide Tour" },
             ]}
             required
           />
@@ -216,35 +219,20 @@ const CreateActivity = () => {
             type="number"
           />
         </InputFieldContainer>
-        {/* 
-        <InputFieldContainer className="news-image-wrapper">
-          <Label for="newsImage">News Image</Label>
-          <InputFile
-            name="newsImage"
-            accept="image/*"
-            id="newsImage"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
-          />
-        </InputFieldContainer> */}
+
         <Button className="btn-block" type="submit">
           Create Activity
         </Button>
       </Form>
       {statusComponent && statusComponent}
-      {activityData && (
-        <Check>
-          {" "}
+
+      {openModal && statusComponent == null && (
+        <Modal setOpenModal={setOpenModal}>
           <div className="created-news-details-wrapper">
             <h2>Activity Created</h2>
-            <h4>{activityData.title}</h4>
-            {/* <p>{newsData.content}</p>
-            <p>{newsData.image}</p>
-            <p>{newsData.sources[0]}</p>
-            <p>{newsData.category}</p> */}
+            {activityData && <div>You created: {activityData.title}</div>}
           </div>
-        </Check>
+        </Modal>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import BtnSlider from "./BtnSlider";
 import "./ActivitySlider.css";
 import PropTypes from "prop-types";
 import getCategoryImageUrl from "../../util/getCategoryImageUrl";
+import { Link } from "react-router-dom";
 
 const ActivitySlider = ({ activitiesData }) => {
   const [slideIndex, setSlideIndex] = useState(1);
@@ -45,8 +46,15 @@ const ActivitySlider = ({ activitiesData }) => {
                 }}
               >
                 <h2 className="activity-title">{activity.title}</h2>
+
                 <h3 className="activity-category">{activity.category}</h3>
                 <p className="activity-description">{activity.description}</p>
+                <div className="activities-link-wrapper">
+                  <Link to="/activities" className="activities-link">
+                    Read More
+                  </Link>
+                </div>
+
                 <BtnSlider moveSlide={nextSlide} direction={"next"} />
                 <BtnSlider moveSlide={prevSlide} direction={"prev"} />
               </div>
