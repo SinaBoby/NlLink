@@ -19,6 +19,7 @@ const httpServer = createServer(app);
 const allowedOrigins = [
   "http://localhost:8080",
   "https://c35-newcomers-develop.herokuapp.com",
+  "http://c35-newcomers-develop.herokuapp.com",
 ];
 export const io = new Server(httpServer, {
   path: "",
