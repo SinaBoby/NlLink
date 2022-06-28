@@ -25,11 +25,7 @@
   display: flex;
   justify-content: center;
   padding: 1rem;
-  background-color: #9e4770;
-}
-
-.activity-page-container-dark .activity-category-select-wrapper {
-  background-color: #ffcf00;
+  background-color: hsla(35, 78%, 49%, 0.9);
 }
 
 .activity-category-select-wrapper .select {
@@ -50,6 +46,6 @@
 
 .create-activity-link.navbar-link:hover {
   color: #f0eff4;
-  background-color: #9e4770;
+  background-color: hsla(35, 78%, 49%, 0.9);
   transition: all 0.4s ease-out;
 }

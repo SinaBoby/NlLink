@@ -21,6 +21,16 @@
   flex-wrap: wrap;
 }
 
+.news-category-wrapper {
+  background-color: hsla(35, 78%, 49%, 0.9);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.news-category-wrapper select {
+  width: 70%;
+}
+
 .add-news-link-wrapper {
   display: flex;
   margin-bottom: 1rem;
