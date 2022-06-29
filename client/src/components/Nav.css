@@ -1,9 +1,11 @@
 .navbar {
+  position: sticky;
+  position: -webkit-sticky;
   display: flex;
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  background-color: #f0ebeb;
+  /* background-color: #f0ebeb; */
 }
 .bg-dark {
   background-color: #222222;
@@ -88,6 +90,7 @@
 @media screen and (max-width: 1080px) {
   .navbar {
     position: sticky;
+    position: -webkit-sticky;
     top: 0;
     width: 100%;
     z-index: 2;

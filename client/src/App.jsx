@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
+import "../public/Variables.css";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
@@ -34,12 +35,13 @@ const App = () => {
     document.getElementsByTagName("body")[0].style.backgroundColor =
       theme.background;
     document.getElementsByTagName("body")[0].style.color = theme.foreground;
+    document.getElementsByTagName("a")[0].style.color = theme.foreground;
   }, [theme]);
 
   return (
     <div
-      id={theme.background === "#222222" ? "dark" : "light"}
-      style={{ background: theme.background }}
+      id="app-wrapper"
+      style={{ background: theme.background, color: theme.foreground }}
     >
       <AuthProvider>
         <UserDetailsProvider>

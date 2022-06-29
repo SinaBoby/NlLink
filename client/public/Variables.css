@@ -1,0 +1,15 @@
+:root{
+  --dark-foreground:#EEEEEE;
+  --dark-background:#222222;
+  --light-foreground:#333333;
+  --light-background:#eeeeee
+}
+
+.dark{
+  background-color:var(--dark-background);
+  color:var(--dark-foreground);
+}
+.light{
+  background-color:var(--light-background);
+  color:var(--light-foreground);
+}
