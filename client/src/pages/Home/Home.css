@@ -1,5 +1,5 @@
 .header {
-  background-color: hsl(0, 14%, 93%);
+  /* background-color: hsl(0, 14%, 93%); */
   display: flex;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .title {
-  color: hsl(220, 23%, 23%);
+  /* color: hsl(220, 23%, 23%); */
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -27,7 +27,7 @@
 }
 
 .feature {
-  background-color: hsl(0, 38%, 88%);
+  /* background-color: hsl(0, 38%, 88%); */
   display: flex;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .feature-para {
-  color: hsl(0, 0%, 25%);
+  /* color: hsl(0, 0%, 25%); */
   width: 90%;
   text-align: center;
   font-size: 1.2rem;
@@ -60,7 +60,7 @@
   display: flex;
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background-color: hsl(0, 0%, 85%);
+  /* background-color: hsl(0, 0%, 85%); */
   flex-direction: column;
   align-items: center;
 }

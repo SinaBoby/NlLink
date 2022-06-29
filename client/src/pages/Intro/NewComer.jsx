@@ -173,7 +173,7 @@ const NewComer = () => {
               {
                 <FcUp
                   className="react-icons up-intro"
-                  size="3rem"
+                  size="2.5rem"
                   color="white"
                 />
               }

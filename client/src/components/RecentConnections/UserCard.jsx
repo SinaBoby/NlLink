@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./UserCard.css";
 import PropTypes from "prop-types";
 import { Buffer } from "buffer";
+import { ThemeContext } from "../../ThemeContext";
 
 const UserCard = ({ user, children, onClick }) => {
+  const { theme, isDarkMode } = useContext(ThemeContext);
   return (
     <div
       className="card"
@@ -25,7 +27,14 @@ const UserCard = ({ user, children, onClick }) => {
       </div>
       <div className="card-info">
         <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType})`}</h3>
-        <h5 className="card-subtitle">{user.province}</h5>
+        <h5
+          className="card-subtitle"
+          style={{
+            color: isDarkMode ? theme.foreground : "hsla(0, 0%, 0%, 0.5);",
+          }}
+        >
+          {user.province}
+        </h5>
         {children}
       </div>
     </div>
