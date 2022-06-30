@@ -53,7 +53,7 @@
   width: 100%;
   min-height: 300px;
   padding: 3rem 0;
-  background-color: #f0ebeb;
+  /* background-color: #f0ebeb; */
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -72,6 +72,9 @@
   height: 10%;
   padding: 6px;
   margin-bottom: 1rem;
+  margin-top: 0.7rem;
+  color: var(--light-foreground);
+  text-align: center;
 }
 
 .latest-news-wrapper {
@@ -102,6 +105,7 @@
 .latest-news-img {
   width: 100%;
   height: auto;
+  margin-top: auto;
 }
 
 .latest-news-header {
@@ -142,7 +146,7 @@
   height: 500px;
   flex-wrap: wrap;
   overflow-y: auto;
-  background-color: hsl(0, 0%, 100%);
+  /* background-color: hsl(0, 0%, 100%); */
 }
 
 .connections-status-details-wrapper::-webkit-scrollbar {
@@ -200,8 +204,8 @@
   transition-duration: 300ms;
   padding: 10px;
   cursor: pointer;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;  */
 }
 
 .connections-status-details-wrapper .recent-connections .card:hover {

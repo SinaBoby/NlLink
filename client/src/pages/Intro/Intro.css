@@ -9,10 +9,6 @@
   flex-direction: column;
 }
 
-.header-hero-container {
-  width: 70%;
-}
-
 .hero {
   width: 100%;
   height: auto;
@@ -143,10 +139,6 @@ a.btn-guide {
   }
   .title-intro {
     font-size: 1.5rem;
-  }
-
-  .header {
-    padding-bottom: 2rem;
   }
 
   .feature {

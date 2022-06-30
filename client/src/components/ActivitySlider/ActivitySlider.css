@@ -50,9 +50,10 @@
 .activity-title,
 .activity-category,
 .activity-description {
-  backdrop-filter: blur(60px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   margin: 2px;
-  padding: 0.2rem;
+  padding: 0.3rem;
 }
 
 .activity-title {
@@ -69,17 +70,23 @@
 .activities-link {
   color: hsl(0, 0%, 98%);
   font-size: 1rem;
-  backdrop-filter: blur(60px);
-  background-color: orange;
-  padding: 0.2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /*  background-color: orange; */
+  padding: 0.3rem;
 }
-
+.activities-link:hover {
+  color: orange;
+}
 .activity-category {
   font-size: 0.8rem;
-  text-decoration: underline;
   margin-bottom: 0;
 }
-
+.act-cat-sign {
+  color: red;
+  font-weight: 900;
+  font-size: 1.3rem;
+}
 .btn-slide {
   width: 36px;
   height: 36px;

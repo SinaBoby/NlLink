@@ -20,6 +20,10 @@
 
 .ctnc-filter-section {
   width: 57%;
+  margin-top: 3rem;
+}
+.ctnc-filter-section .btn {
+  margin-top: 3rem;
 }
 
 .ctnc-interests {
@@ -35,7 +39,11 @@
   text-align: center;
   margin-bottom: 2rem;
 }
-
+.ctnc-interests .label,
+.input-field-container .label {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .ctnc-img-container {
   width: 100%;
 }

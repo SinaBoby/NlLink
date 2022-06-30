@@ -44,10 +44,9 @@ const Dashboard = () => {
       {isMeLoading && !meError && <Spinner />}
       {meError && <Error>{meError}</Error>}
       <div className="user-info-wrapper">
-        <h2 className="user-header">
-          {userDetails && (
-            <h3 className="dashboard-header-title">{`Welcome, ${userDetails.firstName} ${userDetails.lastName}`}</h3>
-          )}
+        <h2 className="user-header dashboard-header-title">
+          {userDetails &&
+            `Welcome, ${userDetails.firstName} ${userDetails.lastName}`}
         </h2>
         <div className="dashboard-header-btn-wrapper">
           <Button onClick={() => navigate("changephoto")} className="btn-guide">
@@ -98,8 +97,8 @@ const Dashboard = () => {
         <div className="latest-news-img-wrapper">
           <img src={latestNews} alt="latest-news" className="latest-news-img" />
         </div>
-        <div className="latest-news-details-wrapper">
-          <h3 className="latest-news-header">Latest News About Newcomers</h3>
+        <div className="latest-news-details-wrapper scroll-narrow">
+          <h2 className="latest-news-header">Latest News About Newcomers</h2>
           <DashboardNews />
         </div>
       </div>

@@ -47,7 +47,10 @@ const ActivitySlider = ({ activitiesData }) => {
               >
                 <h2 className="activity-title">{activity.title}</h2>
 
-                <h3 className="activity-category">{activity.category}</h3>
+                <h3 className="activity-category">
+                  <span className="act-cat-sign"> | </span>
+                  {activity.category}
+                </h3>
                 <p className="activity-description">{activity.description}</p>
                 <div className="activities-link-wrapper">
                   <Link to="/activities" className="activities-link">

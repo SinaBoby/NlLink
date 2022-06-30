@@ -36,7 +36,7 @@
 .profile-image-input::before {
   content: "Upload your Image";
   display: inline-block;
-  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  /* background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3); */
   border: 1px solid #999;
   border-radius: 3px;
   padding: 5px 8px;
@@ -54,6 +54,11 @@
 .profile-image-input:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
+.hint-sign {
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+}
 .hint {
   position: absolute;
   padding: 2rem;
@@ -62,11 +67,6 @@
   top: -11.5rem;
   background-color: hsl(0, 0%, 100%);
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
-}
-.hint-sign {
-  cursor: pointer;
-  position: relative;
-  padding: 2px;
 }
 .password-hint {
   left: 5rem;
@@ -122,9 +122,26 @@ form span p.error-msg {
     width: 100%;
     margin-left: 10px;
   }
-
+  .hint-sign {
+    position: static;
+    display: flex;
+  }
+  .hint {
+    position: absolute;
+    padding: 2rem;
+  }
   .userName-hint {
-    left: 0rem;
+    position: absolute;
+    padding: 2rem;
+    z-index: 1;
+    top: 6rem;
+    left: -1rem;
     width: 100%;
+  }
+  .password-hint {
+    width: max-content;
+    z-index: 1;
+    top: -12rem;
+    left: -1rem;
   }
 }

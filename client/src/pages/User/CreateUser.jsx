@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import InputFieldContainer from "../../components/Forms/InputFieldContainer";
 import Select from "../../components/Forms/Select";
 import Input from "../../components/Forms/Input";
@@ -18,10 +18,11 @@ import Error from "../../components/Error/Error";
 import { toast } from "react-toastify";
 import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
-
-const PasswordHint = () => {
+import { ThemeContext } from "../../ThemeContext";
+import { PasswordHint, UserHint } from "./Hints";
+/* const PasswordHint = () => {
   return (
-    <div className="hint password-hint">
+    <div className="hint password-hint" style={{backgroundColor: isDarkMode ? "var(--light-background)" : "var(--dark-background)", color: isDarkMode ? "var(--light-foreground)" : "var(--dark-foreground)"  }}>
       <h3> Password Requirements:</h3>
       <ul>
         <li>Be 6 characters or longer</li>
@@ -35,7 +36,7 @@ const PasswordHint = () => {
 };
 const UserHint = () => {
   return (
-    <div className="hint userName-hint">
+    <div className="hint userName-hint" style={{backgroundColor: isDarkMode ? "var(--light-background)" : "var(--dark-background)", color: isDarkMode ? "var(--light-foreground)" : "var(--dark-foreground)"  }}>
       <h3> Username Requirements:</h3>
       <ul>
         <li>Minimum 3 and maximum 23 characters </li>
@@ -46,7 +47,7 @@ const UserHint = () => {
       </ul>
     </div>
   );
-};
+}; */
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ const CreateUser = () => {
   const [isEqualPass, setIsEqualPass] = useState("");
   const [equalPassError, setEqualPassError] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const { isDarkMode } = useContext(ThemeContext);
   const strongRegex = new RegExp(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,64})"
   );
@@ -235,7 +237,15 @@ const CreateUser = () => {
   } else if (isLoading) {
     statusComponent = <Spinner data-testid={TEST_ID.loadingContainer} />;
   }
-
+  /* const handleMouseEnter = () => {
+  window.innerWidth > 450 && setUserHint(true);
+}
+const handleMouseExit = () => {
+  window.innerWidth > 450 && setUserHint(false);
+} */
+  useEffect(() => {
+    document.body.onClick = () => setUserHint(false);
+  });
   return (
     <Form onSubmit={handleSubmit} title="Join NlLink">
       <InputFieldContainer className="first-name-wrapper">
@@ -275,9 +285,10 @@ const CreateUser = () => {
             className="hint-sign"
             onMouseEnter={() => setUserHint(true)}
             onMouseLeave={() => setUserHint(false)}
+            onTouchStart={() => setUserHint(true)}
+            onTouchEnd={() => setUserHint(false)}
           >
-            {" "}
-            ?
+            ?{userHint && <UserHint />}
           </span>
           <span>{userError && <Error>{userError}</Error>}</span>
         </Label>
@@ -305,7 +316,6 @@ const CreateUser = () => {
           }}
           required
         />
-        {userHint && <UserHint />}
       </InputFieldContainer>
       <InputFieldContainer className="email-input-wrapper">
         <Label>
@@ -417,6 +427,8 @@ const CreateUser = () => {
             className="hint-sign"
             onMouseEnter={() => setIsHint(true)}
             onMouseLeave={() => setIsHint(false)}
+            onTouchStart={() => setIsHint(true)}
+            onTouchEnd={() => setIsHint(false)}
           >
             ?{isHint && <PasswordHint />}
           </span>
@@ -495,6 +507,14 @@ const CreateUser = () => {
           onChange={(e) => {
             logInfo(e.target.value);
             setProfileImage(e.target.files[0]);
+          }}
+          style={{
+            backgroundColor: isDarkMode
+              ? "var(--light-background)"
+              : "var(--dark-background)",
+            color: isDarkMode
+              ? "var(--light-foreground)"
+              : "var(--dark-foreground)",
           }}
         />
       </InputFieldContainer>

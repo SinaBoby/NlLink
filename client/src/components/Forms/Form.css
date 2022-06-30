@@ -6,7 +6,7 @@
   flex-direction: column;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  background-color: hsl(0, 14%, 93%);
+  /* background-color: hsl(0, 14%, 93%); */
 }
 
 .form-header {

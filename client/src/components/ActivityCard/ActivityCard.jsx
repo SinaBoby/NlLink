@@ -7,6 +7,8 @@ import useFetch from "../../hooks/useFetch";
 import Error from "../Error/Error";
 import CheckMarkSvg from "./icons/CheckMarkSvg";
 import { ThemeContext } from "../../ThemeContext";
+import { MdTimer, MdTimerOff, MdOutlineLocationOn } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 const ActivityCard = ({ activity, userId }) => {
   const [userIsJoining, setUserIsJoining] = useState(null);
@@ -67,60 +69,78 @@ const ActivityCard = ({ activity, userId }) => {
   const endDate = new Date(activity.endAt).toLocaleString("nl-NL");
 
   return (
-    <div
-      className={
-        isDarkMode
-          ? "activity-card-wrapper activity-card-wrapper-dark"
-          : "activity-card-wrapper"
-      }
+    <IconContext.Provider
+      value={{
+        size: "0.70rem",
+        className: "react-activity-icon",
+      }}
     >
-      <div className="activity-card-image-wrapper">
-        <img src={getCategoryImageUrl(activity.category)} alt="" />
-      </div>
-
-      <h4 className="activity-card-content-padding activity-card-title">
-        {activity.title}
-      </h4>
-      <span className="activity-card-content-padding activity-card-category">
-        {activity.category}
-      </span>
-
-      <time className="activity-card-content-padding activity-card-time">
-        Start at: {startDate}
-      </time>
-      <time className="activity-card-content-padding activity-card-time">
-        End at: {endDate}
-      </time>
-      <p className="activity-card-content-padding activity-card-description">
-        {activity.description}
-      </p>
-      <span className="activity-card-content-padding activity-card-attendees">{`Attendees: ${activity.joinedBy.length}/${activity.maxPeople}`}</span>
-      <p className="activity-card-content-padding">{activity.location.city}</p>
       <div
-        title="Join"
-        onClick={() => {
-          handleJoin();
-        }}
-      >
-        {
-          <div>
-            {userIsJoining ? (
-              <div className="join-icon-wrapper">
-                {" "}
-                <span> Cancel Activity</span>
-                <CheckMarkSvg />
-              </div>
-            ) : (
-              <div className="join-icon-wrapper">
-                <span>Join Activity</span>
-                <JoinSvg />
-              </div>
-            )}
-          </div>
+        className={
+          isDarkMode
+            ? "activity-card-wrapper activity-card-wrapper-dark"
+            : "activity-card-wrapper"
         }
+      >
+        <div className="activity-card-image-wrapper">
+          <img src={getCategoryImageUrl(activity.category)} alt="" />
+        </div>
+
+        <h4 className="activity-card-content-padding activity-card-title">
+          {activity.title}
+        </h4>
+        <span className="activity-card-content-padding activity-card-category">
+          {activity.category}
+        </span>
+
+        <time className="activity-card-content-padding activity-card-time">
+          <span className="activity-span">
+            <MdTimer />
+          </span>{" "}
+          Start at: {startDate}
+        </time>
+        <time className="activity-card-content-padding activity-card-time">
+          <span className="activity-span">
+            <MdTimerOff />
+          </span>{" "}
+          End at: {endDate}
+        </time>
+        <p className="activity-card-content-padding activity-card-description">
+          {activity.description}
+        </p>
+        <span className="activity-card-content-padding activity-card-attendees">{`Attendees: ${activity.joinedBy.length}/${activity.maxPeople}`}</span>
+        <p className="activity-card-content-padding location-span">
+          <span className="">
+            {<MdOutlineLocationOn className="location-icon" />}
+          </span>
+          {activity.location.city}
+        </p>
+        <div
+          title="Join"
+          onClick={() => {
+            handleJoin();
+          }}
+        >
+          {
+            <div>
+              {userIsJoining ? (
+                <div className="join-icon-wrapper">
+                  {" "}
+                  <span> Cancel Activity</span>
+                  <CheckMarkSvg />
+                </div>
+              ) : (
+                <div className="join-icon-wrapper">
+                  <span>Join Activity</span>
+                  <JoinSvg />
+                </div>
+              )}
+            </div>
+          }
+        </div>
+        <div>{error && <Error>{error}</Error>}</div>
       </div>
-      <div>{error && <Error>{error}</Error>}</div>
-    </div>
+    </IconContext.Provider>
   );
 };
 

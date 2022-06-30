@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useContext } from "react";
 import "./Message.css";
 import PropTypes from "prop-types";
 import { Buffer } from "buffer";
-
+import { ThemeContext } from "../../ThemeContext";
 export const Message = ({ message, align, currentUser, receiver }) => {
+  const { theme } = useContext(ThemeContext);
   const messageTimestamp =
     currentUser && currentUser._id === message.sender
       ? `You at ${new Date(message.createdAt).toLocaleString()} to ${
@@ -15,7 +16,10 @@ export const Message = ({ message, align, currentUser, receiver }) => {
         ).toLocaleString()}`;
 
   return (
-    <div className={`message-container ${align}`}>
+    <div
+      className={`message-container ${align} dark-shadow-l`}
+      style={{ color: theme.foreground, backgroundColor: theme.background }}
+    >
       <img
         src={
           currentUser &&

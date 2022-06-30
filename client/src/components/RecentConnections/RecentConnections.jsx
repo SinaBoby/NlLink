@@ -7,6 +7,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import "./RecentConnections.css";
 import UserCard from "./UserCard";
+import { ThemeContext } from "../../ThemeContext";
 
 // eslint-disable-next-line react/prop-types
 const RecentConnections = () => {
@@ -14,6 +15,7 @@ const RecentConnections = () => {
   const [contactsIds, setContactsIds] = useState([]);
   const { userDetails, isMeLoading, meError, cancelMeFetch } = useUserDetails();
   const navigate = useNavigate();
+  const { theme, isDarkMode } = useContext(ThemeContext);
   // logInfo(contactsIds);
   const { socket } = useContext(SocketContext);
   function provideContactsIds(data, userId, cb) {
@@ -52,11 +54,23 @@ const RecentConnections = () => {
     };
   }, []);
   return (
-    <div className="recent-connections">
+    <div
+      className="recent-connections"
+      style={{
+        boxShadow: !isDarkMode
+          ? "5px -7px 12px rgba(0, 0, 0, 0.2)"
+          : "5px -7px 12px -1px var(--light-background)",
+      }}
+    >
       {isMeLoading && !meError && <Spinner />}
       {meError && <Error>{meError}</Error>}
-      <h2 className="recent-connections-title">Connections</h2>
-      <div className="recent-connections-list">
+      <h2
+        className="recent-connections-title"
+        style={{ borderBottom: `1px solid ${theme.foreground}` }}
+      >
+        Connections
+      </h2>
+      <div className="recent-connections-list scroll-narrow">
         <>
           {contacts &&
             contacts.map((user, index) => {

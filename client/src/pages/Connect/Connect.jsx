@@ -162,9 +162,9 @@ const Connect = () => {
           </section>
           <div className="ctnc-filter-section">
             <section className="ctnc-interests">
-              <h1 className="ctnc-section-title">
-                What are you interested at {userDetails?.firstName}
-              </h1>
+              <Label className="ctnc-section-title">
+                What are you interested at {userDetails?.firstName}?
+              </Label>
               <InterestsFilter
                 onInsertInterest={addInterest}
                 onDeleteInterest={deleteInterest}
@@ -174,7 +174,7 @@ const Connect = () => {
             </section>
             <section className="ctnc-location">
               <InputFieldContainer>
-                <Label>Where do you live now ?</Label>
+                <Label>which province do you live?</Label>
                 <Select
                   value={province}
                   onChange={(value) => updateProvince(value)}
