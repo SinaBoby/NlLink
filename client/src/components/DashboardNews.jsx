@@ -23,7 +23,7 @@ const DashboardNews = () => {
   }, []);
 
   return (
-    <div className="news-wrapper">
+    <div className="news-wrapper scroll-narrow">
       {error && <Error>{error}</Error>}
       {newsData && newsData.length === 0 && (
         <div className="no-news-yet-wrapper">No News Yet</div>

@@ -20,6 +20,9 @@ const Nav = () => {
   const [width] = useWindowSize();
   const toggleDropdown = () => setDropdown((prev) => !prev);
   const { theme } = useContext(ThemeContext);
+  const handleOnMouseEnter = (e) =>
+    (e.target.style.color = "hsla(35, 78%, 49%, 0.9)");
+  const handleOnMouseLeave = (e) => (e.target.style.color = theme.foreground);
   return (
     <>
       <IconContext.Provider
@@ -39,33 +42,70 @@ const Nav = () => {
           <div className="navbar-right">
             <div className="collapse">
               {isAuthenticated && userDetails && (
-                <Link to={"/news"} className="navbar-link">
+                <Link
+                  to={"/news"}
+                  className="nav-link-simple"
+                  style={{ color: theme.foreground }}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                >
                   News
                 </Link>
               )}
               {isAuthenticated && (
-                <Link to="/activities" className="navbar-link">
+                <Link
+                  to="/activities"
+                  className="nav-link-simple"
+                  style={{ color: theme.foreground }}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                >
                   Activities
                 </Link>
               )}
               {userDetails && isAuthenticated && (
-                <Link to="connect" className="navbar-link">
+                <Link
+                  to="connect"
+                  className="nav-link-simple"
+                  style={{ color: theme.foreground }}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                >
                   {userDetails.userType === "NewComer"
                     ? "Connect to Locals"
                     : "Connect to New Comers"}
                 </Link>
               )}
-              <Link to="/about" className="navbar-link">
-                About
-              </Link>
-              <Link to="/contact" className="navbar-link">
-                Contact us
-              </Link>
+              {!isAuthenticated && (
+                <Link
+                  to="/about"
+                  className="nav-link-simple"
+                  style={{ color: theme.foreground }}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                >
+                  About
+                </Link>
+              )}
+              {!isAuthenticated && (
+                <Link
+                  to="/contact"
+                  className="nav-link-simple"
+                  style={{ color: theme.foreground }}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                >
+                  Contact us
+                </Link>
+              )}
               {isAuthenticated ? (
                 <>
                   <Link
                     to="/dashboard"
-                    className="navbar-link"
+                    className="nav-link-simple"
+                    style={{ color: theme.foreground }}
+                    onMouseEnter={handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
                     data-testid={TEST_ID.linkToUsers}
                   >
                     Dashboard
@@ -80,7 +120,12 @@ const Nav = () => {
                 </Link>
               )}
             </div>
-            <button onClick={toggleDropdown} className="btn-menu mobile">
+            <button
+              onClick={toggleDropdown}
+              className="btn-menu mobile"
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            >
               <MdMenu />
             </button>
             <ThemeToggleButton className="theme-btn" />

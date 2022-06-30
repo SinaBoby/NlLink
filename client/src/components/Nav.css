@@ -5,6 +5,7 @@
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
+  z-index: 2;
   /* background-color: #f0ebeb; */
 }
 .bg-dark {
@@ -33,7 +34,14 @@
   width: 100%;
   height: auto;
 }
-
+.nav-link-simple {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  margin-left: 1.2rem;
+}
+.nav-link-simple:hover {
+  color: hsla(35, 78%, 49%, 0.9);
+}
 .navbar-link {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
@@ -89,8 +97,6 @@
 
 @media screen and (max-width: 1080px) {
   .navbar {
-    position: sticky;
-    position: -webkit-sticky;
     top: 0;
     width: 100%;
     z-index: 2;

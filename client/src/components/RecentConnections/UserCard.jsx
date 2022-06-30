@@ -5,12 +5,19 @@ import { Buffer } from "buffer";
 import { ThemeContext } from "../../ThemeContext";
 
 const UserCard = ({ user, children, onClick }) => {
-  const { theme, isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode } = useContext(ThemeContext);
   return (
     <div
       className="card"
       onClick={() => onClick(user)}
-      style={{ cursor: "pointer" }}
+      style={{
+        cursor: "pointer",
+        boxShadow: !isDarkMode
+          ? `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px ,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`
+          : `var(--light-background) 0px 2px 5px -1px ,
+      var(--light-foreground) 0px 1px 3px -1px`,
+      }}
     >
       <div className="card-img-container">
         <img
@@ -26,12 +33,9 @@ const UserCard = ({ user, children, onClick }) => {
         />
       </div>
       <div className="card-info">
-        <h3 className="card-title">{`${user.firstName} ${user.lastName} (${user.userType})`}</h3>
+        <h3 className="card-title">{`${user.firstName} ${user.lastName} | ${user.userType}`}</h3>
         <h5
-          className="card-subtitle"
-          style={{
-            color: isDarkMode ? theme.foreground : "hsla(0, 0%, 0%, 0.5);",
-          }}
+          className={isDarkMode ? "card-subtitle light-text" : "card-subtitle"}
         >
           {user.province}
         </h5>

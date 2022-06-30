@@ -8,6 +8,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   color: black;
+  border-radius: 3%;
 }
 
 .news-card-image-wrapper {
@@ -19,6 +20,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-top-right-radius: 3%;
+  border-top-left-radius: 3%;
 }
 
 .news-card-details-wrapper {
@@ -70,6 +73,7 @@
 
 .news-card-link:hover {
   opacity: 1;
+  color: var(--primary-orange);
 }
 
 @media screen and (min-width: 480px) {

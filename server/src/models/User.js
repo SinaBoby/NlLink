@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema(
     userType: {
       type: String,
       enum: {
-        values: ["NewComer", "Local"],
+        values: ["Newcomer", "Local"],
         message: (props) => `${props.value} is not a valid userType`,
       },
       required: "Required field error! Please add your {PATH} to the form",

@@ -1,12 +1,12 @@
 import cityTour from "../images/city-tour.jpg";
-import countrysideTour from "../images/countryside-tour.jpg";
+import countrysideTour from "../images/keukenhof.jpg";
 import museum from "../images/museum.jpg";
 import food from "../images/food.jpg";
 import language from "../images/language.jpg";
-import music from "../images/music.jpg";
+import music from "../images/partyBackground.jpg";
 import sport from "../images/sport.jpg";
 import education from "../images/training.jpg";
-import volunteerWork from "../images/volunteer-work.jpg";
+import volunteerWork from "../images/volunturee.jpg";
 
 const getCategoryImageUrl = (category) => {
   const categoryName = category.replace(/\s+/g, "-").toLowerCase();

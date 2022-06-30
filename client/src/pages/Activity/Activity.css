@@ -36,7 +36,10 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-around;
   flex-direction: row;
+  padding: 2rem 0;
 }
 
 .create-activity-link.navbar-link {

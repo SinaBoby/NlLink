@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import TEST_ID from "./Home.testid";
 import "./Home.css";
-import welcometonl from "../../images/welcometonl.png";
+import welcometonl from "../../images/amsterdam.png";
 import Button from "../../components/Button";
 import newBegin from "../../images/connectionshome.jpeg";
 import chatting from "../../images/sharing.jpg";
 import party from "../../images/homeactivities.jpg";
 import Testimonials from "../../components/Testimonials/Testimonials";
+import { ThemeContext } from "../../ThemeContext";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { isDarkMode } = useContext(ThemeContext);
   return (
     <>
       <header className="header" data-testid={TEST_ID.container}>
-        <div className="header-hero-container">
-          <img src={welcometonl} className="hero" alt="hero" />
-        </div>
-        <div className="header-btn-col">
-          <h1 className="title mobile-mt">Welkom bij NlLink®</h1>
+        <div
+          className="header-btn-col"
+          style={{
+            cursor: "pointer",
+            boxShadow: !isDarkMode
+              ? `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px ,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`
+              : `var(--light-background) 0px 2px 5px -1px ,
+      var(--light-foreground) 0px 1px 3px -1px`,
+          }}
+        >
+          <h1 className="title mobile-mt header-home-title">
+            Welkom bij NlLink®
+          </h1>
           <Button
             className={"btn-inline"}
             type="button"
@@ -33,6 +44,9 @@ const Home = () => {
           >
             I&apos;m a new comer
           </Button>
+        </div>
+        <div className="header-hero-container">
+          <img src={welcometonl} className="hero" alt="hero" />
         </div>
       </header>
       <main>

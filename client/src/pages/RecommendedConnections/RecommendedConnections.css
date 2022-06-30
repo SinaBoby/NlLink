@@ -1,8 +1,12 @@
 .recommended-connections {
   padding: 2rem;
-  background-color: hsl(0, 53%, 91%);
+  /* background-color: hsl(0, 53%, 91%); */
+  min-height: 70vh;
 }
-
+.recommended-connections .card h3,
+.recommended-connections .card h5 {
+  color: var(--light-foreground);
+}
 .card-wrapper {
   background-color: hsl(0, 0%, 100%);
   padding: 0.7rem;
