@@ -10,7 +10,7 @@ import UserCard from "./UserCard";
 import { ThemeContext } from "../../ThemeContext";
 
 // eslint-disable-next-line react/prop-types
-const RecentConnections = () => {
+const RecentConnections = ({ parent }) => {
   const [contacts, setContacts] = useState([]);
   const [contactsIds, setContactsIds] = useState([]);
   const { userDetails, isMeLoading, meError, cancelMeFetch } = useUserDetails();
@@ -30,11 +30,14 @@ const RecentConnections = () => {
     });
     cb(contactsIdsArray);
   }
+  /*  useEffect(() => {
+    window.addEventListener("load", () => socket.connect())
+  }) */
   useEffect(() => {
     socket.connect();
 
     userDetails &&
-      socket.on("chatHistory", (data) => {
+      socket.on("contactHistory", (data) => {
         provideContactsIds(data, userDetails._id, (providedIds) =>
           setContactsIds(providedIds)
         );
@@ -50,6 +53,7 @@ const RecentConnections = () => {
   useEffect(() => {
     return () => {
       socket.disconnect();
+
       cancelMeFetch();
     };
   }, []);
@@ -64,13 +68,20 @@ const RecentConnections = () => {
     >
       {isMeLoading && !meError && <Spinner />}
       {meError && <Error>{meError}</Error>}
-      <h2
-        className="recent-connections-title"
-        style={{ borderBottom: `1px solid ${theme.foreground}` }}
+      <h2 className="recent-connections-title">Contacts</h2>
+      <div
+        className="recent-connections-list scroll-narrow"
+        style={{
+          backgroundColor:
+            isDarkMode && parent === "chat"
+              ? "hsla(30, 7%, 27%, 0.8)"
+              : parent !== "chat"
+              ? theme.background
+              : "rgba(50, 50, 93, 0.25)",
+          borderRadius: parent === "chat" ? "0.5rem" : "0",
+          padding: parent === "chat" && "1rem 0",
+        }}
       >
-        Connections
-      </h2>
-      <div className="recent-connections-list scroll-narrow">
         <>
           {contacts &&
             contacts.map((user, index) => {
@@ -80,6 +91,7 @@ const RecentConnections = () => {
                   <UserCard
                     key={index}
                     user={user}
+                    parent={parent}
                     onClick={() => {
                       userDetails._id &&
                         navigate(`/chat/${user._id}`, {

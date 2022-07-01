@@ -7,7 +7,9 @@
 .ctnc-search-container {
   display: flex;
   width: 75%;
+  height: max-content;
   padding: 2rem;
+  padding-right: 0;
   justify-content: space-between;
   /* background-color: hsl(0, 53%, 91%); */
 }
@@ -20,7 +22,10 @@
 
 .ctnc-filter-section {
   width: 57%;
-  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /*  margin-top: 3rem; */
 }
 .ctnc-filter-section .btn {
   margin-top: 3rem;
@@ -51,7 +56,7 @@
 .ctnc-img-container img {
   width: 100%;
   border-radius: 0.5rem;
-  height: auto;
+  height: 100%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -66,10 +71,22 @@
 @media screen and (max-width: 800px) {
   .ctnc-search-container {
     flex-direction: column;
+    padding-right: 2rem;
   }
 
   .ctnc-filter-section,
   .ctnc-illustration {
     width: 100%;
+  }
+  .ctnc-filter-section {
+    margin-bottom: 2rem;
+  }
+  .ctnc-img-container {
+    display: flex;
+    justify-content: center;
+  }
+  .ctnc-img-container img {
+    width: 50%;
+    height: 50%;
   }
 }

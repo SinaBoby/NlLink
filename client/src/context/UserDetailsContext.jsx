@@ -28,8 +28,14 @@ export const UserDetailsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    window.addEventListener("load", getMe);
-    return () => window.removeEventListener("load", getMe);
+    //window.addEventListener("load", getMe);
+    if (isAuthenticated) {
+      performFetch({
+        method: "GET",
+        credentials: "include",
+      });
+    }
+    return () => cancelFetch();
   }, []);
 
   return (

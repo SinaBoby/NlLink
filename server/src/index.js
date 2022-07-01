@@ -67,6 +67,12 @@ io.on("connection", async (socket) => {
     socket.emit("id", socket.id);
     logInfo(socket.userName);
     socket_id.push(socket.id);
+    const userName = socket.userName;
+    const user = await User.findOne({ userName });
+    const userId = user._id;
+    const chatLog = await MessageSchema.statics.latest(userId);
+    socket.emit("chatHistory", chatLog);
+    socket.emit("contactHistory", chatLog);
     /*  if (socket_id[0] === socket.id) {
             // remove the connection listener for any subsequent
             // connections with the same ID
@@ -81,17 +87,6 @@ io.on("connection", async (socket) => {
         logError(error);
       }
     });
-    socket.on("disconnect", () => {
-      logInfo("Client disconnected...");
-      //socket.removeAllListeners();
-    });
-    const userName = socket.userName;
-    const user = await User.findOne({ userName });
-    const userId = user._id;
-    const chatLog = await MessageSchema.statics.latest(userId);
-    if (userId) {
-      socket.emit("chatHistory", chatLog);
-    }
     socket.on("contacts", async (contactsIds) => {
       try {
         logInfo(contactsIds);
@@ -103,6 +98,10 @@ io.on("connection", async (socket) => {
       } catch (err) {
         logError(err);
       }
+    });
+    socket.on("disconnect", () => {
+      logInfo("Client disconnected...");
+      //socket.removeAllListeners();
     });
   } catch (error) {
     logError(error);

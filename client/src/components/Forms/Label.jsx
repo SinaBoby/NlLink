@@ -7,7 +7,7 @@ const Label = ({ children }) => {
 };
 
 Label.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 
 export default Label;

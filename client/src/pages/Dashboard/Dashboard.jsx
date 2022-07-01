@@ -111,7 +111,7 @@ const Dashboard = () => {
           />
         </div>
         <div className="connections-status-details-wrapper">
-          {userDetails && <RecentConnections userId={userDetails._id} />}
+          {userDetails && <RecentConnections />}
         </div>
       </div>
     </div>

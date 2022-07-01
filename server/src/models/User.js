@@ -122,7 +122,15 @@ const userSchema = new mongoose.Schema(
     ],
     activities: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Activity" }],
   },
-  { timestamps: true }
+  { timestamps: true },
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
+  }
 );
 
 userSchema.pre("save", async function (next) {

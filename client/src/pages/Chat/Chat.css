@@ -6,13 +6,19 @@
 .chat-page-wrapper {
   width: 75%;
   padding: 1.5rem;
+  padding-right: 0;
   display: flex;
-  background-color: hsla(30, 54%, 60%, 0.8);
   height: 100%;
+  padding-top: 0;
 }
 
 .receiver-info {
   width: 30%;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
 .chat-container {
@@ -28,6 +34,7 @@
 .chat-title {
   font-size: 2rem;
   margin-bottom: 1rem;
+  margin-top: 1.5rem;
 }
 #msgBox span {
   word-break: break-all;
@@ -73,9 +80,25 @@
   border: none;
   box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.2);
 }
-
+.react-chat-icon {
+  width: 2rem;
+}
+#send-btn {
+  padding: 0.5rem 0;
+  margin: 0.5rem;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 53px;
+  height: 53px;
+}
 .btn-send-container {
   width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .receiver-info {
