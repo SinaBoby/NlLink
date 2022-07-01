@@ -38,7 +38,7 @@ MessageSchema.statics.latest = (se) => {
     },
     {
       $sort: {
-        updatedAt: -1,
+        updatedAt: 1,
       },
     },
     {

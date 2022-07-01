@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import useUserDetails from "../../hooks/useUserDetails";
 import Button from "../../components/Button";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { IconContext } from "react-icons";
+import InputEmoji from "react-input-emoji";
 
 const MessageBox = ({ receiver, performFetch, socket }) => {
   const [value, setValue] = useState("");
@@ -31,24 +34,32 @@ const MessageBox = ({ receiver, performFetch, socket }) => {
   };
 
   return (
-    <form onSubmit={postMessage}>
-      <div className="chat-input-container">
-        <input
-          type="text"
-          id="chat-message"
-          name="chat-message"
-          placeholder="type here... "
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className="chat-input"
-        />
-        <div className="btn-send-container">
-          <Button className="btn-block" type="submit">
-            Send
-          </Button>
+    <IconContext.Provider
+      value={{
+        size: "1.7rem",
+        className: "react-chat-icon",
+      }}
+    >
+      <form onSubmit={postMessage}>
+        <div className="chat-input-container">
+          <InputEmoji
+            type="text"
+            id="chat-message"
+            name="chat-message"
+            cleanOnEnter
+            placeholder="type here... "
+            value={value}
+            onChange={setValue}
+            className="chat-input"
+          />
+          <div className="btn-send-container">
+            <Button id="send-btn" className="btn-block" type="submit">
+              <RiSendPlaneFill />
+            </Button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </IconContext.Provider>
   );
 };
 export default MessageBox;

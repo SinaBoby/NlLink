@@ -11,6 +11,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Error from "../../components/Error/Error";
 import MessageBox from "./MessageBox";
 import { SocketContext } from "../../SocketContext";
+import { ThemeContext } from "../../ThemeContext";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -20,7 +21,7 @@ const Chat = () => {
   const userId = state.userId;
   const { refId } = useParams();
   const receiverId = refId;
-
+  const { isDarkMode } = useContext(ThemeContext);
   const { socket } = useContext(SocketContext);
   const onGetSuccess = (response) => {
     const { success } = response;
@@ -103,11 +104,18 @@ const Chat = () => {
   return (
     <div className="row-container">
       <div className="chat-page-wrapper">
-        <div className="chat-container" id="msgBox">
+        <div className="chat-container scroll" id="msgBox">
           <p className="chat-title">
-            {userDetails?.userName} is now chatting with {receiver?.userName}
+            {userDetails?.firstName} is chatting with {receiver?.firstName}
           </p>
-          <div className="chat-log">
+          <div
+            className="chat-log"
+            style={{
+              backgroundColor: isDarkMode
+                ? "hsla(30, 7%, 27%, 0.8)"
+                : "rgba(50, 50, 93, 0.25)",
+            }}
+          >
             {isLoading && !error && <Spinner />}
             {error && <Error>{error}</Error>}
             {isGetLoading && !getError && <Spinner />}
@@ -158,7 +166,7 @@ const Chat = () => {
           <p className="receiver-name">{`${receiver.firstName} ${receiver.lastName}`}</p>
         </div>
       </div>
-      <RecentConnections userId={userId} />
+      {userDetails && <RecentConnections parent={"chat"} />}
     </div>
   );
 };

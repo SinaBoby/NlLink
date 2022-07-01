@@ -111,7 +111,6 @@ const Login = () => {
           </Link>
         </div>
         <div className="forgot-password">
-          <p>Forgot your password?</p>
           <Button
             type={"button"}
             className="form-btn-link"

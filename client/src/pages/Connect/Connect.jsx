@@ -154,13 +154,8 @@ const Connect = () => {
       {meError && <Error>{meError}</Error>}
       <div className="ctnc-wrapper">
         <div className="ctnc-search-container">
-          <section className="ctnc-illustration">
-            <h1 className="ctnc-section-title">Make A New Connection</h1>
-            <div className="ctnc-img-container">
-              <img src={makeAConnection} alt="make a new connection" />
-            </div>
-          </section>
           <div className="ctnc-filter-section">
+            <h1 className="ctnc-section-title">Make A New Connection</h1>
             <section className="ctnc-interests">
               <Label className="ctnc-section-title">
                 What are you interested at {userDetails?.firstName}?
@@ -201,6 +196,11 @@ const Connect = () => {
               Find a match
             </Button>
           </div>
+          <section className="ctnc-illustration">
+            <div className="ctnc-img-container">
+              <img src={makeAConnection} alt="make a new connection" />
+            </div>
+          </section>
         </div>
         {((!addInterestError &&
           !deleteInterestError &&

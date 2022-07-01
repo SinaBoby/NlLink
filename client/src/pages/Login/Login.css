@@ -11,9 +11,10 @@
   align-items: center;
   justify-content: center;
 }
-
-.create-user p,
-.forgot-password p {
+.login-extra-actions {
+  margin: 0.5rem;
+}
+.create-user p {
   margin-right: 0.5rem;
 }
 

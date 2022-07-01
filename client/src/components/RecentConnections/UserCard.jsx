@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import { Buffer } from "buffer";
 import { ThemeContext } from "../../ThemeContext";
 
-const UserCard = ({ user, children, onClick }) => {
-  const { isDarkMode } = useContext(ThemeContext);
+const UserCard = ({ user, children, onClick, parent }) => {
+  const { theme, isDarkMode } = useContext(ThemeContext);
+
   return (
     <div
       className="card"
@@ -17,6 +18,8 @@ const UserCard = ({ user, children, onClick }) => {
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`
           : `var(--light-background) 0px 2px 5px -1px ,
       var(--light-foreground) 0px 1px 3px -1px`,
+        backgroundColor: theme.background,
+        width: parent === "chat" && "100%",
       }}
     >
       <div className="card-img-container">
@@ -49,6 +52,7 @@ UserCard.propTypes = {
   user: PropTypes.object.isRequired,
   children: PropTypes.element,
   onClick: PropTypes.func,
+  parent: PropTypes.string,
 };
 
 export default UserCard;
