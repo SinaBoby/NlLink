@@ -70,7 +70,7 @@ const CreateUser = () => {
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState("");
   const [birthDay, setBirthDay] = useState("");
-  const [userType, setUserType] = useState("NewComer");
+  const [userType, setUserType] = useState("Newcomer");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passError, setPassError] = useState("");
   const [ageError, setAgeError] = useState("");
@@ -150,7 +150,7 @@ const CreateUser = () => {
     setPhoneNumber("");
     setPassword("");
     setBirthDay("");
-    setUserType("NewComer");
+    setUserType("Newcomer");
     setConfirmPassword("");
   };
   function getAge(birthDay) {
