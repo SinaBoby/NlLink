@@ -159,6 +159,7 @@
     width: 100%;
     flex-direction: column-reverse;
     padding: 0.5rem;
+    justify-content: flex-end;
   }
 
   .row-container .recent-connections {
@@ -169,6 +170,7 @@
   .chat-container {
     width: 100%;
     margin: 0;
+    height: 80%;
   }
 
   .receiver-info {
@@ -198,7 +200,7 @@
   }
 
   .chat-log {
-    height: 70%;
+    height: 320px;
     width: 100%;
   }
   .chat-input-container {
