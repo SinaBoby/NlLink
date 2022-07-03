@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid userType`,
       },
       required: "Required field error! Please add your {PATH} to the form",
-      default: "NewComer",
+      default: "Newcomer",
     },
     phoneNumber: {
       type: String,
