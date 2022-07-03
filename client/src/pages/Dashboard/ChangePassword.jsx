@@ -9,12 +9,13 @@ import Button from "./../../components/Button";
 import Form from "../../components/Forms/Form";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./../../components/Spinner/Spinner";
-//import { AuthContext } from "../../AuthContext";
 import Error from "../../components/Error/Error";
 import { toast } from "react-toastify";
 import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
+import { IoMdClose } from "react-icons/io";
 import "./Dashboard.css";
+
 const PasswordHint = () => {
   return (
     <div className="hint password-hint">
@@ -129,6 +130,12 @@ const ChangePassword = () => {
 
   return (
     <div className="changePhoto-form-wrapper">
+      <IoMdClose
+        onClick={() => {
+          navigate("/dashboard");
+        }}
+        className="change-info-close-btn"
+      />
       {isLoading && !error && <Spinner />}
       {error && <Error>{error}</Error>}
       <Form

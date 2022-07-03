@@ -14,26 +14,31 @@
 .dashboard-header-btn-wrapper .btn {
   margin-bottom: 0;
   padding: 0.5rem;
+  max-width: calc(50% - 1rem);
 }
 .user-info-wrapper {
   display: flex;
 
   justify-content: space-between;
   align-items: center;
-  height: 200px;
+  min-height: 200px;
   padding: 1rem 1rem 1rem 0;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .user-img-container {
-  margin-right: 5%;
-  width: 7rem;
+  width: 100%;
   height: 7rem;
   align-self: flex-start;
+  display: flex;
+  justify-content: center;
 }
 
 .user-img-container img {
   border-radius: 50%;
   object-fit: cover;
-  width: 100%;
+  width: auto;
   height: 100%;
 }
 .activity-wrapper {
@@ -51,7 +56,7 @@
 
 .user-activity-wrapper {
   width: 100%;
-  min-height: 300px;
+  /* min-height: 300px; */
   padding: 3rem 0;
   /* background-color: #f0ebeb; */
   display: flex;
@@ -61,20 +66,23 @@
 }
 
 .user-header {
-  width: 50%;
+  width: 100%;
   padding: 2% 5%;
   margin-bottom: 20px;
   line-height: 1.5;
+  text-align: center;
 }
 
 .activity-wrapper-header {
   width: 100%;
-  height: 10%;
-  padding: 6px;
-  margin-bottom: 1rem;
-  margin-top: 0.7rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  /* margin-bottom: 1rem; */
+  /* margin-top: 0.7rem; */
   color: var(--light-foreground);
   text-align: center;
+  color: hsl(0, 0%, 98%);
+  background-color: hsla(35, 78%, 49%, 0.9);
 }
 
 .latest-news-wrapper {
@@ -211,21 +219,43 @@
 .connections-status-details-wrapper .recent-connections .card:hover {
   width: 91%;
 }
+
 form.form.changePhoto-form {
   margin: 0;
 }
+
+.changePhoto-form-wrapper {
+  position: relative;
+}
+
+.change-info-close-btn {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.change-info-close-btn:hover {
+  opacity: 1;
+  font-size: 1.6rem;
+}
+
 .changePhoto-form-wrapper > div.form-container {
   min-height: 30vh;
 }
-@media screen and (max-width: 900px) {
+
+@media screen and (max-width: 767px) {
   .user-activity-wrapper {
     flex-direction: column;
   }
   .dashboard-header-btn-wrapper {
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
-    justify-content: end;
-    width: 30%;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 1rem;
   }
   .dashboard-header-title {
     font-size: 1.2rem;
@@ -233,7 +263,7 @@ form.form.changePhoto-form {
   .dashboard-header-btn-wrapper .btn-guide.dashboard-header-btn {
     font-size: 0.8rem;
     min-width: max-width;
-    max-width: 6rem;
+    max-width: calc(50% - 1rem);
   }
   .activity-wrapper {
     width: 80%;
@@ -246,12 +276,11 @@ form.form.changePhoto-form {
 
   .user-header {
     padding: 5px;
-    width: 30%;
-    align-self: flex-start;
+    width: 100%;
+    /* align-self: flex-start; */
+    text-align: center;
   }
-  .user-img-container {
-    margin-left: 5%;
-  }
+
   .latest-news-wrapper {
     height: 500px;
     flex-direction: column;
@@ -292,5 +321,40 @@ form.form.changePhoto-form {
   .connections-status-img-wrapper img {
     width: 100%;
     height: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .user-info-wrapper {
+    flex-direction: row;
+  }
+
+  .user-header {
+    width: 50%;
+  }
+
+  .user-img-container {
+    margin-right: 0;
+    width: 50%;
+    height: 7rem;
+  }
+
+  .dashboard-header-btn-wrapper {
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .latest-news-img-wrapper {
+    width: 40%;
+    display: flex;
+    align-items: center;
+  }
+
+  .latest-news-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

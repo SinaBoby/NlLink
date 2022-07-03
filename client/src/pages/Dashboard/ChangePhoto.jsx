@@ -15,6 +15,7 @@ import Error from "../../components/Error/Error";
 import { logInfo } from "../../../../server/src/util/logging";
 import "react-toastify/dist/ReactToastify.css";
 import "./Dashboard.css";
+import { IoMdClose } from "react-icons/io";
 
 const ChangePhoto = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -49,6 +50,12 @@ const ChangePhoto = () => {
 
   return (
     <div className="changePhoto-form-wrapper">
+      <IoMdClose
+        onClick={() => {
+          navigate("/dashboard");
+        }}
+        className="change-info-close-btn"
+      />
       {isLoading && !error && <Spinner />}
       {error && <Error>{error}</Error>}
       <Form

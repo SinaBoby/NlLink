@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./Dropdown.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import DropdownLink from "./DropdownLink";
 import { AuthContext } from "../AuthContext";
 import useUserDetails from "../hooks/useUserDetails";
 
-const Dropdown = ({ closeDropdown }) => {
+const Dropdown = ({ closeDropdown, isDropdown }) => {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(AuthContext);
@@ -18,8 +18,36 @@ const Dropdown = ({ closeDropdown }) => {
     navigate(route);
   };
 
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const closeDropdownEvent = (event) => {
+      if (
+        isDropdown &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        closeDropdown();
+      }
+    };
+
+    return document.addEventListener("click", closeDropdownEvent);
+  }, []);
+
+  // const dropdownRef = useRef();
+
+  // useEffect(() => {
+
+  //     document.addEventListener("mousedown", (event) => {
+  //       if (!dropdownRef.current.contains(event.target)) {
+  //         setDropdown(false);
+
+  //     });
+  //   }
+  // });
+
   return (
-    <div className="dropdown">
+    <div className="dropdown" ref={dropdownRef}>
       {isAuthenticated && (
         <DropdownLink onClick={() => handleNavigation("/news")}>
           News
@@ -47,10 +75,10 @@ const Dropdown = ({ closeDropdown }) => {
       {!isAuthenticated ? (
         <>
           <DropdownLink onClick={() => handleNavigation("/login")}>
-            Login
+            Sign in
           </DropdownLink>
           <DropdownLink onClick={() => handleNavigation("/user/create")}>
-            Register
+            Sign up
           </DropdownLink>
         </>
       ) : (
@@ -69,6 +97,7 @@ const Dropdown = ({ closeDropdown }) => {
 
 Dropdown.propTypes = {
   closeDropdown: PropTypes.func.isRequired,
+  isDropdown: PropTypes.bool.isRequired,
 };
 
 export default Dropdown;

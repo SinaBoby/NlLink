@@ -48,17 +48,6 @@ const Dashboard = () => {
           {userDetails &&
             `Welcome, ${userDetails.firstName} ${userDetails.lastName}`}
         </h2>
-        <div className="dashboard-header-btn-wrapper">
-          <Button onClick={() => navigate("changephoto")} className="btn-guide">
-            Change my profile image
-          </Button>
-          <Button
-            onClick={() => navigate("changepassword")}
-            className="btn-guide dashboard-header-btn"
-          >
-            Change my password
-          </Button>
-        </div>
         <div className="user-img-container">
           <img
             src={
@@ -72,6 +61,17 @@ const Dashboard = () => {
             }
             alt={userDetails && userDetails.firstName}
           />
+        </div>
+        <div className="dashboard-header-btn-wrapper">
+          <Button onClick={() => navigate("changephoto")} className="btn-guide">
+            Change my profile image
+          </Button>
+          <Button
+            onClick={() => navigate("changepassword")}
+            className="btn-guide dashboard-header-btn"
+          >
+            Change my password
+          </Button>
         </div>
       </div>
       <Outlet />

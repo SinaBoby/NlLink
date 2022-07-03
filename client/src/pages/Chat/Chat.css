@@ -1,6 +1,6 @@
 .row-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .chat-page-wrapper {
@@ -150,19 +150,19 @@
 @media screen and (max-width: 767px) {
   .row-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
   }
 
   .chat-page-wrapper {
-    height: 50%;
+    height: 70vh;
     width: 100%;
     flex-direction: column-reverse;
     padding: 0.5rem;
   }
 
   .row-container .recent-connections {
-    height: 50%;
+    height: 70vh;
     width: 100%;
   }
 
@@ -207,10 +207,6 @@
   .chat-input {
     padding: 0.5rem;
     font-size: 0.7rem;
-  }
-
-  .btn-send-container {
-    padding: 0.5rem;
   }
 
   .btn-send-container .btn-block {

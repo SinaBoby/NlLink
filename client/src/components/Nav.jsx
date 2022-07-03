@@ -23,6 +23,7 @@ const Nav = () => {
   const handleOnMouseEnter = (e) =>
     (e.target.style.color = "hsla(35, 78%, 49%, 0.9)");
   const handleOnMouseLeave = (e) => (e.target.style.color = theme.foreground);
+
   return (
     <>
       <IconContext.Provider
@@ -131,7 +132,11 @@ const Nav = () => {
             <ThemeToggleButton className="theme-btn" />
           </div>
           {isDropdown && width < 1080 && (
-            <Dropdown closeDropdown={() => setDropdown(false)} />
+            <Dropdown
+              closeDropdown={() => setDropdown(false)}
+              isDropdown={isDropdown}
+              setDropdown={setDropdown}
+            />
           )}
         </div>
       </IconContext.Provider>
