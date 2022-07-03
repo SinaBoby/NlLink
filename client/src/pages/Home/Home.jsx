@@ -28,7 +28,7 @@ const Home = () => {
           }}
         >
           <h1 className="title mobile-mt header-home-title">
-            Welkom bij NlLink®
+            Welkom bij NlLink<span style={{ fontWeight: "400" }}>®</span>
           </h1>
           <Button
             className={"btn-inline"}
