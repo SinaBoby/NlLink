@@ -65,7 +65,9 @@
   .logo-container {
     align-self: center;
   }
-
+  .footer {
+    padding: 1rem 1.5rem;
+  }
   .footer-stack {
     flex-direction: column;
     justify-content: space-between;
@@ -73,12 +75,12 @@
 
   .copyright {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .footer-links {
     /* flex-direction: column; */
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     flex-wrap: wrap;
     justify-content: space-between;

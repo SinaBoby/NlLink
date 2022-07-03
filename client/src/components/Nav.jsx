@@ -72,9 +72,9 @@ const Nav = () => {
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
                 >
-                  {userDetails.userType === "NewComer"
+                  {userDetails.userType === "Newcomer"
                     ? "Connect to Locals"
-                    : "Connect to New Comers"}
+                    : "Connect to Newcomers"}
                 </Link>
               )}
               {!isAuthenticated && (
