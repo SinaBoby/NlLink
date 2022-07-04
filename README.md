@@ -4,9 +4,11 @@
 
 This is the final project for the HackYourFuture curriculum we did as a class using the MERN stack by following the agile methodology with our team and a group of mentors. A quick guide to what we built:
 
-> TODO: Add short description of the app
+<img src="./client/src/images/demo.gif">
 
-[Click here for the Demo version](https://c35-newcomers-develop.herokuapp.com/)
+> NlLink is a social network platform to connect locals and newcomers in the Netherlands. Users match based on their interests and province, messaging between users and create and join the events are core features of NlLink.
+
+> [Click here for the Demo version](https://c35-newcomers-develop.herokuapp.com/)
 
 ## 1. Setup
 
@@ -55,6 +57,21 @@ server
     └── util
     index.js
 ```
+
+## 🛠️ Used tools and languages
+
+![](https://img.shields.io/badge/Code-JavaScript-informational?style=flat&logo=JavaScript&color=F7DF1E)
+![](https://img.shields.io/badge/Code-HTML5-informational?style=flat&logo=HTML5&color=E34F26)
+![](https://img.shields.io/badge/Style-CSS3-informational?style=flat&logo=CSS3&color=1572B6)
+![](https://img.shields.io/badge/Code-React-informational?style=flat&logo=React&color=2bbc8a)
+![](https://img.shields.io/badge/Code-Node.js-informational?style=flat&logo=Node.js&color=darkgreen)
+![](https://img.shields.io/badge/Code-express-informational?style=flat&logo=Express.js&color=darkgreen)
+![](https://img.shields.io/badge/Tools-Git-informational?style=flat&logo=Git&color=F05032)
+![](https://img.shields.io/badge/Tools-Netlify-informational?style=flat&logo=netlify&color=00C7B7)
+![](https://img.shields.io/badge/Tools-GitHub-informational?style=flat&logo=GitHub&color=181717)
+![](https://img.shields.io/badge/Database-mongoDB-informational?style=flat&logo=mongoDB&color=GREEN)
+![](https://img.shields.io/badge/Tools-VSCode-informational?style=flat&logo=visualstudiocode&color=1572B6)
+![](https://img.shields.io/badge/Tools-heroku-informational?style=flat&logo=heroku&color=1572B6)
 
 ### 2.1 Client structure
 
@@ -106,7 +123,14 @@ For more information on how these work together including the automatic deployme
 - `@testing-library/*` || We use React Testing Library to write all of our tests. See [docs](https://testing-library.com/docs/react-testing-library/intro/)
 - `jest` || To run our tests and coverage. See [docs](https://jestjs.io/)
 - `jest-fetch-mock` || To mock out the backend for our testing purposes. See [docs](https://github.com/jefflau/jest-fetch-mock#readme)
-- `prop-types` || To type-check our components. See [docs](https://github.com/facebook/prop-types)
+- `buffer` || To provide the buffer module from node.js, for the browser. See [docs](https://github.com/feross/buffer#readme)
+- `prop-types` || To document the intended types of properties passed to components. See [docs](https://github.com/facebook/prop-types)
+- `react-dark-mode-toggle` || A super cutesy dark mode toggle button for React. See [docs](https://github.com/cawfree/react-dark-mode-toggle#readme)
+- `react-icons` || To provide beautiful icons in React. See [docs](https://github.com/react-icons/react-icons#readme)
+- `react-input-emoji` || A React input with an option to pick emojis. See [docs](https://https://github.com/cesarwbr/react-input-emoji#readme)
+- `react-phone-number-input` || International phone number input for React. See [docs](https://gitlab.com/catamphetamine/react-phone-number-input/-/blob/master/README.md)
+- `react-scroll` || React component for animating vertical scrolling. See [docs](https://https://github.com/fisshy/react-scroll#readme)
+- `react-toastify` || Allows you to add notifications to your app with ease. See [docs](https://github.com/fkhadra/react-toastify#readme)
 
 ### 3.3 Server-side libraries
 
@@ -116,3 +140,10 @@ For more information on how these work together including the automatic deployme
 - `mongodb-memory-server` || To mock out our database in our backend tests. See [docs](https://github.com/nodkz/mongodb-memory-server)
 - `cors` || To open up our API. See [docs](https://github.com/expressjs/cors#readme)
 - `mongoose` || To add schemas to our database. See [docs](https://mongoosejs.com/)
+- `jsonwebtoken` || To sign and verify the authorization token. See [docs](https://github.com/auth0/node-jsonwebtoken#readme)
+- `aws-sdk` || To store Imaged at amazon web service. See [docs](https://github.com/aws/aws-sdk-js#readme)
+- `bcrypt` || To hash users passwords before saving in the database. See [docs](https://github.com/kelektiv/node.bcrypt.js#readme)
+- `cors` || To provide a Connect/Express middleware that can be used to enable CORS with various options. See [docs](https://github.com/expressjs/cors#readme)
+- `multer` || To handle multipart form/data, used for uploading files. See [docs](https://github.com/expressjs/multer#readme)
+- `socket.io` || To enable real-time bidirectional event-based communication, used for messaging section. See [docs](https://github.com/socketio/socket.io#readme)
+- `nodemailer` || To send E-mails from node.js. See [docs](https://github.com/nodemailer/nodemailer#readme)
