@@ -18,8 +18,8 @@ const port = process.env.PORT;
 const httpServer = createServer(app);
 const allowedOrigins = [
   "http://localhost:8080",
-  "https://c35-newcomers-develop.herokuapp.com",
-  "http://c35-newcomers-develop.herokuapp.com",
+  "https://nllink.herokuapp.com",
+  "http://nllink.herokuapp.com",
 ];
 export const io = new Server(httpServer, {
   path: "",

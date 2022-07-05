@@ -22,8 +22,8 @@ const __dirname = path.dirname(filename);
 const app = express();
 const allowedOrigins = [
   "http://localhost:8080",
-  "https://c35-newcomers-develop.herokuapp.com",
-  "http://c35-newcomers-develop.herokuapp.com",
+  "https://nllink.herokuapp.com",
+  "https://nllink.herokuapp.com",
 ];
 // Tell express to use the json middleware
 app.use(express.json());

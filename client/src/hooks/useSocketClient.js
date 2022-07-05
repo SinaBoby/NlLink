@@ -3,7 +3,7 @@ const useSocketClient = (pathName = "", queryData) => {
   //https://c35-newcomers-develop.herokuapp.com
   let socket;
   if (queryData) {
-    socket = io.of("https://c35-newcomers-develop.herokuapp.com/", {
+    socket = io.of("https://nllink.herokuapp.com/", {
       path: pathName,
       autoConnect: false,
       transports: ["websocket"],
@@ -16,7 +16,7 @@ const useSocketClient = (pathName = "", queryData) => {
       },
     });
   } else if (!queryData) {
-    socket = io("https://c35-newcomers-develop.herokuapp.com/", {
+    socket = io("https://nllink.herokuapp.com/", {
       path: pathName,
       autoConnect: false,
       transports: ["websocket"],
